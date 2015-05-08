@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E4098FF-362D-4EDD-B285-41D61209D141}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.WebBase", "TMD.WebBase\TMD.WebBase.csproj", "{BCB8BCFD-0163-430C-8088-224074D6E384}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.Models", "TMD.Models\TMD.Models.csproj", "{81067904-2176-4648-87AB-014B0D76B85E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.Interfaces", "TMD.Interfaces\TMD.Interfaces.csproj", "{98F7A831-6D93-48E9-950F-623772AA607A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.Repository", "TMD.Repository\TMD.Repository.csproj", "{852BDC39-3388-4CB1-A959-F3BD06E9DF92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.Implementation", "TMD.Implementation\TMD.Implementation.csproj", "{42D2E6C0-74F1-46FB-B7BA-43251156275D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.Web", "TMD.Web\TMD.Web.csproj", "{426080DD-D8CB-49F2-9645-DFD962ADFFDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCB8BCFD-0163-430C-8088-224074D6E384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCB8BCFD-0163-430C-8088-224074D6E384}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCB8BCFD-0163-430C-8088-224074D6E384}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCB8BCFD-0163-430C-8088-224074D6E384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81067904-2176-4648-87AB-014B0D76B85E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81067904-2176-4648-87AB-014B0D76B85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81067904-2176-4648-87AB-014B0D76B85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81067904-2176-4648-87AB-014B0D76B85E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F7A831-6D93-48E9-950F-623772AA607A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98F7A831-6D93-48E9-950F-623772AA607A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98F7A831-6D93-48E9-950F-623772AA607A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98F7A831-6D93-48E9-950F-623772AA607A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{852BDC39-3388-4CB1-A959-F3BD06E9DF92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{852BDC39-3388-4CB1-A959-F3BD06E9DF92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{852BDC39-3388-4CB1-A959-F3BD06E9DF92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{852BDC39-3388-4CB1-A959-F3BD06E9DF92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42D2E6C0-74F1-46FB-B7BA-43251156275D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42D2E6C0-74F1-46FB-B7BA-43251156275D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42D2E6C0-74F1-46FB-B7BA-43251156275D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42D2E6C0-74F1-46FB-B7BA-43251156275D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{426080DD-D8CB-49F2-9645-DFD962ADFFDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{426080DD-D8CB-49F2-9645-DFD962ADFFDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{426080DD-D8CB-49F2-9645-DFD962ADFFDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{426080DD-D8CB-49F2-9645-DFD962ADFFDF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.Database.6.0.1304.0\lib\NET45
+	EndGlobalSection
+EndGlobal

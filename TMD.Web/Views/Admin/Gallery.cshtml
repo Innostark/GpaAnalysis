@@ -1,0 +1,181 @@
+﻿@model TMD.Web.ViewModels.Admin.GalleryAdminViewModel
+@{
+    ViewBag.Title = "Gallery";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="mainbar" dir="rtl">
+
+    <!-- Page heading -->
+    <div class="page-head">
+        <h2 class="pull-right">Gallery</h2>
+
+        <div class="clearfix"></div>
+
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Page heading ends -->
+    <!-- Matter -->
+
+    <div class="matter">
+        <div class="container">
+            <!-- Dashboard Graph starts -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-head">
+                            <div class="pull-right">Gallery Add/Update</div>
+                            <div class="widget-icons pull-left">
+                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+
+                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget-content">
+                            <div class="padd">
+                                <!-- Form starts.  -->
+                                @using (Html.BeginForm("Gallery", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                                {
+                                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.ImageName)
+                                    @Html.HiddenFor(model => model.UserId)
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.TitleA, new { @class = "form-control", @placeholder = "عنوان" })
+                                            @Html.ValidationMessageFor(model => model.TitleA, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">عنوان</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            @Html.EditorFor(model => model.TitleE, new { htmlAttributes = new { placeholder = "Title", @class = "form-control ltr" } })
+                                            @Html.ValidationMessageFor(model => model.TitleE, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">Title</label>
+                                    </div>
+    <div class="form-group" id="IsVideoDiv">
+        <div class="col-lg-10">
+            @Html.CheckBoxFor(model => model.IsVideo)
+            @Html.ValidationMessageFor(model => model.IsVideo, String.Empty, new { @class = "Error" })
+        </div>
+        <label class="col-lg-2 control-label textAlignLeft">Is Video</label>
+    </div>
+                                    <div class="form-group" id="isSelectedDiv">
+                                        <div class="col-lg-10">
+                                            @Html.CheckBoxFor(model => model.IsSelected, new {@disabled = (User.IsInRole("Doctor") ? "true" : "false") })
+                                            @Html.ValidationMessageFor(model => model.IsSelected, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">Is Selected</label>
+                                    </div>
+    <div class="form-group" id="VideoUrlDiv">
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.VideoUrl, new { placeholder = "Video URL", @class = "ltr form-control" })
+            @Html.ValidationMessageFor(model => model.VideoUrl, String.Empty, new { @class = "Error" })
+        </div>
+        <label class="col-lg-2 control-label textAlignLeft">Video Url</label>
+    </div>
+                                    if (Model != null && Model.Id > 0 && Model.IsVideo != true)
+                                    {
+        <div class="form-group">
+            <div class="col-lg-10">
+                @Html.HiddenFor(model => model.ImageName)
+                <img class="DisplayImage" src="@Url.Content(Model.UpdatedBy)" />
+            </div>
+            <label class="col-lg-2 control-label textAlignLeft">Image</label>
+        </div>
+                                    }
+
+                                    <div class="form-group" id="UploadImageDiv">
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.UploadImage, new { @class = "form-control", type = "file", accept = ".jpg,.jpeg,.png" })
+                                            @Html.ValidationMessageFor(model => model.UploadImage, null, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">Upload Photo</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            @Html.TextAreaFor(model => model.CommentA)
+                                            @Html.ValidationMessageFor(model => model.CommentA, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">التعليق</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            @Html.TextAreaFor(model => model.CommentE, new { htmlAttributes = new { placeholder = "Comment", @class = "ltr" } })
+                                            @Html.ValidationMessageFor(model => model.CommentE, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">Comment</label>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+
+                                        <a href="/Admin/GalleryLV">
+                                            <div class="col-lg-6">
+                                                <button id="signupuser" type="button" class="btn btn-primary btn-block FontSize16">Cancel</button>
+                                            </div>
+                                        </a>
+                                        <div class="col-lg-6">
+                                            <button id="signupuser" type="submit" class="btn btn-success btn-block FontSize16">حفظ</button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Matter ends -->
+
+</div>
+<script src="~/RichTextEditor/ckeditor.js"></script>
+
+<script>
+    //CKEDITOR.inline('Employee_Bio');//inline editing
+    CKEDITOR.replace('CommentA');
+    CKEDITOR.replace('CommentE');
+    $(document).ready(function () {
+        //if Gallery item is being editted, don't allow to change the TYPE
+        var id='@Model.Id';
+        if (parseInt(id) > 0) {
+            $('#IsVideoDiv').hide();
+        }
+        function performChecks() {
+            
+            if ($('#IsVideo').is(":checked")) {
+                $('#UploadImageDiv').hide();
+                $('#isSelectedDiv').show();
+                $('#VideoUrlDiv').show();
+            } else {
+                
+                $('#VideoUrlDiv').hide();
+                $('#isSelectedDiv').hide();
+                $('#UploadImageDiv').show();
+
+                $('#IsSelected').prop("checked", false);
+                $('#VideoUrl').val('');
+            }
+        }
+        $("#IsVideo").change(function () {
+            performChecks();
+        });
+        performChecks();
+    });
+</script>
+<script>
+    $(function () {
+
+        $("[disabled='false']").removeAttr("disabled");
+
+    });
+</script>

@@ -1,0 +1,46 @@
+﻿@using System.Configuration
+@model TMD.Models.IdentityModels.ViewModels.LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewBag.Title = "Login";
+}
+
+@Html.Partial("_Alert")
+<div class="container-login">
+    <div class="form-centering-wrapper">
+        <div class="form-window-login">
+            <div class="form-window-login-logo">
+                <div class="login-logo">
+                    <img src="~/Content/Images/gpa20_red_home.gif" alt="Desert Stars" />
+                </div>
+                
+                <h2 class="login-title">Welcome to GPA Analysis</h2>
+                <div class="login-member">
+                        Not a Member?&nbsp;<a href="@ConfigurationManager.AppSettings["SiteURL"]/Account/Subscribe">Sign Up &#187;</a>
+                    </div>
+                    <div class="login-or">Or</div>
+                <div class="login-input-area">
+                    <span class="help-block">Already Member</span>
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                        @*@Html.Partial("_Alert")*@
+                        <div>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", placeholder = "Username" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <button type="submit" class="btn btn-large btn-success btn-login">Login</button>
+                    }
+                    <a href="@ConfigurationManager.AppSettings["SiteURL"]/Account/ForgotPassword" class="forgot-pass">Forgot Your Password?</a>
+                    @*@Html.ActionLink("Forgot Your Password?", "ForgotPassword")*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

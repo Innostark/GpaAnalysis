@@ -1,0 +1,243 @@
+﻿@using System.Configuration
+<!DOCTYPE html>
+
+<html dir="@TMD.Web.Resources.Shared.Common.TextDirection">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>@ViewBag.Title</title>
+
+    <!-- shortcut icon -->
+    <link rel="shortcut icon" href="~/Images/favicon.ico" />
+    <link rel="stylesheet" href="~/Content/css/photon.css" media="all" />
+    <link rel="stylesheet" href="~/Content/css/photon-pt2.css" media="all" />
+    <link rel="stylesheet" href="~/Content/css/photon-responsive.css" media="all" />
+
+    <!--[if IE]>
+            <link rel="stylesheet" type="text/css" href="~/Content/css_compiled/ie-only-min.css" />
+    <![endif]-->
+    <!--[if lt IE 9]>
+            <link rel="stylesheet" type="text/css" href="~/Content/css_compiled/ie8-only-min.css" />
+            <script type="text/javascript" src="~/Scripts/plugins/excanvas.js"></script>
+            <script type="text/javascript" src="~/Scripts/plugins/html5shiv.js"></script>
+            <script type="text/javascript" src="~/Scripts/plugins/respond.min.js"></script>
+            <script type="text/javascript" src="~/Scripts/plugins/fixFontIcons.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/modernizr.custom.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.pnotify.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/less-1.3.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/xbreadcrumbs.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.maskedinput-1.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.autotab-1.1b.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/charCount.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.textareaCounter.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/elrte.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/elrte.en.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery-picklist.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/additional-methods.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.form.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.metadata.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.mockjax.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.uniform.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.rating.pack.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/farbtastic.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.timeentry.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.jstree.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.mCustomScrollbar.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.stack.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/raphael.2.1.0.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/justgage.1.0.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.clock.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.countdown.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.jqtweet.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.cookie.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/bootstrap-fileupload.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/prettify/prettify.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/bootstrapSwitch.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/mfupload.js"></script>
+    <script type="text/javascript" src="~/Scripts/common.js"></script>
+</head>
+<body class="body-inner">
+    <div class="btn-toolbar btn-mobile-menus">
+        <button class="btn btn-main-menu"></button>
+        <button class="btn btn-user-menu"><img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /></button>
+    </div>
+    <!--- Sidebar navigation -->
+    <div class="nav-fixed-left" style="visibility: hidden">
+        @Html.Action("LoadMenu", "Menu")
+    </div>
+    <!--- Topbar navigation -->
+    <div class="nav-fixed-topright" style="visibility: hidden">
+        <ul class="nav nav-user-menu">
+            <li class="user-sub-menu-container">
+                <a href="javascript:;">
+                    <i class="user-icon"></i><span class="nav-user-selection">Theme Options</span><i class="icon-menu-arrow"></i>
+                </a>
+                <ul class="nav user-sub-menu">
+                    <li class="light">
+                        <a href="javascript:;">
+                            <i class='icon-photon stop'></i>Light Version
+                        </a>
+                    </li>
+                    <li class="dark">
+                        <a href="javascript:;">
+                            <i class='icon-photon stop'></i>Dark Version
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="user-sub-menu-container">
+                <a href="javascript:;">
+                    <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>EN</i>
+                </a>
+                <ul class="nav user-sub-menu">
+                    <li class="">
+                        <a href="dashboard-En.html">
+                            <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />EN
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="dashboard-Ar.html">
+                            <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />AR
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="companyWebsite.html">
+                    <i class="icon-photon target"></i>
+
+                </a>
+            </li>
+            <li>
+                <a href="NotificationList(Admin,Employee with Auth)En.html">
+                    <i class="icon-photon comment_alt2_stroke"></i>
+                    <div class="notification-count">12</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <script>
+        $(function () {
+            setTimeout(function () {
+                $('.nav-fixed-topright').removeAttr('style');
+            }, 300);
+
+            $(window).scroll(function () {
+                if ($('.breadcrumb-container').length) {
+                    var scrollState = $(window).scrollTop();
+                    if (scrollState > 0) $('.nav-fixed-topright').addClass('nav-released');
+                    else $('.nav-fixed-topright').removeClass('nav-released')
+                }
+            });
+            $('.user-sub-menu-container').on('click', function () {
+                $(this).toggleClass('active-user-menu');
+            });
+            $('.user-sub-menu .light').on('click', function () {
+                if ($('body').is('.light-version')) return;
+                $('body').addClass('light-version');
+                setTimeout(function () {
+                    $.cookie('themeColor', 'light', {
+                        expires: 7,
+                        path: '/'
+                    });
+                }, 500);
+            });
+            $('.user-sub-menu .dark').on('click', function () {
+                if ($('body').is('.light-version')) {
+                    $('body').removeClass('light-version');
+                    $.cookie('themeColor', 'dark', {
+                        expires: 7,
+                        path: '/'
+                    });
+                }
+            });
+        });
+    </script>
+
+
+
+    <!-- Main content starts -->
+    <div class="main-content">
+        <div class="breadcrumb-container">
+            @*<ul class="xbreadcrumbs">
+                    <li>
+                        <a href="dashboard(Employee)En.html">
+                            <i class="icon-photon home"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="DepartmentsList(Admin)En.html">
+                            Department's List
+                        </a>
+                    </li>
+                    <li class="current">
+                        <a href="javascript:;">
+                            Department's View Edit Page
+                        </a>
+                    </li>
+
+                </ul>*@
+        </div>
+        <header>
+            <i class="icon-big-notepad"></i>
+            <h2><small>@ViewBag.Title</small></h2>
+        </header>
+
+        <!--Notifications begin-->
+        @*<div class="container-fluid">
+                <div class="control-group row-fluid">
+                    <div class="span12 span-inset">
+                        <div class="alert alert-success alert-block">
+                            <i class="icon-alert icon-alert-info"></i>
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Success</strong>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac risus vel lorem lobortis mattis nec eu est.</span>
+                        </div>
+
+                        <div class="alert alert-error alert-block">
+                            <i class="icon-alert icon-alert-info"></i>
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Error</strong>
+                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac risus vel lorem lobortis mattis nec eu est.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <!--Notifications end-->
+        <form class="form-horizontal">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </form>
+    </div>
+    @if (ViewBag.MessageVM != null)
+    {
+        <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
+        <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
+        <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
+        <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+    }
+    <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
+</body>
+</html>
