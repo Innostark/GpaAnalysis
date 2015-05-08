@@ -57,7 +57,7 @@ body, input, textarea, select
 
 	#header-wrapper
 	{
-		background: #3B4346 url('~/Content/css/images/bg01.jpg') top center;
+		background: #3B4346 url('images/bg01.jpg') top center;
 		box-shadow: inset 0px -1px 0px 0px #272d30, inset 0px -2px 0px 0px #51575a;
 		text-shadow: -1px -1px 1px rgba(0,0,0,0.75);
 	}
@@ -71,14 +71,14 @@ body, input, textarea, select
 
 	#features-wrapper
 	{
-		background: #353D40 url('~/Content/css/images/bg02.jpg');
+		background: #353D40 url('images/bg02.jpg');
 		padding: 15px 15px 30px 15px;
 		text-shadow: -1px -1px 1px rgba(0,0,0,0.75);
 	}
 	
 	#content-wrapper
 	{
-		background: #f7f7f7 url('~/Content/css/images/bg04.png');
+		background: #f7f7f7 url('images/bg04.png');
 		padding: 5px;
 	}
 
@@ -250,7 +250,7 @@ body, input, textarea, select
 
 	#titleBar {
 		color: #fff;
-		background: url('~/Content/css/images/bg04.jpg');
+		background: url('images/bg04.jpg');
 		box-shadow: inset 0px -20px 70px 0px rgba(200,220,245,0.1), inset 0px -1px 0px 0px rgba(255,255,255,0.1), 0px 1px 7px 0px rgba(0,0,0,0.6);
 		text-shadow: -1px -1px 1px rgba(0,0,0,0.75);
 	}
@@ -291,7 +291,7 @@ body, input, textarea, select
 				position: absolute;
 				width: 20px;
 				height: 30px;
-				background: url('~/Content/css/images/mobileUI-site-nav-opener-bg.svg');
+				background: url('images/mobileUI-site-nav-opener-bg.svg');
 				top: 15px;
 				left: 20px;
 				z-index: 1;
@@ -303,7 +303,7 @@ body, input, textarea, select
 			}
 
 	#navPanel {
-		background: url('~/Content/css/images/bg04.jpg');
+		background: url('images/bg04.jpg');
 		box-shadow: inset -1px 0px 0px 0px rgba(255,255,255,0.25), inset -2px 0px 25px 0px rgba(0,0,0,0.5);
 		text-shadow: -1px -1px 1px rgba(0,0,0,1);
 	}

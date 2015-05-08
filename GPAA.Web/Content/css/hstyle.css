@@ -14,7 +14,7 @@
 
 	body
 	{
-		background: #D4D9DD url('/GpaAnalysis/Content/css/images/bg03.jpg');
+		background: #D4D9DD url('images/bg03.jpg');
 	}
 
 	body, input, textarea, select
@@ -141,7 +141,7 @@
 		{
 			padding: 0.7em 0 0.7em 45px;
 			font-size: 1.2em;
-			background: url('/GpaAnalysis/Content/css/images/icon-checkmark.png') 0px 1.05em no-repeat;
+			background: url('images/icon-checkmark.png') 0px 1.05em no-repeat;
 		}
 		
 		.check-list li:first-child
@@ -184,7 +184,7 @@
 	.bordered-feature-image
 	{
 		display: block;
-		background: #fff url('/GpaAnalysis/Content/css/images/bg04.png');
+		background: #fff url('images/bg04.png');
 		padding: 10px;
 		box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.15);
 		margin: 0 0 1.5em 0;

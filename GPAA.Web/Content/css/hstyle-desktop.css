@@ -24,7 +24,7 @@
 
 	#header-wrapper
 	{
-		background: #3B4346 url('/GpaAnalysis/Content/css/images/bg01.jpg');
+		background: #3B4346 url('images/bg01.jpg');
 		border-bottom: solid 1px #272d30;
 		box-shadow: inset 0px -1px 0px 0px #51575a;
 		text-shadow: -1px -1px 1px rgba(0,0,0,0.75);
@@ -37,7 +37,7 @@
 	
 	#features-wrapper
 	{
-		background: #353D40 url('/GpaAnalysis/Content/css/images/bg02.jpg');
+		background: #353D40 url('images/bg02.jpg');
 		border-bottom: solid 1px #272e31;
 		padding: 45px 0 45px 0;
 		text-shadow: -1px -1px 1px rgba(0,0,0,0.75);
@@ -45,7 +45,7 @@
 	
 	#content-wrapper
 	{
-		background: #f7f7f7 url('/GpaAnalysis/Content/css/images/bg04.png');
+		background: #f7f7f7 url('images/bg04.png');
 		border-top: solid 1px #fff;
 		padding: 45px 0 45px 0;
 	}
@@ -60,7 +60,7 @@
 
 	#header
 	{
-		min-height: 90px;
+		min-height: 155px;
 		position: relative;
 	}
 
@@ -68,7 +68,7 @@
 		{
 			position: absolute;
 			left: 0;
-			bottom: 20px;
+			bottom: 35px;
 			font-size: 2.75em;
 		}
 	
@@ -82,7 +82,7 @@
 		{
 			position: absolute;
 			right: 0;
-			bottom: 15px;
+			bottom: 35px;
 			font-weight: 200;
 		}
 	

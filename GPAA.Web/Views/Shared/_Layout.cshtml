@@ -7,36 +7,43 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <script src="~/Scripts/js/jquery.min.js"></script>
-    <script src="~/Scripts/js/skel.min.js"></script>
+    <script src="~/Scripts/js/mskel.min.js"></script>
+    @*<script src="~/Scripts/js/hskel.min.js"></script>*@
     <script src="~/Scripts/js/skel-layers.min.js"></script>
-    <script src="~/Scripts/js/init.js"></script>
+    @*<script src="~/Scripts/js/hinit.js"></script>*@
+    <script src="~/Scripts/js/minit.js"></script>
     <noscript>
-        <link rel="stylesheet" href="~/Content/css/skel.css" />
-        <link rel="stylesheet" href="~/Content/css/style.css" />
-        <link rel="stylesheet" href="~/Content/css/style-desktop.css" />
+        <link rel="stylesheet" href="~/Content/css/mskel.css" />
+        <link rel="stylesheet" href="~/Content/css/mstyle.css" />
+        <link rel="stylesheet" href="~/Content/css/mstyle-desktop.css" />
+        <link rel="stylesheet" href="~/Content/css/hskel.css" />
+        <link rel="stylesheet" href="~/Content/css/hstyle.css" />
+        <link rel="stylesheet" href="~/Content/css/hstyle-desktop.css" />
     </noscript>
     <!--[if lte IE 9]><link rel="stylesheet" href="~/Content/css/ie9.css" /><![endif]-->
     <!--[if lte IE 8]><script src="~/Scripts/js/html5shiv.js"></script><![endif]-->
 </head>
 <body class="body-inner">
     <!-- Header -->
-    <div id="header-wrapper" style="box-shadow:none">
-        <header id="header" class="container">
+    <div id="header-wrapper">
+        <div class="container">
             <div class="row">
                 <div class="12u">
-                    <!-- Logo -->
-                    <h1><a href="@ConfigurationManager.AppSettings["SiteURL"]/Home/Index" id="logo">Halcyonic</a></h1>
-                    <!-- Nav -->
-                    <nav id="nav">
-                        <a href="@ConfigurationManager.AppSettings["SiteURL"]/Home/Index">Homepage</a>
-                        <a href="@ConfigurationManager.AppSettings["SiteURL"]/Home/OneColumn">One Column</a>
-                        <a href="@ConfigurationManager.AppSettings["SiteURL"]/Home/TwoColumnOne">Two Column #1</a>
-                        <a href="@ConfigurationManager.AppSettings["SiteURL"]/Home/TwoColumnTwo">Two Column #2</a>
-                        <a href="@ConfigurationManager.AppSettings["SiteURL"]/Home/ThreeColumn">Three Column</a>
-                    </nav>
+
+                    <header id="header">
+                        <h1><a href="#" id="logo">Minimaxing</a></h1>
+                        <nav id="nav">
+                            <a href="index.html" class="current-page-item">Homepage</a>
+                            <a href="twocolumn1.html">Two Column #1</a>
+                            <a href="twocolumn2.html">Two Column #2</a>
+                            <a href="onecolumn.html">One Column</a>
+                            <a href="threecolumn.html">Three Column</a>
+                        </nav>
+                    </header>
+
                 </div>
             </div>
-        </header>
+        </div>
     </div>
     <!-- Page content starts -->
     <div class="main-content">
