@@ -1,0 +1,183 @@
+﻿@using System.Configuration
+@using GPAA.Web.Helper
+﻿@using System.Configuration
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>@ViewBag.Title</title>
+
+    <!-- shortcut icon -->
+    <link rel="shortcut icon" href="~/Images/favicon.ico" />
+    <link rel="stylesheet" href="~/Content/css/photon.css" media="all" />
+    <link rel="stylesheet" href="~/Content/css/photon-pt2.css" media="all" />
+    <link rel="stylesheet" href="~/Content/css/photon-responsive.css" media="all" />
+    @if (CultureHelper.IsRighToLeft())
+    {
+        <link rel="stylesheet" href="~/Content/css/arabic.css" media="all" />
+    }
+    <link href="~/Content/CSS/styleIST.css" rel="stylesheet" media="all" />
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/modernizr.custom.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.pnotify.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/less-1.3.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/xbreadcrumbs.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.maskedinput-1.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.autotab-1.1b.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/charCount.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.textareaCounter.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/elrte.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/elrte.en.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery-picklist.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/additional-methods.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.form.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.metadata.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.mockjax.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.uniform.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.tagsinput.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.rating.pack.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/farbtastic.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.timeentry.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.dataTables.min.js"></script>
+    @*<script type="text/javascript" src="~/Scripts/plugins/jquery.dataTables-1.9.4.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.jstree.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.mCustomScrollbar.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.stack.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.resize.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/raphael.2.1.0.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/justgage.1.0.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.clock.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.countdown.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.jqtweet.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/jquery.cookie.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/bootstrap-fileupload.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/prettify/prettify.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/bootstrapSwitch.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins/mfupload.js"></script>
+    <script type="text/javascript" src="~/Scripts/common.js"></script>
+
+    <script src="~/Scripts/App/architecture.js"></script>
+    <!--Data Annotation Starts-->
+    <script src="@Url.Content("~/Scripts/plugins/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+    <!--Data Annotation Ends-->
+    @*<script src="~/Scripts/Functions/scriptIST.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>*@
+</head>
+<body class="body-login">
+    <!-- Page content starts -->
+    <div class="container-fluid dashboard dashboard-widget-group">
+        <div class="row-fluid">
+            <div id="photon_widgets" class="span12 ui-sortable">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-watermark"></div>
+    <div class="scroll-top-wrapper ">
+        <span class="scroll-top-inner">
+            <span class="arrow_up"></span>
+        </span>
+    </div>
+
+    @if (ViewBag.MessageVM != null)
+    {
+        <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
+        <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
+        <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
+        <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+        <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
+    }
+    <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
+
+    <script>
+        $(function () {
+            setTimeout(function () {
+                $('.nav-fixed-topright').removeAttr('style');
+            }, 300);
+
+            $(window).scroll(function () {
+                if ($('.breadcrumb-container').length) {
+                    var scrollState = $(window).scrollTop();
+                    if (scrollState > 0) $('.nav-fixed-topright').addClass('nav-released');
+                    else $('.nav-fixed-topright').removeClass('nav-released');
+                }
+            });
+            $('.user-sub-menu-container').on('click', function () {
+                $(this).toggleClass('active-user-menu');
+            });
+            $('.user-sub-menu .light').on('click', function () {
+                if ($('body').is('.light-version')) return;
+                $('body').addClass('light-version');
+                setTimeout(function () {
+                    $.cookie('themeColor', 'light', {
+                        expires: 7,
+                        path: '/'
+                    });
+                }, 500);
+            });
+            $('.user-sub-menu .dark').on('click', function () {
+                if ($('body').is('.light-version')) {
+                    $('body').removeClass('light-version');
+                    $.cookie('themeColor', 'dark', {
+                        expires: 7,
+                        path: '/'
+                    });
+                }
+            });
+        });
+
+        $(function () {
+
+            $(document).on('scroll', function () {
+
+                if ($(window).scrollTop() > 100) {
+                    $('.scroll-top-wrapper').addClass('show');
+                } else {
+                    $('.scroll-top-wrapper').removeClass('show');
+                }
+            });
+
+
+            $(document).on('scroll', function () {
+
+                if ($(window).scrollTop() > 100) {
+                    $('.scroll-top-wrapper').addClass('show');
+                } else {
+                    $('.scroll-top-wrapper').removeClass('show');
+                }
+            });
+
+            $('.scroll-top-wrapper').on('click', scrollToTop);
+
+
+        });
+
+        function scrollToTop() {
+            verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+            element = $('body');
+            offset = element.offset();
+            offsetTop = offset.top;
+            $('html, body').animate({ scrollTop: offsetTop }, 500, 'linear');
+        }
+    </script>
+
+</body>
+</html>

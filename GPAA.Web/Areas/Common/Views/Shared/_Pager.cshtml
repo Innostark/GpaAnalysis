@@ -1,0 +1,23 @@
+﻿<!-- ko with: pager -->
+<div data-bind="if: pagerWithLimit().length > 0">
+    <ul class="pagination">
+        <li><a href="#" data-bind="click: previousPage">Prev</a></li>
+        <!-- ko if: showBackPageDotLink -->
+        <li><a href="#" data-bind="click: shiftRight">...</a></li>
+        <!-- /ko -->
+        <!-- ko foreach: pagerWithLimit -->
+        <li data-bind="css: { active: page === $parent.currentPage() + 1 }">
+            <a href="#" data-bind="text: page, click: clicked">1</a>
+        </li>
+        <!-- /ko -->
+        <!-- ko if: showNextPageDotLink -->
+        <li><a href="#" data-bind="click: shiftLeft">...</a></li>
+        <!-- /ko -->
+        <li><a href="#" data-bind="click: nextPage">Next</a></li>
+    </ul>
+</div>
+<div class="searchCount">
+    <span data-bind="text: filteredTotalContents"></span>
+</div>
+<!-- /ko -->
+

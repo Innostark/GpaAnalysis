@@ -1,0 +1,230 @@
+﻿@model IEnumerable<GPAA.Models.DomainModels.HomeSlider>
+
+@{
+    ViewBag.Title = "Home Slider LV";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    thead tr th {
+        text-align: right;
+    }
+</style>
+<div class="mainbar" dir="rtl">
+    <!-- Page heading -->
+    <div class="page-head">
+        <h2 class="pull-right">Home Slider</h2>
+
+        <div class="clearfix"></div>
+
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Page heading ends -->
+    <!-- Matter -->
+
+    <div class="matter" style="padding: 0 !important">
+        <div class="container">
+            <!-- Dashboard Graph starts -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        @using (Html.BeginForm("HomeSliderLV", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                        {
+                            <div class="widget-head">
+                                &nbsp;
+                                <div class="pull-right"><input id="btnResetFltr" type="button" class="btn btn-danger" value="Reset" /></div>
+                                &nbsp;
+                                <div class="pull-right"><input id="btnFltr" type="button" class="btn btn-primary" style="margin-right:15px;" value="Filter" /></div>
+                                &nbsp;
+                                <div class="widget-icons pull-left">
+                                    <a href="#" class="wminimize">Filters<i class="fa fa-chevron-up"></i></a>
+
+                                    @*<a href="#" class="wclose"><i class="fa fa-times"></i></a>*@
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="widget-content filterArea">
+                                <div class="padd">
+                                    <!-- Form starts.  -->
+
+                                    <div class="form-group">
+
+                                        <div class="col-lg-11">
+                                            <input id="txtSearchTitle" placeholder="Search Title" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-1 control-label textAlignLeft">
+                                            Search
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Matter ends -->
+    <!-- Matter -->
+
+    <div class="matter" style="border-top: none !important; padding: 0 !important">
+        <div class="container">
+            <!-- Dashboard Graph starts -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-head">
+                            
+                            <a href="HomeSlider">
+                                <div class="pull-right"><input type="button" class="btn btn-success" value="Create New" /></div>
+                            </a>
+
+                            <div class="widget-icons pull-left">
+                                <a href="#" class="wminimize">Home Sliders<i class="fa fa-chevron-up"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget-content">
+
+                            <table id="kaluAna" class="table table-striped table-hover table-bordered dataTable no-footer" style="border: 1px solid #ddd !important">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>عنوان</th>
+                                        <th>Title</th>
+                                        <th>Sort Order</th>
+                                        <th>Is Selected</th>
+                                        <th>وصف الأخبار</th>
+                                        <th>Description</th>
+                                        <th>Author</th>
+                                        <th></th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ToList())
+                                    {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td class="containerHeight"><div>@item.ImageTitleA</div></td>
+                                            <td class="containerHeight"><div>@item.ImageTitleE</div></td>
+                                            <td>@item.SortOrder</td>
+                                            <td>@item.IsSelected</td>
+                                            <td class="containerHeight"><div>@Html.Raw(@item.ImageDescriptionA)</div></td>
+                                            <td class="containerHeight"><div>@Html.Raw(@item.ImageDescriptionE)</div></td>
+                                            <td>@item.CreatedBy</td>
+                                            <td>@Html.ActionLink("Edit", "HomeSlider", new { id = item.Id }) </td>
+                                            <td>
+                                                <a class="delete" href="javascript:;">Delete</a>
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Matter ends -->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var serviceURL = "HomeSliderDelete";
+
+        var oTable = $('#kaluAna').dataTable({
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "bFilter": true,
+            "bLengthChange": false,
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [8, 9] },
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+
+        });
+
+        $('#btnFltr').on('click', function(e) {
+
+
+            var searchN = $('#txtSearchTitle').val();
+            oTable.fnFilter(searchN);
+
+
+
+        });
+        $('#btnResetFltr').on('click', function (e) {
+            $('#txtSearchTitle').val('');
+            oTable.fnFilter('');
+        });
+        $('#kaluAna').on('click', '.delete', function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this row ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            $.ajax({
+                type: "POST",
+                url: serviceURL,
+                data: "{id:" + aData[0] + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+
+            function successFunc(data, status) {
+
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
+
+                    displayLength = oTable.fnSettings()._iDisplayLength,
+                    displayStart = oTable.fnSettings()._iDisplayStart;
+
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if (totalRcd > page * displayLength)
+                    oTable.fnPageChange(page);
+                else
+                    oTable.fnPageChange(page - 1);
+            }
+
+            function errorFunc(e, status) {
+
+                alert('error');
+            }
+
+
+        });
+    });
+
+</script>
+<style type="text/css">
+    .dataTables_filter {
+        display: none !important;
+    }
+</style>

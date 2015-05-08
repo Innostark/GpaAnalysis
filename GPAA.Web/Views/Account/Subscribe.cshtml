@@ -1,0 +1,56 @@
+﻿@model GPAA.Models.IdentityModels.ViewModels.SignupViewModel
+
+@{
+    ViewBag.Title = "Subscribe";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="container-login">
+    <div class="form-centering-wrapper">
+        <div class="form-window-login">
+            <div class="form-window-login-logo">
+                <div class="login-logo">
+                    <img src="~/Content/Images/gpa20_red_home.gif" alt="Desert Stars" />
+                </div>
+                <h2 class="login-title">Subscribe</h2>
+
+
+                <div class="login-input-area">
+                    @using (Html.BeginForm("Subscribe", "Account", FormMethod.Post, new { @id = "signupForm", @class = "", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.UserId)
+                        <div>
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", @placeholder = "Username", @id = "Username" })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "required" })
+                        </div>
+                        <div>
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control ", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "required" })
+                        </div>
+                        <div>
+                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control ", @placeholder = "Confirm Password" })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "required" })
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control ", @placeholder = "Email" })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "required" })
+                        </div>
+                        
+                        <button type="submit" class="btn btn-large btn-success btn-login">Create Account</button>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#signupForm").validate({
+            //ignore: ".ignore"
+    
+        }).settings.ignore = ".ignore, .file";
+    });
+</script>

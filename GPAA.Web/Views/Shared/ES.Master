@@ -1,0 +1,71 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ES.Master.cs" Inherits="GPAA.Web.Views.Shared.ES" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="~/Content/CSS/Admin/style/bootstrap.css" rel="stylesheet">
+    <!-- Font awesome icon -->
+    <link rel="stylesheet" href="~/Content/CSS/Admin/style/font-awesome.css">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="~/Content/CSS/Admin/style/jquery-ui-1.9.2.custom.min.css">
+    <!-- Calendar -->
+    <link rel="stylesheet" href="~/Content/CSS/Admin/style/fullcalendar.css">
+        <link rel="stylesheet" href="~/Content/CSS/Admin/style/bootstrap-datetimepicker.min.css">
+    <!-- CLEditor -->
+    <link rel="stylesheet" href="~/Content/CSS/Admin/style/jquery.cleditor.css">
+    <!-- Uniform -->
+    <link rel="stylesheet" href="~/Content/CSS/Admin/style/uniform.default.html">
+    <!-- Uniform -->
+    <link rel="stylesheet" href="~/Content/CSS/Admin/style/daterangepicker-bs3.css" />
+    <!-- Bootstrap toggle -->
+    <link rel="stylesheet" href="~/Content/CSS/Admin/style/bootstrap-switch.css">
+    <!-- Main stylesheet -->
+    <link href="~/Content/CSS/Admin/style/style.css" rel="stylesheet">
+    <link href="~/Content/ClinicAdmin.css" rel="stylesheet">
+    
+        <link href="~/Content/CSS/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/CSS/styleIST.css" rel="stylesheet" />
+    <link href="~/Content/CSS/Admin/style/styleISTadmin.css" rel="stylesheet">
+
+    <%--<link href="~/Content/CSS/components.css" rel="stylesheet" type="text/css" />--%>
+
+    <!-- HTML5 Support for IE -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shim.js"></script>
+    <![endif]-->
+    <!-- Favicon -->
+       <%= System.Web.Optimization.Scripts.Render("~/Scripts/App/Admin/js/jquery.js") %>
+        <%--<%= System.Web.Optimization.Scripts.Render("~/Scripts/jquery-ui-1.10.4.js.js") %>--%>
+  
+   <%-- <script type="text/javascript" src="~/Scripts/App/Admin/js/jquery.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.4.js"></script>--%>
+    <%--<script src="~/Scripts/jquery-1.10.2.js"></script>--%>
+    <link rel="shortcut icon" href="img/favicon/favicon.png">
+  
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+  
+         <%= System.Web.Optimization.Scripts.Render("~/Scripts/App/Admin/js/bootstrap.js") %>
+        <%= System.Web.Optimization.Scripts.Render("~/Scripts/App/Admin/js/jquery-ui-1.9.2.custom.min.js") %>
+   <%= System.Web.Optimization.Scripts.Render("~/Scripts/App/Admin/js/daterangepicker.js") %>
+        <%= System.Web.Optimization.Scripts.Render("~/Scripts/App/Admin/js/bootstrap-datetimepicker.min.js") %>
+        <%--<%= System.Web.Optimization.Scripts.Render("~/Scripts/App/Admin/js/index.js") %>--%>
+      
+        <script>
+            //jQuery(document).ready(function () {
+            //    Metronic.init(); // init metronic core componets
+            //    Layout.init(); // init layout
+            //});
+        </script>
+    </form>
+</body>
+</html>

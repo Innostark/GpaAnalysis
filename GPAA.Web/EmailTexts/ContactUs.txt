@@ -1,0 +1,7 @@
+﻿Admin,<br/><br/>
+[Name] has sent you a message on [Date].<br/><br/>
+Message:<br/>
+[Message]<br/><br/>
+Contact information for [Name] - <br/>
+[Email]<br/>
+[Phone]

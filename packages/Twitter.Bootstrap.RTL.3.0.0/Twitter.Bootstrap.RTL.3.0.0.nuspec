@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Twitter.Bootstrap.RTL</id>
+    <version>3.0.0</version>
+    <title>RTL Twitter Bootstrap</title>
+    <authors>Kiarash Soleimanzadeh</authors>
+    <owners>Kiarash Soleimanzadeh</owners>
+    <projectUrl>http://soleimanzadeh.com/</projectUrl>
+    <iconUrl>http://soleimanzadeh.persiangig.com/image/RTL-Bootstrap.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Bootstrap is a front-end toolkit from Twitter designed to kickstart development of webapps and sites, featuring simple and flexible HTML, CSS, and Javascript for popular user interface components and interactions.
+RTL Bootstrap is Right To Left Of Twitter Bootstrap For Persian, Arabic, Urdu and etc.
+
+Very Thanx to Drew Strickland for Online BootSwatchr tool and RTL support with this package: http://www.bootswatchr.com</description>
+    <releaseNotes />
+    <language />
+    <tags>twitter css css3 html html5 ui jquery ender bootstrap rtl</tags>
+    <dependencies>
+      <dependency id="jQuery" version="1.10.2" />
+    </dependencies>
+  </metadata>
+</package>

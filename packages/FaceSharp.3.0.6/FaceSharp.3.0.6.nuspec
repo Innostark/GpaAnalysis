@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>FaceSharp</id>
+    <version>3.0.6</version>
+    <title>FaceSharp</title>
+    <authors>Patrick Gidich</authors>
+    <owners>Patrick Gidich</owners>
+    <licenseUrl>http://facesharp.codeplex.com/license</licenseUrl>
+    <projectUrl>http://www.facesharp.com/</projectUrl>
+    <iconUrl>http://www.facesharp.com/ui/images/logo-facesharp.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Get started with Facebook Development quickly with FaceSharp!</description>
+    <summary>Join the .NET Movement in Facebook Apps
+- Liberal MIT Licensing. Fully customize your code.</summary>
+    <copyright>Copyright © 2012 Patrick Gidich</copyright>
+    <tags>Facebook</tags>
+    <dependencies>
+      <dependency id="Castle.Core" version="3.0.0.4001" />
+      <dependency id="Castle.Windsor" version="3.0.0.4001" />
+      <dependency id="RestSharp" version="103.1" />
+      <dependency id="Newtonsoft.Json" version="4.5.5" />
+    </dependencies>
+  </metadata>
+</package>

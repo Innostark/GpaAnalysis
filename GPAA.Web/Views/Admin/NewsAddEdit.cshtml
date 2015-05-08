@@ -1,0 +1,131 @@
+﻿@model GPAA.Web.ViewModels.ES.NewsViewModel
+@{
+    ViewBag.Title = "News";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="mainbar" dir="rtl">
+
+    <!-- Page heading -->
+    <div class="page-head">
+        <h2 class="pull-right">إضافة تحرير الأخبار</h2>
+
+        <div class="clearfix"></div>
+
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Page heading ends -->
+    <!-- Matter -->
+
+    <div class="matter">
+        <div class="container">
+            <!-- Dashboard Graph starts -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-head">
+                            <div class="pull-right">News Add/Update</div>
+                            <div class="widget-icons pull-left">
+                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+
+                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget-content">
+                            <div class="padd" >
+                                <!-- Form starts.  -->
+                                @using (Html.BeginForm("NewsAddEdit", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                                {
+                                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                                    @Html.HiddenFor(model => model.SingleNews.Id)
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.SingleNews.TitleA, new { @class = "form-control", @placeholder = "عنوان الأخبار" })
+                                            @Html.ValidationMessageFor(model => model.SingleNews.TitleA, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft" >عنوان</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.SingleNews.TitleE, new { placeholder = "News Title", @class = "ltr form-control" })
+                                            @Html.ValidationMessageFor(model => model.SingleNews.TitleE, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">Title</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.SingleNews.CreatedBy, new { @class = "ltr form-control", placeholder = "Author" })
+                                            @Html.ValidationMessageFor(model => model.SingleNews.CreatedBy, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">Author</label>
+                                    </div>
+ if (Model.SingleNews != null && Model.SingleNews.Id > 0)
+ {
+     <div class="form-group">
+         <div class="col-lg-10">
+             @Html.HiddenFor(model=>model.SingleNews.ImageName)
+             <img class="DisplayImage" src="@Url.Content(Model.SingleNews.UpdatedBy)" />
+         </div>
+         <label class="col-lg-2 control-label textAlignLeft">Image</label>
+     </div>
+ }
+
+                                    <div class="form-group">
+
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.UploadImage, new {@class="form-control", type = "file", accept = ".jpg,.jpeg,.png" })
+                                            @Html.ValidationMessageFor(model => model.UploadImage, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">Upload Photo</label>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="col-lg-10">
+                                            @Html.TextAreaFor(model => model.SingleNews.DescriptionA)
+                                            @Html.ValidationMessageFor(model => model.SingleNews.DescriptionA, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft" >وصف الأخبار</label>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <div class="col-lg-10">
+                                            @Html.TextAreaFor(model => model.SingleNews.DescriptionE)
+                                            @Html.ValidationMessageFor(model => model.SingleNews.DescriptionE, String.Empty, new { @class = "Error" })
+                                        </div>
+                                        <label class="col-lg-2 control-label textAlignLeft">Description</label>
+                                    </div>
+                                    <hr />
+                                    <div class="form-group">
+                                        <a href="/Admin/NewsLV">
+                                            <div class="col-lg-6">
+                                                <button id="signupuser" type="button" class="btn btn-primary btn-block FontSize16">Cancel</button>
+                                            </div>
+                                        </a>
+                                        <div class="col-lg-6">
+                                            <button id="signupuser" type="submit" class="btn btn-success btn-block FontSize16">خلق الأخبار</button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Matter ends -->
+
+</div>
+<script src="~/RichTextEditor/ckeditor.js"></script>
+
+<script>
+    //CKEDITOR.inline('Employee_Bio');//inline editing
+    CKEDITOR.replace('SingleNews.DescriptionA');
+    CKEDITOR.replace('SingleNews.DescriptionE');
+</script>

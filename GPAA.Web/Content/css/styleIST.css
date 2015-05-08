@@ -1,0 +1,294 @@
+﻿.select2me {
+    width: 128% !important;
+}
+
+.required {
+    color: #e02222;
+    font-size: 12px;
+    padding-left: 2px;
+}
+
+.requiredLeftAlign {
+    color: #e02222;
+    text-align: left !important;
+}
+
+.displayCK {
+    display: inline-block;
+    vertical-align: middle;
+    box-shadow: inset 0 2px 0 -1px white, 0px 1px 1px white;
+    cursor: not-allowed;
+    background-color: #f2f2f2;
+    border: 1px solid #d1d7df;
+    transition: background-color linear .2s, box-shadow linear .2s;
+    width: 100%;
+    padding: 3px 10px;
+    margin: 15px 0;
+    color: #333333;
+    font-size: 14px;
+    line-height: 20px;
+    text-shadow: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.Error {
+    color: #e02222;
+    font-size: 12px;
+    padding-left: 2px;
+}
+
+    .Error::-webkit-input-placeholder { /* WebKit browsers */
+        color: #e02222;
+    }
+
+    .Error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color: #e02222;
+        opacity: 1;
+    }
+
+    .Error::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color: #e02222;
+        opacity: 1;
+    }
+
+    .Error:-ms-input-placeholder { /* Internet Explorer 10+ */
+        color: #e02222;
+    }
+
+.datepickerArabic .IqamaIssueDateAr .IqamaExpiryDateAr .PassportExpiryDateAr {
+    width: 125px;
+    margin-right: 10px;
+}
+
+.calendars-month-year {
+    width: 100%;
+    margin: 0 0;
+}
+
+.calendars-month-header {
+    display: flex !important;
+}
+
+.datepicker .datepickerArabic .IqamaIssueDateAr .IqamaExpiryDateAr .inline-font-icons-list .PassportExpiryDateAr {
+    width: 10px !important;
+}
+
+.cursorHand {
+    cursor: pointer !important;
+}
+
+.text-align-center {
+    text-align: center !important;
+}
+
+.dataTables_wrapper img {
+    max-height: 100px !important;
+}
+
+.table {
+    max-width: 100%;
+}
+
+.areaLabel {
+    margin-top: -36px;
+    margin-left: 15px;
+}
+
+.controllerLabel {
+    margin-top: -37px;
+    margin-left: 15px;
+}
+
+.controllerChek {
+    margin-left: 35px !important;
+}
+
+.actionChek {
+    margin-top: 5px !important;
+}
+
+.actionLabel {
+    margin-top: -32px;
+    margin-left: 5px;
+}
+
+.childItem {
+    margin-left: 35px !important;
+}
+
+.areaItem {
+    padding-top: 5px !important;
+}
+
+#lean_overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    display: none;
+}
+
+#popup, .pops {
+    width: 620px;
+    padding-bottom: 25px;
+    display: none;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(17, 70, 238, 0.7);
+    -webkit-box-shadow: 0 0 4px rgba(17, 70, 238, 0.7);
+    -moz-box-shadow: 0 0px 4px rgba(17, 70, 238, 0.7);
+    color: #000;
+}
+
+
+.modal_close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(../images/modal_close.png);
+    z-index: 2;
+}
+
+
+.popup-ct {
+    padding: 30px 20px 10px 20px;
+    font-size: 14px;
+}
+
+.popup-header h2 {
+    font-size: 21px;
+    color: #231f20;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.popup-header p {
+    font-size: 12px;
+    color: #333333;
+}
+
+.popup-image {
+    float: left;
+    width: 278px;
+    margin-right: 20px;
+}
+
+    .popup-image img {
+        border: 2px solid #c7c7c8;
+        width: 275px;
+    }
+
+.popup-content {
+    float: right;
+    width: 282px;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+    .popup-content h3 {
+        font-size: 14px;
+        color: #231f20;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .popup-content p {
+        border-bottom: 1px solid #e7e7ec;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+.green-text {
+    font-size: 12px;
+    color: #98a502;
+    font-weight: bold;
+}
+
+.additional-colors {
+    padding: 20px 0 0px;
+}
+
+    .additional-colors select {
+        width: auto !important;
+        color: #333333;
+        font-style: normal !important;
+        height: auto;
+    }
+
+    .additional-colors img {
+        border: 2px solid #c7c7c8;
+        float: left;
+        margin-right: 5px;
+    }
+
+.na {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.popup-custom {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.pops-custom {
+    width: 620px;
+    padding-bottom: 25px;
+    margin-top: 10%;
+    display: none;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(17, 70, 238, 0.7);
+    -webkit-box-shadow: 0 0 4px rgba(17, 70, 238, 0.7);
+    -moz-box-shadow: 0 0px 4px rgba(17, 70, 238, 0.7);
+    color: #000;
+}
+
+.popup-button {
+    margin-left: 45%;
+    background-color: #4778A1;
+    color: white;
+    width: 100px;
+    height: 30px;
+}
+
+.popup-header {
+    padding: 9px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+    .popup-header .close {
+        margin-top: 2px;
+    }
+
+    .popup-header h3 {
+        margin: 0;
+        line-height: 30px;
+        font-size: 20px;
+    }
+
+.popup-body {
+    position: relative;
+    max-height: 400px;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.disableList {
+    pointer-events: none;
+}
+
+.enableList {
+    pointer-events: all;
+}

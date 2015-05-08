@@ -1,0 +1,264 @@
+﻿@model GPAA.Web.ViewModels.Admin.AppointmentViewModel
+
+@{
+    ViewBag.Title = "Appointment LV";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    thead tr th {
+        text-align: right;
+    }
+</style>
+<div class="mainbar" dir="rtl">
+    <!-- Page heading -->
+    <div class="page-head">
+        <h2 class="pull-right">Appointments</h2>
+
+        <div class="clearfix"></div>
+
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Page heading ends -->
+    <!-- Matter -->
+
+    <div class="matter" style="padding: 0 !important">
+        <div class="container">
+            <!-- Dashboard Graph starts -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        @using (Html.BeginForm("AppointmentLV", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                        {
+                            <div class="widget-head">
+                                &nbsp;
+                                <div class="pull-right"><input id="btnResetFltr" type="button" class="btn btn-danger" value="Reset" /></div>
+                                &nbsp;
+                                <div class="pull-right"><input id="btnFltr" type="button" class="btn btn-primary" style="margin-right:15px;" value="Filter" /></div>
+                                &nbsp;
+                                <div class="widget-icons pull-left">
+                                    <a href="#" class="wminimize">Filters<i class="fa fa-chevron-up"></i></a>
+
+                                    @*<a href="#" class="wclose"><i class="fa fa-times"></i></a>*@
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="widget-content filterArea">
+                                <div class="padd">
+                                    <!-- Form starts.  -->
+
+                                    <div class="form-group">
+                                        
+                                        
+                                        <div class="col-lg-3">
+                                            <input id="txtPatientName" placeholder="Patient Name" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-2 control-label textAlignLeft">
+                                            Patient Name
+                                        </div>
+                                        
+                                        <div class="col-lg-2">
+                                            <input id="txtMobile" placeholder="Patient Mobile" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-1 control-label textAlignLeft">
+                                            Mobile
+                                        </div>
+                                        
+                                        <div class="col-lg-2">
+                                            <input id="txtAppointmentDate" placeholder="Date" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-2 control-label textAlignLeft">
+                                            Appointment Date
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Matter ends -->
+    <!-- Matter -->
+
+    <div class="matter" style="border-top: none !important; padding: 0 !important">
+        <div class="container">
+            <!-- Dashboard Graph starts -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-head">
+                            @*<a href="GeneralAddEdit">
+
+                                    <div class="pull-right"><input type="button" class="btn btn-success" value="Create New" /></div>
+                                </a>*@
+
+                            <div class="widget-icons pull-left">
+                                <a href="#" class="wminimize">Appointments<i class="fa fa-chevron-up"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="widget-content">
+
+                            <table id="apartmentTable" class="table table-striped table-hover table-bordered dataTable no-footer" style="border: 1px solid #ddd !important">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Age</th>
+                                        <th>Nationality</th>
+                                        <th>Appointment Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Matter ends -->
+</div>
+<link rel="stylesheet" href="~/Content/css/zebra.css" type="text/css" media="screen">
+<script type="text/javascript" src="~/Scripts/App/zebra_datepicker.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#txtAppointmentDate').Zebra_DatePicker();
+        var siteURL = $('#siteURL').val();
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+        var oTable = $('#apartmentTable').dataTable({
+            "iDisplayLength": 11,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [2,4,5,7] },
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+            "columns": [
+                 { "data": "Id" },
+                { "data": "NameA" },
+                { "data": "Email" },
+                { "data": "Mobile" },
+                { "data": "Age" },
+                { "data": "Nationality" },
+                { "data": "AppointmentDateStr" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='delete' href='javascript:;'>Delete</a>"
+                }
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: siteURL+"/Admin/AppointmentLV",
+                type: "POST",
+                dataType: "json",
+                data: function (params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    if (params.SortBy === 0) {
+                        params.SortBy = 1;
+                    }
+                    params.IsAsc = params.order[0].dir === "asc";
+                    //params.SearchString = $('#SearchString').val();
+                    params.PatientName = $('#txtPatientName').val();
+                    params.PatientMobile = $('#txtMobile').val();
+                    params.AppointmentDate = $('#txtAppointmentDate').val();
+                }
+            }
+        });
+
+        $('#btnFltr').on('click', function (e) {
+            oTable.fnDraw();
+
+        });
+
+        $('#btnResetFltr').on('click', function (e) {
+            $('#txtPatientName').val('');
+            $('#txtMobile').val('');
+            $('#txtAppointmentDate').val('');
+            oTable.fnFilter('');
+        });
+
+        $('#apartmentTable').on('click', '.delete', function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this row ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            var serviceUrl = siteURL + '/Admin/AppointmentDelete';
+            $.ajax({
+                type: "POST",
+                url: serviceUrl,
+                data: "{ id:" + aData.Id + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                complete: function (data) {
+                    if (data.responseJSON.status === 200) {
+                        successFunc(data);
+                    }
+                    else {
+                        errorFunc(data);
+                    }
+                }
+            });
+
+            function successFunc(data) {
+
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
+                    displayStart = oTable.fnSettings()._iDisplayStart,
+                    displayLength = oTable.fnSettings()._iDisplayLength;
+
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if (totalRcd <= displayStart) {
+                    oTable.fnPageChange(page - 1);
+                }
+                else {
+                    oTable.fnPageChange(page);
+                }
+
+                toastr.success(data.responseJSON.response);
+            }
+
+            function errorFunc(error) {
+                toastr.error(error.responseJSON.response);
+            }
+        });
+    });
+</script>
+<style type="text/css">
+    .dataTables_filter {
+        display: none !important;
+    }
+</style>
