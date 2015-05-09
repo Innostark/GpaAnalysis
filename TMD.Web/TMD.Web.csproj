@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -165,6 +166,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData">
       <Private>True</Private>
     </Reference>
@@ -296,6 +299,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Integration\Ebay\ITmdEbayIntegrationService.cs" />
+    <Compile Include="Integration\Ebay\TmdEbayIntegrationService.svc.cs">
+      <DependentUpon>TmdEbayIntegrationService.svc</DependentUpon>
+    </Compile>
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
@@ -383,6 +390,7 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Images\pic05.jpg" />
+    <Content Include="Integration\Ebay\TmdEbayIntegrationService.svc" />
     <Content Include="Scripts\js\hskel.min.js" />
     <Content Include="Scripts\js\minit.js" />
     <Content Include="Views\Home\OneColumn.cshtml" />
@@ -1480,6 +1488,7 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Files\" />
+    <Folder Include="Integration\ToyGrader\" />
     <Folder Include="Reports\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

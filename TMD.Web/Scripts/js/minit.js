@@ -9,10 +9,10 @@
 	skel.init({
 		reset: 'full',
 		breakpoints: {
-		    'global': { range: '*', href: '/GpaAnalysis/Content/css/mstyle.css' },
-		    'desktop': { range: '737-', href: '/GpaAnalysis/Content/css/mstyle-desktop.css', containers: 1200, grid: { gutters: 25 } },
-		    '1000px': { range: '737-1200', href: '/GpaAnalysis/Content/css/mstyle-1000px.css', containers: 1000, grid: { gutters: 20 }, viewport: { width: 1080 } },
-		    'mobile': { range: '-736', href: '/GpaAnalysis/Content/css/mstyle-mobile.css', containers: '100%!', grid: { collapse: true, gutters: 20 }, viewport: { scalable: false } }
+		    'global': { range: '*', href: '/TmdAnalysis/Content/css/mstyle.css' },
+		    'desktop': { range: '737-', href: '/TmdAnalysis/Content/css/mstyle-desktop.css', containers: 1200, grid: { gutters: 25 } },
+		    '1000px': { range: '737-1200', href: '/TmdAnalysis/Content/css/mstyle-1000px.css', containers: 1000, grid: { gutters: 20 }, viewport: { width: 1080 } },
+		    'mobile': { range: '-736', href: '/TmdAnalysis/Content/css/mstyle-mobile.css', containers: '100%!', grid: { collapse: true, gutters: 20 }, viewport: { scalable: false } }
 		},
 		plugins: {
 			layers: {

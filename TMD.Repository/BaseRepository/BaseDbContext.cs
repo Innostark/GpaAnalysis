@@ -3,6 +3,8 @@ using TMD.Models.DomainModels;
 using TMD.Models.LoggerModels;
 using TMD.Models.MenuModels;
 using Microsoft.Practices.Unity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Core.Objects;
 
 namespace TMD.Repository.BaseRepository
 {
@@ -73,5 +75,26 @@ namespace TMD.Repository.BaseRepository
         public DbSet<AspNetUserClaim> UserClaims { get; set; }
         public DbSet<AspNetUserLogin> UserLogins { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }
+
+        /// <summary>
+        /// Staging EBay
+        /// </summary>
+        public DbSet<StagingEBayBatchImport> StagingEBayBatchImports { get; set; }
+
+        public bool IsEbayLoadRunning()
+        {
+            ObjectResult<int?> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<int?>("spIsEbayLoadRunning");
+
+            foreach(int?  result in results)
+            {
+                if(result == 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GPAAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -55,6 +55,134 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
           <Property Name="ImageName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DWH_Dim_Comapany">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DWH_Dim_Date">
+          <Key>
+            <PropertyRef Name="DateId" />
+          </Key>
+          <Property Name="DateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DWH_Dim_Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DWH_Dim_ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DWH_Fact_Sale">
+          <Key>
+            <PropertyRef Name="SaleId" />
+          </Key>
+          <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateId" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="ProductTypeId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+        </EntityType>
+        <EntityType Name="STG_EBayBatchImports">
+          <Key>
+            <PropertyRef Name="EBayBatchImportId" />
+          </Key>
+          <Property Name="EBayBatchImportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InProcess" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="StartedOn" Type="datetime" />
+          <Property Name="CompletedOn" Type="nchar" MaxLength="10" />
+          <Property Name="Imported" Type="int" />
+          <Property Name="Failed" Type="int" />
+          <Property Name="Auctions" Type="int" />
+          <Property Name="FixedPrice" Type="int" />
+          <Property Name="EbayTimestamp" Type="datetime" />
+          <Property Name="EbayVersion" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="STG_EBayItems">
+          <Key>
+            <PropertyRef Name="EBayItemtId" />
+          </Key>
+          <Property Name="EBayItemtId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EBayBatchImportId" Type="int" Nullable="false" />
+          <Property Name="ToyGraderItemId" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="Condition" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="2" />
+          <Property Name="GalleryURL" Type="nchar" MaxLength="2048" />
+          <Property Name="GlobalId" Type="nvarchar" MaxLength="12" />
+          <Property Name="ListingInfoBuyItNowAvailable" Type="bit" />
+          <Property Name="ListingInfoBuyItNowPrice" Type="money" />
+          <Property Name="ListingInfoEndTime" Type="datetime" />
+          <Property Name="ListingInfoGift" Type="bit" />
+          <Property Name="ListingInfoListingType" Type="nvarchar" MaxLength="20" />
+          <Property Name="ListingInfoStartTime" Type="datetime" />
+          <Property Name="PrimaryCategory" Type="nvarchar" MaxLength="30" />
+          <Property Name="ProducitId" Type="nvarchar" MaxLength="50" />
+          <Property Name="SecondaryCategory" Type="nvarchar" MaxLength="30" />
+          <Property Name="SellerInfoTopRatedSeller" Type="bit" />
+          <Property Name="SellingStatusBidCount" Type="int" />
+          <Property Name="SellingStatusCurrentPrice" Type="money" />
+          <Property Name="SellingStatusSellingState" Type="nvarchar" MaxLength="20" />
+          <Property Name="SellingStatusTimeLeft" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="StoreInfoStoreName" Type="nvarchar" MaxLength="200" />
+          <Property Name="StoreInfoStoreURL" Type="nvarchar" MaxLength="2048" />
+          <Property Name="SubTitle" Type="nvarchar" MaxLength="1024" />
+          <Property Name="Title" Type="varchar" MaxLength="1024" />
+          <Property Name="ViewItemUrL" Type="nvarchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="STG_ToyGraderBatchImports">
+          <Key>
+            <PropertyRef Name="ToyGraderBatchImporttId" />
+          </Key>
+          <Property Name="ToyGraderBatchImporttId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InProcess" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="StartedOn" Type="datetime" />
+          <Property Name="CompletedOn" Type="nchar" MaxLength="10" />
+          <Property Name="Imported" Type="int" />
+          <Property Name="Failed" Type="int" />
+        </EntityType>
+        <EntityType Name="STG_ToyGraderItems">
+          <Key>
+            <PropertyRef Name="ToyGraderItemId" />
+          </Key>
+          <Property Name="ToyGraderItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToyGraderBatchImporttId" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="AfaSerial" Type="nvarchar" MaxLength="30" />
+          <Property Name="Blister" Type="int" />
+          <Property Name="Card" Type="int" />
+          <Property Name="Company" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateGraded" Type="datetime" />
+          <Property Name="Figure" Type="int" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Series" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Variation" Type="nvarchar" MaxLength="50" />
+          <Property Name="Year" Type="int" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -112,12 +240,106 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GPAAModelStoreContainer">
+        <Association Name="FK_DWH_Fact_Sale_DWH_Dim_Comapany">
+          <End Role="DWH_Dim_Comapany" Type="Self.DWH_Dim_Comapany" Multiplicity="0..1" />
+          <End Role="DWH_Fact_Sale" Type="Self.DWH_Fact_Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DWH_Dim_Comapany">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="DWH_Fact_Sale">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DWH_Fact_Sale_DWH_Dim_Date">
+          <End Role="DWH_Dim_Date" Type="Self.DWH_Dim_Date" Multiplicity="0..1" />
+          <End Role="DWH_Fact_Sale" Type="Self.DWH_Fact_Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DWH_Dim_Date">
+              <PropertyRef Name="DateId" />
+            </Principal>
+            <Dependent Role="DWH_Fact_Sale">
+              <PropertyRef Name="DateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DWH_Fact_Sale_DWH_Dim_Product">
+          <End Role="DWH_Dim_Product" Type="Self.DWH_Dim_Product" Multiplicity="0..1" />
+          <End Role="DWH_Fact_Sale" Type="Self.DWH_Fact_Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DWH_Dim_Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="DWH_Fact_Sale">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DWH_Fact_Sale_DWH_Dim_ProductType">
+          <End Role="DWH_Dim_ProductType" Type="Self.DWH_Dim_ProductType" Multiplicity="0..1" />
+          <End Role="DWH_Fact_Sale" Type="Self.DWH_Fact_Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DWH_Dim_ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="DWH_Fact_Sale">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STG_EBayItem_STG_EBayBatchImport">
+          <End Role="STG_EBayBatchImports" Type="Self.STG_EBayBatchImports" Multiplicity="1" />
+          <End Role="STG_EBayItems" Type="Self.STG_EBayItems" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="STG_EBayBatchImports">
+              <PropertyRef Name="EBayBatchImportId" />
+            </Principal>
+            <Dependent Role="STG_EBayItems">
+              <PropertyRef Name="EBayItemtId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STG_ToyGraderItem_STG_EBayItem">
+          <End Role="STG_EBayItems" Type="Self.STG_EBayItems" Multiplicity="0..1" />
+          <End Role="STG_ToyGraderItems" Type="Self.STG_ToyGraderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STG_EBayItems">
+              <PropertyRef Name="EBayItemtId" />
+            </Principal>
+            <Dependent Role="STG_ToyGraderItems">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STG_ToyGraderItem_STG_ToyGraderBatchImport">
+          <End Role="STG_ToyGraderBatchImports" Type="Self.STG_ToyGraderBatchImports" Multiplicity="0..1" />
+          <End Role="STG_ToyGraderItems" Type="Self.STG_ToyGraderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STG_ToyGraderBatchImports">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Principal>
+            <Dependent Role="STG_ToyGraderItems">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spIsEbayLoadRunning" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="TMDModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DWH_Dim_Comapany" EntityType="Self.DWH_Dim_Comapany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DWH_Dim_Date" EntityType="Self.DWH_Dim_Date" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DWH_Dim_Product" EntityType="Self.DWH_Dim_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DWH_Dim_ProductType" EntityType="Self.DWH_Dim_ProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DWH_Fact_Sale" EntityType="Self.DWH_Fact_Sale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STG_EBayBatchImports" EntityType="Self.STG_EBayBatchImports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STG_EBayItems" EntityType="Self.STG_EBayItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STG_ToyGraderBatchImports" EntityType="Self.STG_ToyGraderBatchImports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STG_ToyGraderItems" EntityType="Self.STG_ToyGraderItems" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -134,12 +356,39 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_DWH_Fact_Sale_DWH_Dim_Comapany" Association="Self.FK_DWH_Fact_Sale_DWH_Dim_Comapany">
+            <End Role="DWH_Dim_Comapany" EntitySet="DWH_Dim_Comapany" />
+            <End Role="DWH_Fact_Sale" EntitySet="DWH_Fact_Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DWH_Fact_Sale_DWH_Dim_Date" Association="Self.FK_DWH_Fact_Sale_DWH_Dim_Date">
+            <End Role="DWH_Dim_Date" EntitySet="DWH_Dim_Date" />
+            <End Role="DWH_Fact_Sale" EntitySet="DWH_Fact_Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DWH_Fact_Sale_DWH_Dim_Product" Association="Self.FK_DWH_Fact_Sale_DWH_Dim_Product">
+            <End Role="DWH_Dim_Product" EntitySet="DWH_Dim_Product" />
+            <End Role="DWH_Fact_Sale" EntitySet="DWH_Fact_Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DWH_Fact_Sale_DWH_Dim_ProductType" Association="Self.FK_DWH_Fact_Sale_DWH_Dim_ProductType">
+            <End Role="DWH_Dim_ProductType" EntitySet="DWH_Dim_ProductType" />
+            <End Role="DWH_Fact_Sale" EntitySet="DWH_Fact_Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STG_EBayItem_STG_EBayBatchImport" Association="Self.FK_STG_EBayItem_STG_EBayBatchImport">
+            <End Role="STG_EBayBatchImports" EntitySet="STG_EBayBatchImports" />
+            <End Role="STG_EBayItems" EntitySet="STG_EBayItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STG_ToyGraderItem_STG_EBayItem" Association="Self.FK_STG_ToyGraderItem_STG_EBayItem">
+            <End Role="STG_EBayItems" EntitySet="STG_EBayItems" />
+            <End Role="STG_ToyGraderItems" EntitySet="STG_ToyGraderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STG_ToyGraderItem_STG_ToyGraderBatchImport" Association="Self.FK_STG_ToyGraderItem_STG_ToyGraderBatchImport">
+            <End Role="STG_ToyGraderBatchImports" EntitySet="STG_ToyGraderBatchImports" />
+            <End Role="STG_ToyGraderItems" EntitySet="STG_ToyGraderItems" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GPAAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TMDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -238,15 +487,279 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="DWH_Dim_Comapany" EntityType="TMDModel.DWH_Dim_Comapany" />
+          <EntitySet Name="DWH_Dim_Date" EntityType="TMDModel.DWH_Dim_Date" />
+          <EntitySet Name="DWH_Dim_Product" EntityType="TMDModel.DWH_Dim_Product" />
+          <EntitySet Name="DWH_Dim_ProductType" EntityType="TMDModel.DWH_Dim_ProductType" />
+          <EntitySet Name="DWH_Fact_Sale" EntityType="TMDModel.DWH_Fact_Sale" />
+          <AssociationSet Name="FK_DWH_Fact_Sale_DWH_Dim_Comapany" Association="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Comapany">
+            <End Role="DWH_Dim_Comapany" EntitySet="DWH_Dim_Comapany" />
+            <End Role="DWH_Fact_Sale" EntitySet="DWH_Fact_Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DWH_Fact_Sale_DWH_Dim_Date" Association="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Date">
+            <End Role="DWH_Dim_Date" EntitySet="DWH_Dim_Date" />
+            <End Role="DWH_Fact_Sale" EntitySet="DWH_Fact_Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DWH_Fact_Sale_DWH_Dim_Product" Association="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Product">
+            <End Role="DWH_Dim_Product" EntitySet="DWH_Dim_Product" />
+            <End Role="DWH_Fact_Sale" EntitySet="DWH_Fact_Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DWH_Fact_Sale_DWH_Dim_ProductType" Association="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_ProductType">
+            <End Role="DWH_Dim_ProductType" EntitySet="DWH_Dim_ProductType" />
+            <End Role="DWH_Fact_Sale" EntitySet="DWH_Fact_Sale" />
+          </AssociationSet>
+          <EntitySet Name="STG_EBayBatchImport" EntityType="TMDModel.STG_EBayBatchImport" />
+          <EntitySet Name="STG_EBayItem" EntityType="TMDModel.STG_EBayItem" />
+          <EntitySet Name="STG_ToyGraderBatchImport" EntityType="TMDModel.STG_ToyGraderBatchImport" />
+          <EntitySet Name="STG_ToyGraderItem" EntityType="TMDModel.STG_ToyGraderItem" />
+          <AssociationSet Name="FK_STG_EBayItem_STG_EBayBatchImport" Association="TMDModel.FK_STG_EBayItem_STG_EBayBatchImport">
+            <End Role="STG_EBayBatchImports" EntitySet="STG_EBayBatchImport" />
+            <End Role="STG_EBayItems" EntitySet="STG_EBayItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STG_ToyGraderItem_STG_EBayItem" Association="TMDModel.FK_STG_ToyGraderItem_STG_EBayItem">
+            <End Role="STG_EBayItems" EntitySet="STG_EBayItem" />
+            <End Role="STG_ToyGraderItems" EntitySet="STG_ToyGraderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STG_ToyGraderItem_STG_ToyGraderBatchImport" Association="TMDModel.FK_STG_ToyGraderItem_STG_ToyGraderBatchImport">
+            <End Role="STG_ToyGraderBatchImports" EntitySet="STG_ToyGraderBatchImport" />
+            <End Role="STG_ToyGraderItems" EntitySet="STG_ToyGraderItem" />
+          </AssociationSet>
+          <FunctionImport Name="spIsEbayLoadRunning" ReturnType="Collection(Int32)" />
         </EntityContainer>
+        <EntityType Name="DWH_Dim_Comapany">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DWH_Fact_Sale" Relationship="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Comapany" FromRole="DWH_Dim_Comapany" ToRole="DWH_Fact_Sale" />
+        </EntityType>
+        <EntityType Name="DWH_Dim_Date">
+          <Key>
+            <PropertyRef Name="DateId" />
+          </Key>
+          <Property Name="DateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DWH_Fact_Sale" Relationship="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Date" FromRole="DWH_Dim_Date" ToRole="DWH_Fact_Sale" />
+        </EntityType>
+        <EntityType Name="DWH_Dim_Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DWH_Fact_Sale" Relationship="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Product" FromRole="DWH_Dim_Product" ToRole="DWH_Fact_Sale" />
+        </EntityType>
+        <EntityType Name="DWH_Dim_ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DWH_Fact_Sale" Relationship="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_ProductType" FromRole="DWH_Dim_ProductType" ToRole="DWH_Fact_Sale" />
+        </EntityType>
+        <EntityType Name="DWH_Fact_Sale">
+          <Key>
+            <PropertyRef Name="SaleId" />
+          </Key>
+          <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateId" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="ProductTypeId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <NavigationProperty Name="DWH_Dim_Comapany" Relationship="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Comapany" FromRole="DWH_Fact_Sale" ToRole="DWH_Dim_Comapany" />
+          <NavigationProperty Name="DWH_Dim_Date" Relationship="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Date" FromRole="DWH_Fact_Sale" ToRole="DWH_Dim_Date" />
+          <NavigationProperty Name="DWH_Dim_Product" Relationship="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Product" FromRole="DWH_Fact_Sale" ToRole="DWH_Dim_Product" />
+          <NavigationProperty Name="DWH_Dim_ProductType" Relationship="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_ProductType" FromRole="DWH_Fact_Sale" ToRole="DWH_Dim_ProductType" />
+        </EntityType>
+        <Association Name="FK_DWH_Fact_Sale_DWH_Dim_Comapany">
+          <End Type="TMDModel.DWH_Dim_Comapany" Role="DWH_Dim_Comapany" Multiplicity="0..1" />
+          <End Type="TMDModel.DWH_Fact_Sale" Role="DWH_Fact_Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DWH_Dim_Comapany">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="DWH_Fact_Sale">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DWH_Fact_Sale_DWH_Dim_Date">
+          <End Type="TMDModel.DWH_Dim_Date" Role="DWH_Dim_Date" Multiplicity="0..1" />
+          <End Type="TMDModel.DWH_Fact_Sale" Role="DWH_Fact_Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DWH_Dim_Date">
+              <PropertyRef Name="DateId" />
+            </Principal>
+            <Dependent Role="DWH_Fact_Sale">
+              <PropertyRef Name="DateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DWH_Fact_Sale_DWH_Dim_Product">
+          <End Type="TMDModel.DWH_Dim_Product" Role="DWH_Dim_Product" Multiplicity="0..1" />
+          <End Type="TMDModel.DWH_Fact_Sale" Role="DWH_Fact_Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DWH_Dim_Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="DWH_Fact_Sale">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DWH_Fact_Sale_DWH_Dim_ProductType">
+          <End Type="TMDModel.DWH_Dim_ProductType" Role="DWH_Dim_ProductType" Multiplicity="0..1" />
+          <End Type="TMDModel.DWH_Fact_Sale" Role="DWH_Fact_Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DWH_Dim_ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="DWH_Fact_Sale">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="STG_EBayBatchImport">
+          <Key>
+            <PropertyRef Name="EBayBatchImportId" />
+          </Key>
+          <Property Name="EBayBatchImportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InProcess" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartedOn" Type="DateTime" Precision="3" />
+          <Property Name="CompletedOn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Imported" Type="Int32" />
+          <Property Name="Failed" Type="Int32" />
+          <Property Name="Auctions" Type="Int32" />
+          <Property Name="FixedPrice" Type="Int32" />
+          <Property Name="EbayTimestamp" Type="DateTime" Precision="3" />
+          <Property Name="EbayVersion" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="STG_EBayItems" Relationship="TMDModel.FK_STG_EBayItem_STG_EBayBatchImport" FromRole="STG_EBayBatchImports" ToRole="STG_EBayItems" />
+        </EntityType>
+        <EntityType Name="STG_EBayItem">
+          <Key>
+            <PropertyRef Name="EBayItemtId" />
+          </Key>
+          <Property Name="EBayItemtId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EBayBatchImportId" Type="Int32" Nullable="false" />
+          <Property Name="ToyGraderItemId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="Condition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountryCode" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="GalleryURL" Type="String" MaxLength="2048" FixedLength="true" Unicode="true" />
+          <Property Name="GlobalId" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="ListingInfoBuyItNowAvailable" Type="Boolean" />
+          <Property Name="ListingInfoBuyItNowPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ListingInfoEndTime" Type="DateTime" Precision="3" />
+          <Property Name="ListingInfoGift" Type="Boolean" />
+          <Property Name="ListingInfoListingType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ListingInfoStartTime" Type="DateTime" Precision="3" />
+          <Property Name="PrimaryCategory" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ProducitId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SecondaryCategory" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="SellerInfoTopRatedSeller" Type="Boolean" />
+          <Property Name="SellingStatusBidCount" Type="Int32" />
+          <Property Name="SellingStatusCurrentPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SellingStatusSellingState" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SellingStatusTimeLeft" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="StoreInfoStoreName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StoreInfoStoreURL" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="SubTitle" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="ViewItemUrL" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="STG_EBayBatchImports" Relationship="TMDModel.FK_STG_EBayItem_STG_EBayBatchImport" FromRole="STG_EBayItems" ToRole="STG_EBayBatchImports" />
+          <NavigationProperty Name="STG_ToyGraderItems" Relationship="TMDModel.FK_STG_ToyGraderItem_STG_EBayItem" FromRole="STG_EBayItems" ToRole="STG_ToyGraderItems" />
+        </EntityType>
+        <EntityType Name="STG_ToyGraderBatchImport">
+          <Key>
+            <PropertyRef Name="ToyGraderBatchImporttId" />
+          </Key>
+          <Property Name="ToyGraderBatchImporttId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InProcess" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartedOn" Type="DateTime" Precision="3" />
+          <Property Name="CompletedOn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Imported" Type="Int32" />
+          <Property Name="Failed" Type="Int32" />
+          <NavigationProperty Name="STG_ToyGraderItems" Relationship="TMDModel.FK_STG_ToyGraderItem_STG_ToyGraderBatchImport" FromRole="STG_ToyGraderBatchImports" ToRole="STG_ToyGraderItems" />
+        </EntityType>
+        <EntityType Name="STG_ToyGraderItem">
+          <Key>
+            <PropertyRef Name="ToyGraderItemId" />
+          </Key>
+          <Property Name="ToyGraderItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToyGraderBatchImporttId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="AfaSerial" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Blister" Type="Int32" />
+          <Property Name="Card" Type="Int32" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateGraded" Type="DateTime" Precision="3" />
+          <Property Name="Figure" Type="Int32" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Series" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Variation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <NavigationProperty Name="STG_EBayItems" Relationship="TMDModel.FK_STG_ToyGraderItem_STG_EBayItem" FromRole="STG_ToyGraderItems" ToRole="STG_EBayItems" />
+          <NavigationProperty Name="STG_ToyGraderBatchImports" Relationship="TMDModel.FK_STG_ToyGraderItem_STG_ToyGraderBatchImport" FromRole="STG_ToyGraderItems" ToRole="STG_ToyGraderBatchImports" />
+        </EntityType>
+        <Association Name="FK_STG_EBayItem_STG_EBayBatchImport">
+          <End Type="TMDModel.STG_EBayBatchImport" Role="STG_EBayBatchImports" Multiplicity="1" />
+          <End Type="TMDModel.STG_EBayItem" Role="STG_EBayItems" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="STG_EBayBatchImports">
+              <PropertyRef Name="EBayBatchImportId" />
+            </Principal>
+            <Dependent Role="STG_EBayItems">
+              <PropertyRef Name="EBayItemtId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STG_ToyGraderItem_STG_EBayItem">
+          <End Type="TMDModel.STG_EBayItem" Role="STG_EBayItems" Multiplicity="0..1" />
+          <End Type="TMDModel.STG_ToyGraderItem" Role="STG_ToyGraderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STG_EBayItems">
+              <PropertyRef Name="EBayItemtId" />
+            </Principal>
+            <Dependent Role="STG_ToyGraderItems">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STG_ToyGraderItem_STG_ToyGraderBatchImport">
+          <End Type="TMDModel.STG_ToyGraderBatchImport" Role="STG_ToyGraderBatchImports" Multiplicity="0..1" />
+          <End Type="TMDModel.STG_ToyGraderItem" Role="STG_ToyGraderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STG_ToyGraderBatchImports">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Principal>
+            <Dependent Role="STG_ToyGraderItems">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GPAAModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="TMDModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="GPAAModel.AspNetRole">
+            <EntityTypeMapping TypeName="TMDModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -254,7 +767,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="GPAAModel.AspNetUserClaim">
+            <EntityTypeMapping TypeName="TMDModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -264,7 +777,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="GPAAModel.AspNetUserLogin">
+            <EntityTypeMapping TypeName="TMDModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -273,7 +786,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="GPAAModel.AspNetUser">
+            <EntityTypeMapping TypeName="TMDModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -290,7 +803,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="GPAAModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="TMDModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -298,6 +811,144 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="DWH_Dim_Comapany">
+            <EntityTypeMapping TypeName="TMDModel.DWH_Dim_Comapany">
+              <MappingFragment StoreEntitySet="DWH_Dim_Comapany">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DWH_Dim_Date">
+            <EntityTypeMapping TypeName="TMDModel.DWH_Dim_Date">
+              <MappingFragment StoreEntitySet="DWH_Dim_Date">
+                <ScalarProperty Name="DateId" ColumnName="DateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DWH_Dim_Product">
+            <EntityTypeMapping TypeName="TMDModel.DWH_Dim_Product">
+              <MappingFragment StoreEntitySet="DWH_Dim_Product">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DWH_Dim_ProductType">
+            <EntityTypeMapping TypeName="TMDModel.DWH_Dim_ProductType">
+              <MappingFragment StoreEntitySet="DWH_Dim_ProductType">
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DWH_Fact_Sale">
+            <EntityTypeMapping TypeName="TMDModel.DWH_Fact_Sale">
+              <MappingFragment StoreEntitySet="DWH_Fact_Sale">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="DateId" ColumnName="DateId" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STG_EBayBatchImport">
+            <EntityTypeMapping TypeName="TMDModel.STG_EBayBatchImport">
+              <MappingFragment StoreEntitySet="STG_EBayBatchImports">
+                <ScalarProperty Name="EbayVersion" ColumnName="EbayVersion" />
+                <ScalarProperty Name="EbayTimestamp" ColumnName="EbayTimestamp" />
+                <ScalarProperty Name="FixedPrice" ColumnName="FixedPrice" />
+                <ScalarProperty Name="Auctions" ColumnName="Auctions" />
+                <ScalarProperty Name="Failed" ColumnName="Failed" />
+                <ScalarProperty Name="Imported" ColumnName="Imported" />
+                <ScalarProperty Name="CompletedOn" ColumnName="CompletedOn" />
+                <ScalarProperty Name="StartedOn" ColumnName="StartedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="InProcess" ColumnName="InProcess" />
+                <ScalarProperty Name="EBayBatchImportId" ColumnName="EBayBatchImportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STG_EBayItem">
+            <EntityTypeMapping TypeName="TMDModel.STG_EBayItem">
+              <MappingFragment StoreEntitySet="STG_EBayItems">
+                <ScalarProperty Name="ViewItemUrL" ColumnName="ViewItemUrL" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
+                <ScalarProperty Name="StoreInfoStoreURL" ColumnName="StoreInfoStoreURL" />
+                <ScalarProperty Name="StoreInfoStoreName" ColumnName="StoreInfoStoreName" />
+                <ScalarProperty Name="SellingStatusTimeLeft" ColumnName="SellingStatusTimeLeft" />
+                <ScalarProperty Name="SellingStatusSellingState" ColumnName="SellingStatusSellingState" />
+                <ScalarProperty Name="SellingStatusCurrentPrice" ColumnName="SellingStatusCurrentPrice" />
+                <ScalarProperty Name="SellingStatusBidCount" ColumnName="SellingStatusBidCount" />
+                <ScalarProperty Name="SellerInfoTopRatedSeller" ColumnName="SellerInfoTopRatedSeller" />
+                <ScalarProperty Name="SecondaryCategory" ColumnName="SecondaryCategory" />
+                <ScalarProperty Name="ProducitId" ColumnName="ProducitId" />
+                <ScalarProperty Name="PrimaryCategory" ColumnName="PrimaryCategory" />
+                <ScalarProperty Name="ListingInfoStartTime" ColumnName="ListingInfoStartTime" />
+                <ScalarProperty Name="ListingInfoListingType" ColumnName="ListingInfoListingType" />
+                <ScalarProperty Name="ListingInfoGift" ColumnName="ListingInfoGift" />
+                <ScalarProperty Name="ListingInfoEndTime" ColumnName="ListingInfoEndTime" />
+                <ScalarProperty Name="ListingInfoBuyItNowPrice" ColumnName="ListingInfoBuyItNowPrice" />
+                <ScalarProperty Name="ListingInfoBuyItNowAvailable" ColumnName="ListingInfoBuyItNowAvailable" />
+                <ScalarProperty Name="GlobalId" ColumnName="GlobalId" />
+                <ScalarProperty Name="GalleryURL" ColumnName="GalleryURL" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ToyGraderItemId" ColumnName="ToyGraderItemId" />
+                <ScalarProperty Name="EBayBatchImportId" ColumnName="EBayBatchImportId" />
+                <ScalarProperty Name="EBayItemtId" ColumnName="EBayItemtId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STG_ToyGraderBatchImport">
+            <EntityTypeMapping TypeName="TMDModel.STG_ToyGraderBatchImport">
+              <MappingFragment StoreEntitySet="STG_ToyGraderBatchImports">
+                <ScalarProperty Name="Failed" ColumnName="Failed" />
+                <ScalarProperty Name="Imported" ColumnName="Imported" />
+                <ScalarProperty Name="CompletedOn" ColumnName="CompletedOn" />
+                <ScalarProperty Name="StartedOn" ColumnName="StartedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="InProcess" ColumnName="InProcess" />
+                <ScalarProperty Name="ToyGraderBatchImporttId" ColumnName="ToyGraderBatchImporttId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STG_ToyGraderItem">
+            <EntityTypeMapping TypeName="TMDModel.STG_ToyGraderItem">
+              <MappingFragment StoreEntitySet="STG_ToyGraderItems">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Variation" ColumnName="Variation" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Series" ColumnName="Series" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Figure" ColumnName="Figure" />
+                <ScalarProperty Name="DateGraded" ColumnName="DateGraded" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Card" ColumnName="Card" />
+                <ScalarProperty Name="Blister" ColumnName="Blister" />
+                <ScalarProperty Name="AfaSerial" ColumnName="AfaSerial" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ToyGraderBatchImporttId" ColumnName="ToyGraderBatchImporttId" />
+                <ScalarProperty Name="ToyGraderItemId" ColumnName="ToyGraderItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spIsEbayLoadRunning" FunctionName="TMDModel.Store.spIsEbayLoadRunning" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
