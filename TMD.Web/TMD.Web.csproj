@@ -336,6 +336,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Common.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service References\Ebay.FindingService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
@@ -393,10 +398,83 @@
     <Content Include="Integration\Ebay\TmdEbayIntegrationService.svc" />
     <Content Include="Scripts\js\hskel.min.js" />
     <Content Include="Scripts\js\minit.js" />
+    <None Include="Service References\Ebay.FindingService\configuration91.svcinfo" />
+    <None Include="Service References\Ebay.FindingService\configuration.svcinfo" />
+    <None Include="Service References\Ebay.FindingService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Views\Home\OneColumn.cshtml" />
     <Content Include="Views\Home\TwoColumnOne.cshtml" />
     <Content Include="Views\Home\TwoColumnTwo.cshtml" />
     <Content Include="Views\Home\ThreeColumn.cshtml" />
+    <None Include="Service References\Ebay.FindingService\FindService.wsdl" />
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.FindCompletedItemsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.findCompletedItemsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.FindItemsAdvancedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.findItemsAdvancedResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.FindItemsByCategoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.findItemsByCategoryResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.FindItemsByImageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.findItemsByImageResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.FindItemsByKeywordsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.findItemsByKeywordsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.FindItemsByProductResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.findItemsByProductResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.FindItemsForFavoriteSearchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.findItemsForFavoriteSearchResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.FindItemsIneBayStoresResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.findItemsIneBayStoresResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.GetHistogramsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.getHistogramsResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.GetSearchKeywordsRecommendationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.getSearchKeywordsRecommendationResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.GetVersionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Ebay.FindingService\TMD.Web.Ebay.FindingService.getVersionResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1553,6 +1631,12 @@
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Ebay.FindingService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

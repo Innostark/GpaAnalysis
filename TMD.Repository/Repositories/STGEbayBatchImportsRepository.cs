@@ -27,6 +27,11 @@ namespace TMD.Repository.Repositories
         }
         #endregion
 
+        public bool IsEbayLoadRunning()
+        {
+            return this.db.IsEbayLoadRunning();
+        }
+
         public IEnumerable<STGEbayBatchImport> GetAllImports()
         {
             return DbSet;

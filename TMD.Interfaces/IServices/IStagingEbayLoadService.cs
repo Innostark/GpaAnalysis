@@ -1,11 +1,13 @@
-﻿using TMD.Models.DomainModels;
+﻿using System;
 
 namespace TMD.Interfaces.IServices
 {
-    public interface IStagingEbayLoadService
+    public interface IStagingEbayLoadService: IDisposable
     {
+        bool CanExecuteEbayLoad();
+
         void LoadEbayData();
 
-        bool CreateSTGEbayBatchImport(STGEbayBatchImport toBeSave);
+        bool CreateNewStagingEbayLoadBatch();
     }
 }
