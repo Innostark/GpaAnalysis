@@ -103,7 +103,8 @@
     <Compile Include="DomainModels\AspNetUserClaim.cs" />
     <Compile Include="DomainModels\AspNetUserLogin.cs" />
     <Compile Include="DomainModels\AspNetUserRole.cs" />
-    <Compile Include="DomainModels\StagingEBayBatchImport.cs" />
+    <Compile Include="DomainModels\STGEbayBatchImport.cs" />
+    <Compile Include="DomainModels\STGEbayItem.cs" />
     <Compile Include="DomainModels\UserPrefrence.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>

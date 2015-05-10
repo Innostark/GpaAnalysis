@@ -17,6 +17,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<ILogger, LoggerService>();
             unityContainer.RegisterType<IAspNetUserService, AspNetUserService>();
             unityContainer.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            unityContainer.RegisterType<IStagingEbayLoadService, StagingEbayLoadService>();
         }
     }
 }

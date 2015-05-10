@@ -77,10 +77,17 @@ namespace TMD.Repository.BaseRepository
         public DbSet<AspNetUser> AspNetUsers { get; set; }
 
         /// <summary>
-        /// Staging EBay
+        /// Staging Ebay
         /// </summary>
-        public DbSet<StagingEBayBatchImport> StagingEBayBatchImports { get; set; }
+        public DbSet<STGEbayBatchImport> STGEbayBatchImports { get; set; }
 
+        public DbSet<STGEbayItem> STGEbayItems { get; set; }
+
+        /// <summary>
+        /// Calls the database stored procedure spIsEbayLoadRunning
+        /// Check if an ebay load is already running, return the count of IsProcessing records in the database
+        /// </summary>
+        /// <returns>true if load is running, otherwise false</returns>
         public bool IsEbayLoadRunning()
         {
             ObjectResult<int?> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<int?>("spIsEbayLoadRunning");

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.Implementation", "TMD.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.Web", "TMD.Web\TMD.Web.csproj", "{426080DD-D8CB-49F2-9645-DFD962ADFFDF}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TDM.Database", "TDM.Database\TDM.Database.sqlproj", "{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,12 @@ Global
 		{426080DD-D8CB-49F2-9645-DFD962ADFFDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{426080DD-D8CB-49F2-9645-DFD962ADFFDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{426080DD-D8CB-49F2-9645-DFD962ADFFDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

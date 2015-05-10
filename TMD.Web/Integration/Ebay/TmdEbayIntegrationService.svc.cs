@@ -1,6 +1,9 @@
 ﻿using System;
-using System.Data.Entity.Core.Objects;
-using TMD.Repository.BaseRepository;
+using Microsoft.Practices.Unity;
+using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
+using TMD.WebBase.UnityConfiguration;
+
 namespace TMD.Web.Integration.Ebay
 {   
     // NOTE: In order to launch WCF Test Client for testing this service, please select TmdEbayIntegrationService.svc or TmdEbayIntegrationService.svc.cs at the Solution Explorer and start debugging.
@@ -18,20 +21,14 @@ namespace TMD.Web.Integration.Ebay
                 //TODO: Raise error
             }
 
+            IStagingEbayLoadService service = UnityConfig.GetConfiguredContainer().Resolve<IStagingEbayLoadService>();
+
+            service.CreateSTGEbayBatchImport(new STGEbayBatchImport());
+
             //TODO: Authenticate the passed details
 
             //Check if there is a load already running.
-            using(BaseDbContext dbContext = new BaseDbContext())
-            {
-                if(!dbContext.IsEbayLoadRunning())
-                {
 
-                }
-                else
-                {
-                    //TODO: Raise error that the load is already running
-                }
-            }
 
         }
     }
