@@ -357,12 +357,7 @@
     <Compile Include="Views\Shared\ES.Master.designer.cs">
       <DependentUpon>ES.Master</DependentUpon>
     </Compile>
-    <Content Include="Content\css\hie9.css" />
-    <Content Include="Content\css\hskel.css" />
-    <Content Include="Content\css\hstyle-1000px.css" />
-    <Content Include="Content\css\hstyle-desktop.css" />
-    <Content Include="Content\css\hstyle-mobile.css" />
-    <Content Include="Content\css\hstyle.css" />
+    <Content Include="Content\css\ie9.css" />
     <Content Include="Content\css\images\banner.jpg" />
     <Content Include="Content\css\images\bg1.png" />
     <Content Include="Content\css\images\button-hover.svg" />
@@ -372,13 +367,18 @@
     <Content Include="Content\css\images\icon-bubble.png" />
     <Content Include="Content\css\images\nav-a-hover.svg" />
     <Content Include="Content\css\images\nav-a.svg" />
-    <Content Include="Content\css\mie9.css" />
-    <Content Include="Content\css\mskel.css" />
-    <Content Include="Content\css\mstyle-1000px.css" />
-    <Content Include="Content\css\mstyle-desktop.css" />
-    <Content Include="Content\css\mstyle-mobile.css" />
-    <Content Include="Content\css\mstyle.css" />
+    <Content Include="Content\css\skel.css" />
+    <Content Include="Content\css\style-1000px.css" />
+    <Content Include="Content\css\style-desktop.css" />
+    <Content Include="Content\css\style-mobile.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\Images\gpa20_red_home.gif" />
+    <Content Include="Content\Images\pic1.jpg" />
+    <Content Include="Content\Images\pic2.jpg" />
+    <Content Include="Content\Images\pic3.jpg" />
+    <Content Include="Content\Images\pic4.jpg" />
+    <Content Include="Content\Images\pic5.jpg" />
+    <Content Include="Content\Images\pic6.jpg" />
     <Content Include="Images\photon\entypo.eot" />
     <Content Include="Images\photon\entypo.ttf" />
     <Content Include="Images\photon\entypo.woff" />
@@ -396,14 +396,17 @@
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Images\pic05.jpg" />
     <Content Include="Integration\Ebay\TmdEbayIntegrationService.svc" />
-    <Content Include="Scripts\js\hskel.min.js" />
-    <Content Include="Scripts\js\minit.js" />
     <None Include="Service References\Ebay.FindingService\configuration91.svcinfo" />
     <None Include="Service References\Ebay.FindingService\configuration.svcinfo" />
     <None Include="Service References\Ebay.FindingService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Scripts\js\html5shiv.js" />
+    <Content Include="Scripts\js\init.js" />
+    <Content Include="Scripts\js\jquery.min.js" />
+    <Content Include="Scripts\js\skel-layers.min.js" />
+    <Content Include="Scripts\js\skel.min.js" />
     <Content Include="Views\Home\OneColumn.cshtml" />
     <Content Include="Views\Home\TwoColumnOne.cshtml" />
     <Content Include="Views\Home\TwoColumnTwo.cshtml" />
@@ -1384,11 +1387,6 @@
     <Content Include="Scripts\Functions\scriptIST.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\js\html5shiv.js" />
-    <Content Include="Scripts\js\hinit.js" />
-    <Content Include="Scripts\js\jquery.min.js" />
-    <Content Include="Scripts\js\skel-layers.min.js" />
-    <Content Include="Scripts\js\mskel.min.js" />
     <Content Include="Images\entypo.eot" />
     <Content Include="Images\entypo.ttf" />
     <Content Include="Images\entypo.woff" />

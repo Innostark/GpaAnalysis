@@ -87,6 +87,9 @@ a {
 }
 
 /* Reusable */
+#container {
+    padding: 4em 0;
+}
 
 article.blog-post {
     position: relative;
@@ -163,24 +166,3 @@ ul.link-list {
         background-image: linear-gradient(top, #1b9fbe, #118eb1);
         box-shadow: inset 0px 0px 0px 1px #3ecceb;
     }
-
-#content .check-list li {
-    border-bottom: solid 1px #e2e6e8;
-}
-.check-list li:first-child {
-  padding-top: 0 !important;
-  border-top: 0 !important;
-  background-position: 0 0.3em;
-}
-.check-list li {
-  padding: 0.7em 0 0.7em 45px;
-  font-size: 1.2em;
-  background: url('images/icon-checkmark.png') 0px 1.05em no-repeat;
-}
-
-.row {
-  margin: -25px 0 -1px -25px !important;
-}
-.row>* {
-  padding: 25px 0 0 25px;
-}

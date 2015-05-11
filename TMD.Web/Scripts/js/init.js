@@ -1,5 +1,5 @@
 /*
-	Halcyonic by HTML5 UP
+	Minimaxing by HTML5 UP
 	html5up.net | @n33co
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
@@ -9,10 +9,10 @@
 	skel.init({
 		reset: 'full',
 		breakpoints: {
-		    'global': { range: '*', href: '/TmdAnalysis/Content/css/hstyle.css' },
-		    'desktop': { range: '737-', href: '/TmdAnalysis/Content/css/hstyle-desktop.css', containers: 1200, grid: { gutters: 25 } },
-		    '1000px': { range: '737-1200', href: '/TmdAnalysis/Content/css/hstyle-1000px.css', containers: 1000, grid: { gutters: 20 }, viewport: { width: 1080 } },
-		    'mobile': { range: '-736', href: '/TmdAnalysis/Content/css/hstyle-mobile.css', containers: '100%!', grid: { collapse: true, gutters: 20 }, viewport: { scalable: false } }
+		    'global': { range: '*', href: '../../TMD.Web/Content/css/style.css' },
+		    'desktop': { range: '737-', href: '../../TMD.Web/Content/css/style-desktop.css', containers: 1200, grid: { gutters: 25 } },
+		    '1000px': { range: '737-1200', href: '../../TMD.Web/Content/css/style-1000px.css', containers: 1000, grid: { gutters: 20 }, viewport: { width: 1080 } },
+		    'mobile': { range: '-736', href: '../../TMD.Web/Content/css/style-mobile.css', containers: '100%!', grid: { collapse: true, gutters: 20 }, viewport: { scalable: false } }
 		},
 		plugins: {
 			layers: {
