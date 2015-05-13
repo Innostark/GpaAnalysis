@@ -2,45 +2,97 @@
 @model TMD.Models.IdentityModels.ViewModels.LoginViewModel
 
 @{
-    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Login";
 }
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Pages</a></li>
+            <li class="active">Login</li>
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-3">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Login/Register</a></li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Restore Password</a></li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> My account</a></li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Address book</a></li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Wish list</a></li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Returns</a></li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Newsletter</a></li>
+                </ul>
+            </div>
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-9 col-sm-9">
+                <h1>Login</h1>
+                <div class="content-form-page">
+                    <div class="row">
+                        <div class="col-md-7 col-sm-7">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-without-legend", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                                
+                                    <div class="form-group">
+                                        <label for="email" class="col-lg-4 control-label">Email <span class="require">*</span></label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="Email" name="Email">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="col-lg-4 control-label">Password <span class="require">*</span></label>
+                                        <div class="col-lg-8">
+                                            <input type="password" class="form-control" id="Password" name="Password">
+                                        </div>
+                                    </div>
 
-@Html.Partial("_Alert")
-<div class="container-login">
-    <div class="form-centering-wrapper">
-        <div class="form-window-login">
-            <div class="form-window-login-logo">
-                <div class="login-logo">
-                    <img src="~/Content/Images/gpa20_red_home.gif" alt="Desert Stars" />
-                </div>
-                
-                <h2 class="login-title">Welcome to Toy Market Data</h2>
-                <div class="login-member">
-                        Not a Member?&nbsp;<a href="@ConfigurationManager.AppSettings["SiteURL"]/Account/Subscribe">Sign Up &#187;</a>
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-offset-4 padding-left-0 ">
+                                            <button type="submit" class="btn btn-primary">Login</button>
+                                        </div>
+                                    </div>
+
+                                    }
+
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
+                                            <a href="page-forgotton-password.html">Forget Password?</a>
+                                        </div>
+
+                                    </div>
+                                    @*<div class="row">
+                                            <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-10 padding-right-30">
+                                                <hr>
+                                                <div class="login-socio">
+                                                    <p class="text-muted">or login using:</p>
+                                                    <ul class="social-icons">
+                                                        <li><a href="#" data-original-title="facebook" class="facebook" title="facebook"></a></li>
+                                                        <li><a href="#" data-original-title="Twitter" class="twitter" title="Twitter"></a></li>
+                                                        <li><a href="#" data-original-title="Google Plus" class="googleplus" title="Google Plus"></a></li>
+                                                        <li><a href="#" data-original-title="Linkedin" class="linkedin" title="LinkedIn"></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                
+                        </div>
+                        @*<div class="col-md-4 col-sm-4 pull-right">
+                            <div class="form-info">
+                                <h2><em>Important</em> Information</h2>
+                                <p>Duis autem vel eum iriure at dolor vulputate velit esse vel molestie at dolore.</p>
+                                <button type="button" class="btn btn-default">More details</button>
+                            </div>
+                        </div>*@
                     </div>
-                    <div class="login-or">Or</div>
-                <div class="login-input-area">
-                    <span class="help-block">Already Member</span>
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
-                        @*@Html.Partial("_Alert")*@
-                        <div>
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", placeholder = "Username" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                        </div>
-                        <div>
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        </div>
-                        <button type="submit" class="btn btn-large btn-success btn-login">Login</button>
-                    }
-                    <a href="@ConfigurationManager.AppSettings["SiteURL"]/Account/ForgotPassword" class="forgot-pass">Forgot Your Password?</a>
-                    @*@Html.ActionLink("Forgot Your Password?", "ForgotPassword")*@
                 </div>
             </div>
+            <!-- END CONTENT -->
         </div>
+        <!-- END SIDEBAR & CONTENT -->
     </div>
 </div>
