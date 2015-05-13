@@ -303,6 +303,7 @@
     <Compile Include="Integration\Ebay\TmdEbayIntegrationService.svc.cs">
       <DependentUpon>TmdEbayIntegrationService.svc</DependentUpon>
     </Compile>
+    <Compile Include="ModelMappers\FindingServiceSearchItemMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicantModel.cs" />

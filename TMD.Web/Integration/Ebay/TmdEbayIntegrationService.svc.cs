@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using Microsoft.Ajax.Utilities;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IServices;
 using TMD.Web.Ebay.FindingService;

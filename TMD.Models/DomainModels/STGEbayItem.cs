@@ -19,6 +19,7 @@ namespace TMD.Models.DomainModels
         public string CountryCode  {get; set;}
         public string GalleryURL  {get; set;}
         public string GlobalId  {get; set;}
+        public string ItemId { get; set; }
         public bool? ListingInfoBuyItNowAvailable  {get; set;}
         public decimal? ListingInfoBuyItNowPrice  {get; set;}
         public DateTime? ListingInfoEndTime  {get; set;} 

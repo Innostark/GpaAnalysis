@@ -90,6 +90,7 @@
           <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
           <Property Name="GalleryURL" Type="nchar" MaxLength="2048" />
           <Property Name="GlobalId" Type="nvarchar" MaxLength="12" />
+          <Property Name="ItemId" Type="nvarchar" MaxLength="19" Nullable="false" />
           <Property Name="ListingInfoBuyItNowAvailable" Type="bit" />
           <Property Name="ListingInfoBuyItNowPrice" Type="money" />
           <Property Name="ListingInfoEndTime" Type="datetime" />
@@ -366,13 +367,14 @@
           <Property Name="SellingStatusBidCount" Type="Int32" />
           <Property Name="SellingStatusCurrentPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SellingStatusSellingState" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SellingStatusTimeLeft" Type="DateTime" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="SellingStatusTimeLeft" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="3" />
           <Property Name="StoreInfoStoreName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="StoreInfoStoreURL" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <Property Name="SubTitle" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="ViewItemUrL" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="STGEbayBatchImport" Relationship="TMDModel.FK_STG_EBayItem_STG_EBayBatchImport" FromRole="STG_EBayItems" ToRole="STG_EBayBatchImports" />
+          <Property Name="ItemId" Type="String" Nullable="false" MaxLength="19" />
         </EntityType>
         <Association Name="FK_STG_EBayItem_STG_EBayBatchImport">
           <End Type="TMDModel.STGEbayBatchImport" Role="STG_EBayBatchImports" Multiplicity="1" />
@@ -466,6 +468,7 @@
           <EntitySetMapping Name="STGEbayItems">
             <EntityTypeMapping TypeName="TMDModel.STGEbayItem">
               <MappingFragment StoreEntitySet="STG_EBayItems">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="ViewItemUrL" ColumnName="ViewItemUrL" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
