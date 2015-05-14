@@ -2,9 +2,12 @@
 using TMD.Web.Controllers;
 
 namespace IdentitySample.Controllers
+
 {
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();

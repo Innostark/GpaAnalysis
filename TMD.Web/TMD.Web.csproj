@@ -1206,6 +1206,11 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Images\pic05.jpg" />
+    <Content Include="Images\Web\banner1.PNG" />
+    <Content Include="Images\Web\banner2.jpg" />
+    <Content Include="Images\Web\banner3.jpg" />
+    <Content Include="Images\Web\logo2.png" />
+    <Content Include="Images\Web\logo3.png" />
     <Content Include="Integration\Ebay\TmdEbayIntegrationService.svc" />
     <Content Include="Content\global\img\social\Thumbs.db" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />

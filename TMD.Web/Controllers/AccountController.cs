@@ -148,16 +148,16 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            //if (!User.Identity.IsAuthenticated)
-            //{
+            if (!User.Identity.IsAuthenticated)
+            {
                 ViewBag.ReturnUrl = returnUrl;
                 ViewBag.MessageVM = TempData["message"] as MessageViewModel;
                 return View();
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
         }
         [HttpPost]

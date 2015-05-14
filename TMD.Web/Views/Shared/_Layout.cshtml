@@ -8,11 +8,11 @@
 <!-- Head BEGIN -->
 <head>
     <meta charset="utf-8">
-    <title>Metronic Frontend (Header Fixed)</title>
+    <title>Home</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta content="Metronic Shop UI description" name="description">
-    <meta content="Metronic Shop UI keywords" name="keywords">
+    <meta content="Home description" name="description">
+    <meta content="Home keywords" name="keywords">
     <meta content="keenthemes" name="author">
     <meta property="og:site_name" content="-CUSTOMER VALUE-">
     <meta property="og:title" content="-CUSTOMER VALUE-">
@@ -38,7 +38,7 @@
     <link href="~/Content/frontend/layout/css/style.css" rel="stylesheet">
     @*<link href="~/Content/frontend/pages/css/style-revolution-slider.css" rel="stylesheet">*@<!-- metronic revo slider styles -->
     <link href="~/Content/frontend/layout/css/style-responsive.css" rel="stylesheet">
-    <link href="~/Content/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
+    <link href="~/Content/frontend/layout/css/themes/blue.css" rel="stylesheet" id="style-color">
     <link href="~/Content/frontend/layout/css/custom.css" rel="stylesheet">
     <!-- Theme styles END -->
     <script src="@Url.Content("~/Content/global/plugins/jquery-1.11.0.min.js")" type="text/javascript"></script>
@@ -52,7 +52,7 @@
 <!-- Body BEGIN -->
 <body class="corporate">
     <!-- BEGIN STYLE CUSTOMIZER -->
-    <div class="color-panel hidden-sm">
+    @*<div class="color-panel hidden-sm">
         <div class="color-mode-icons icon-color"></div>
         <div class="color-mode-icons icon-color-close"></div>
         <div class="color-mode">
@@ -66,7 +66,7 @@
                 <li class="color-turquoise" data-style="turquoise"></li>
             </ul>
         </div>
-    </div>
+    </div>*@
     <!-- END BEGIN STYLE CUSTOMIZER -->
     <!-- BEGIN TOP BAR -->
     <div class="pre-header">
@@ -76,15 +76,23 @@
                 <div class="col-md-6 col-sm-6 additional-shop-info">
                     <ul class="list-unstyled list-inline">
                         <li><i class="fa fa-phone"></i><span>+1 456 6717</span></li>
-                        <li><i class="fa fa-envelope-o"></i><span>info@keenthemes.com</span></li>
+                        <li><i class="fa fa-envelope-o"></i><span>info@innostark.com</span></li>
                     </ul>
                 </div>
                 <!-- END TOP BAR LEFT PART -->
                 <!-- BEGIN TOP BAR MENU -->
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right">
-                        <li><a href="page-login.html">Log In</a></li>
-                        <li><a href="page-reg-page.html">Registration</a></li>
+                        @if(User.Identity.IsAuthenticated){
+                                <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\LogOff">Log Out</a></li>
+                            }
+                                else
+                                {
+                        <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\login">Log In</a></li>
+                                    <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\login">Registration</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                }
+                        
                     </ul>
                 </div>
                 <!-- END TOP BAR MENU -->
@@ -95,29 +103,31 @@
     <!-- BEGIN HEADER -->
     <div class="header">
         <div class="container">
-            <a class="site-logo" href="index.html"><img src="~/Content/frontend/layout/img/logos/logo-corp-red.png" alt="Metronic FrontEnd"></a>
+            
+            @*~/Content/frontend/layout/img/logos/logo-corp-red.png*@
+            <a class="site-logo" href="index.html"><img src="~/Images/Web/logo2.png" alt="Logo Frontend"></a> 
             <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
             <!-- BEGIN NAVIGATION -->
             <div class="header-navigation pull-right font-transform-inherit">
                 <ul>
                     <li class="dropdown active">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
+                        <a class="dropdown-toggle"style="font-size: 16px" data-toggle="dropdown" data-target="#" href="#">
                             Home
 
                         </a>
 
-                        <ul class="dropdown-menu">
+                        @*<ul class="dropdown-menu">
                             <li><a href="index.html">Home Default</a></li>
                             <li class="active"><a href="index-header-fix.html">Home with Header Fixed</a></li>
                             <li><a href="index-without-topbar.html">Home without Top Bar</a></li>
-                        </ul>
+                        </ul>*@
                     </li>
                     <li class="dropdown dropdown-megamenu">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
-                            Mega Menu
+                          News
 
                         </a>
-                        <ul class="dropdown-menu">
+                        @*<ul class="dropdown-menu">
                             <li>
                                 <div class="header-navigation-content">
                                     <div class="row">
@@ -163,15 +173,15 @@
                                     </div>
                                 </div>
                             </li>
-                        </ul>
+                        </ul>*@
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
-                            Pages
+                            Live Data
 
                         </a>
 
-                        <ul class="dropdown-menu">
+                        @*<ul class="dropdown-menu">
                             <li><a href="page-about.html">About Us</a></li>
                             <li><a href="page-services.html">Services</a></li>
                             <li><a href="page-prices.html">Prices</a></li>
@@ -186,15 +196,28 @@
                             <li><a href="page-careers.html">Careers</a></li>
                             <li><a href="page-site-map.html">Site Map</a></li>
                             <li><a href="page-contacts.html">Contact</a></li>
-                        </ul>
+                        </ul>*@
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
-                            Features
+                            Portfolio
 
                         </a>
 
-                        <ul class="dropdown-menu">
+                        @*<ul class="dropdown-menu">
+                <li><a href="portfolio-4.html">Portfolio 4</a></li>
+                <li><a href="portfolio-3.html">Portfolio 3</a></li>
+                <li><a href="portfolio-2.html">Portfolio 2</a></li>
+                <li><a href="portfolio-item.html">Portfolio Item</a></li>
+            </ul>*@
+                    </li>
+                       <li class="dropdown" >
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
+                            About Us
+
+                        </a>
+
+                        @*<ul class="dropdown-menu">
                             <li><a href="feature-typography.html">Typography</a></li>
                             <li><a href="feature-buttons.html">Buttons</a></li>
                             <li><a href="feature-forms.html">Forms</a></li>
@@ -217,37 +240,11 @@
                                     </li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ul>*@
                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
-                            Portfolio
-
-                        </a>
-
-                        <ul class="dropdown-menu">
-                            <li><a href="portfolio-4.html">Portfolio 4</a></li>
-                            <li><a href="portfolio-3.html">Portfolio 3</a></li>
-                            <li><a href="portfolio-2.html">Portfolio 2</a></li>
-                            <li><a href="portfolio-item.html">Portfolio Item</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
-                            Blog
-
-                        </a>
-
-                        <ul class="dropdown-menu">
-                            <li><a href="blog.html">Blog Page</a></li>
-                            <li><a href="blog-item.html">Blog Item</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="shop-index.html" target="_blank">E-Commerce</a></li>
-                    <li><a href="onepage-index.html" target="_blank">One Page</a></li>
-                    <li><a href="http://keenthemes.com/preview/index.php?theme=metronic_admin" target="_blank">Admin theme</a></li>
-                    <!-- BEGIN TOP SEARCH -->
-                    <li class="menu-search">
+                 
+                                       <!-- BEGIN TOP SEARCH -->
+                    @*<li class="menu-search">
                         <span class="sep"></span>
                         <i class="fa fa-search search-btn"></i>
                         <div class="search-box">
@@ -260,7 +257,7 @@
                                 </div>
                             </form>
                         </div>
-                    </li>
+                    </li>*@
                     <!-- END TOP SEARCH -->
                 </ul>
             </div>
@@ -277,7 +274,7 @@
             <div class="row">
                 <!-- BEGIN COPYRIGHT -->
                 <div class="col-md-6 col-sm-6 padding-top-10">
-                    2014 © Metronic Shop UI. ALL Rights Reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                    2015 ©  InnoSTARK UI. ALL Rights Reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
                 </div>
                 <!-- END COPYRIGHT -->
                 <!-- BEGIN PAYMENTS -->
