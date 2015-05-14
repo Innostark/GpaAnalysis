@@ -5,5 +5,6 @@ namespace TMD.Interfaces.Repository
     public interface ISTGEbayItemRepository : IBaseRepository<STGEbayItem, int>
     {
         IEnumerable<STGEbayItem> GetAllEbayItems();
+        bool EbayItemExists(string itemId);
     }
 }

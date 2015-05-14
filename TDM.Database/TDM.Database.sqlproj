@@ -79,5 +79,6 @@
     <Build Include="dbo\Tables\STG_ToyGraderBatchImports.sql" />
     <Build Include="dbo\Tables\STG_ToyGraderItems.sql" />
     <Build Include="dbo\Stored Procedures\spIsEbayLoadRunning.sql" />
+    <Build Include="dbo\Stored Procedures\spEbayItemExists.sql" />
   </ItemGroup>
 </Project>

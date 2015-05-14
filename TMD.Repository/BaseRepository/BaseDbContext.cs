@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.ObjectModel;
+using System.Data.Entity;
 using TMD.Models.DomainModels;
 using TMD.Models.LoggerModels;
 using TMD.Models.MenuModels;
@@ -99,6 +100,26 @@ namespace TMD.Repository.BaseRepository
                     return false;
                 }
             }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Calls the database stored procedure spIsEbayLoadRunning
+        /// Check if an ebay load is already running, return the count of IsProcessing records in the database
+        /// </summary>
+        /// <returns>true if load is running, otherwise false</returns>
+        public bool EbayItemExists(string itemId)
+        {
+            ObjectResult<Collection<STGEbayItem>> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Collection<STGEbayItem>>("EbayItemExists", new ObjectParameter[] { new ObjectParameter("itemId", itemId) });
+
+            //foreach (int? result in results)
+            //{
+            //    if (result == 0)
+            //    {
+            //        return false;
+            //    }
+            //}
 
             return true;
         }

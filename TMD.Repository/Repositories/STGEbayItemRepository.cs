@@ -31,5 +31,10 @@ namespace TMD.Repository.Repositories
         {
             return DbSet;
         }
+
+        public bool EbayItemExists(string itemId)
+        {
+            return this.db.EbayItemExists(itemId);
+        }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
 using TMD.Web.Ebay.FindingService;
 using TMD.WebBase.UnityConfiguration;
 
@@ -28,20 +30,17 @@ namespace TMD.Web.Integration.Ebay
             {
                 if (stagingEbayLoadService.CanExecuteEbayLoad())
                 {
-                    //stagingEbayLoadService.CreateNewStagingEbayLoadBatch(new STGEbayBatchImport());
+                    stagingEbayLoadService.CreateNewStagingEbayLoadBatch();
 
                     using (FindingServicePortTypeClient client = new FindingServicePortTypeClient())
                     {
-                        MessageHeader header = MessageHeader.CreateHeader("My-CustomHeader",
-                            "http://www.toymarketdata.com", "Custom Header");
+                        MessageHeader header = MessageHeader.CreateHeader("My-CustomHeader", "http://www.toymarketdata.com", "Custom Header");
                         using (OperationContextScope operationContextScope = new OperationContextScope(client.InnerChannel))
                         {
-
                             OperationContext.Current.OutgoingMessageHeaders.Add(header);
                             HttpRequestMessageProperty httpRequestProperty = new HttpRequestMessageProperty();
 
-                            httpRequestProperty.Headers.Add("X-EBAY-SOA-SECURITY-APPNAME",
-                                "InnoSTAR-8fa0-4259-ad7d-b348e40fe0f4");
+                            httpRequestProperty.Headers.Add("X-EBAY-SOA-SECURITY-APPNAME", "InnoSTAR-8fa0-4259-ad7d-b348e40fe0f4");
                             httpRequestProperty.Headers.Add("X-EBAY-SOA-OPERATION-NAME", "findItemsByKeywords");
                             httpRequestProperty.Headers.Add("X-EBAY-SOA-GLOBAL-ID", "EBAY-US");
                             OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = httpRequestProperty;
@@ -59,7 +58,6 @@ namespace TMD.Web.Integration.Ebay
 
                             for (int curPage = 1; curPage <= totalPages; curPage++)
                             {
-
                                 request.paginationInput = new PaginationInput()
                                 {
                                     entriesPerPageSpecified = true,
@@ -72,12 +70,16 @@ namespace TMD.Web.Integration.Ebay
 
                                 if (response.searchResult.item != null && response.searchResult.item.Length > 0)
                                 {
-                                    foreach (
-                                        var item in
-                                            response.searchResult.item.Where(
-                                                i => !String.IsNullOrWhiteSpace(i.globalId) &&
-                                                     i.globalId.ToUpper().Equals("EBAY-US")))
+                                    IEnumerable<SearchItem> searchItems =
+                                        response.searchResult.item.Where(
+                                            i =>
+                                                !String.IsNullOrWhiteSpace(i.globalId) &&
+                                                i.globalId.ToUpper().Equals("EBAY-US"));
+
+                                    foreach (SearchItem item in searchItems)
                                     {
+                                        STGEbayItem stgItem;
+                                        //stagingEbayLoadService.EbayItemExists(item.itemId, out stgItem);
                                         totalKeywordMatchedEntriesWithGlobalIdEbayUs++;
                                         //if (item.sellingStatus.sellingState)
                                         //{

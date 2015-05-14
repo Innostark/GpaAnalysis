@@ -13,6 +13,7 @@
     [CountryCode]                  NVARCHAR (50)   NULL,
     [GalleryURL]                   NCHAR (2048)    NULL,
     [GlobalId]                     NVARCHAR (12)   NULL,
+    [ItemId]                       NVARCHAR (19)   NOT NULL,
     [ListingInfoBuyItNowAvailable] BIT             NULL,
     [ListingInfoBuyItNowPrice]     MONEY           NULL,
     [ListingInfoEndTime]           DATETIME        NULL,
@@ -35,6 +36,8 @@
     CONSTRAINT [PK_STG_EBayItem] PRIMARY KEY CLUSTERED ([EBayItemtId] ASC),
     CONSTRAINT [FK_STG_EBayItem_STG_EBayBatchImport] FOREIGN KEY ([EBayItemtId]) REFERENCES [dbo].[STG_EBayBatchImports] ([EBayBatchImportId])
 );
+
+
 
 
 

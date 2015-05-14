@@ -1,4 +1,5 @@
 ﻿using System;
+using TMD.Models.DomainModels;
 
 namespace TMD.Interfaces.IServices
 {
@@ -8,6 +9,8 @@ namespace TMD.Interfaces.IServices
 
         void LoadEbayData();
 
-        bool CreateNewStagingEbayLoadBatch();
+        STGEbayBatchImport CreateNewStagingEbayLoadBatch();
+
+        bool EbayItemExists(string itemId, out STGEbayItem item);
     }
 }

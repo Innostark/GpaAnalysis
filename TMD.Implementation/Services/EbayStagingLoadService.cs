@@ -1,5 +1,7 @@
-﻿using TMD.Interfaces.IServices;
+﻿using System;
+using TMD.Interfaces.IServices;
 using TMD.Interfaces.Repository;
+using TMD.Models.DomainModels;
 
 namespace TMD.Implementation.Services
 {
@@ -27,16 +29,25 @@ namespace TMD.Implementation.Services
             throw new System.NotImplementedException();
         }
 
-        public bool CreateNewStagingEbayLoadBatch()
+        public STGEbayBatchImport CreateNewStagingEbayLoadBatch()
         {
-            //toBeSave = istgEbayBatchImportsRepository.Create();
+            var toBeSave = istgEbayBatchImportsRepository.Create();
 
-            //toBeSave.CompletedOn =  DateTime.Now;
-            //toBeSave.EbayVersion = "V1.0.0.1";
-            //    istgEbayBatchImportsRepository.Add(toBeSave);
-            //istgEbayBatchImportsRepository.SaveChanges();
+            toBeSave.CompletedOn =  DateTime.Now;
+            toBeSave.EbayVersion = "V1.0.0.1";
+               istgEbayBatchImportsRepository.Add(toBeSave);
+            istgEbayBatchImportsRepository.SaveChanges();
 
-            return true;
+            return new STGEbayBatchImport();
+
+        }
+
+        public bool EbayItemExists(string itemId, out STGEbayItem item)
+        {
+            this.istgEbayItemRepository.EbayItemExists(itemId);
+
+            item = null;
+            return false;
 
         }
 
