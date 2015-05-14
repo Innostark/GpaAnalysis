@@ -195,7 +195,7 @@ namespace IdentitySample.Controllers
                             SetUserPermissions(user.Email);
                             SetCultureInfo(user.Id);
                             if (string.IsNullOrEmpty(returnUrl))
-                                return RedirectToAction("Index", "Home");
+                                return RedirectToAction("Home", "Admin");
                             return RedirectToLocal(returnUrl);
                         }
                     case SignInStatus.LockedOut:

@@ -1,243 +1,606 @@
 ﻿@using System.Configuration
 <!DOCTYPE html>
 
-<html dir="@TMD.Web.Resources.Shared.Common.TextDirection">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>InnoSTARK | Home </title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta content="" name="description" />
+        <meta content="" name="author" />
 
-    <title>@ViewBag.Title</title>
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="~/Content/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN THEME STYLES -->
+        <link href="~/Content/global/css/components.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/global/css/plugins.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/admin/layout/css/layout.css" rel="stylesheet" type="text/css" />
+        <link id="style_color" href="~/Content/admin/layout/css/themes/blue.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/admin/layout/css/custom.css" rel="stylesheet" type="text/css" />
+        <!-- END THEME STYLES -->
+        <link rel="shortcut icon" href="favicon.ico" />
+        
+        <script src="~/Content/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
+        <script src="~/Content/global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 
-    <!-- shortcut icon -->
-    <link rel="shortcut icon" href="~/Images/favicon.ico" />
-    <link rel="stylesheet" href="~/Content/css/photon.css" media="all" />
-    <link rel="stylesheet" href="~/Content/css/photon-pt2.css" media="all" />
-    <link rel="stylesheet" href="~/Content/css/photon-responsive.css" media="all" />
 
-    <!--[if IE]>
-            <link rel="stylesheet" type="text/css" href="~/Content/css_compiled/ie-only-min.css" />
-    <![endif]-->
-    <!--[if lt IE 9]>
-            <link rel="stylesheet" type="text/css" href="~/Content/css_compiled/ie8-only-min.css" />
-            <script type="text/javascript" src="~/Scripts/plugins/excanvas.js"></script>
-            <script type="text/javascript" src="~/Scripts/plugins/html5shiv.js"></script>
-            <script type="text/javascript" src="~/Scripts/plugins/respond.min.js"></script>
-            <script type="text/javascript" src="~/Scripts/plugins/fixFontIcons.js"></script>
-    <![endif]-->
+    </head>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
-
-    <script type="text/javascript" src="~/Scripts/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/modernizr.custom.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.pnotify.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/less-1.3.1.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/xbreadcrumbs.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.maskedinput-1.3.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.autotab-1.1b.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/charCount.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.textareaCounter.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/elrte.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/elrte.en.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/select2.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery-picklist.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/additional-methods.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.form.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.metadata.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.mockjax.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.uniform.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.tagsinput.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.rating.pack.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/farbtastic.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.timeentry.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.jstree.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/dataTables.bootstrap.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.mousewheel.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.mCustomScrollbar.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.stack.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.pie.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.flot.resize.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/raphael.2.1.0.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/justgage.1.0.1.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.qrcode.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.clock.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.countdown.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.jqtweet.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/jquery.cookie.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/bootstrap-fileupload.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/prettify/prettify.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/bootstrapSwitch.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/mfupload.js"></script>
-    <script type="text/javascript" src="~/Scripts/common.js"></script>
-</head>
-<body class="body-inner">
-    <div class="btn-toolbar btn-mobile-menus">
-        <button class="btn btn-main-menu"></button>
-        <button class="btn btn-user-menu"><img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /></button>
-    </div>
-    <!--- Sidebar navigation -->
-    <div class="nav-fixed-left" style="visibility: hidden">
-        @Html.Action("LoadMenu", "Menu")
-    </div>
-    <!--- Topbar navigation -->
-    <div class="nav-fixed-topright" style="visibility: hidden">
-        <ul class="nav nav-user-menu">
-            <li class="user-sub-menu-container">
-                <a href="javascript:;">
-                    <i class="user-icon"></i><span class="nav-user-selection">Theme Options</span><i class="icon-menu-arrow"></i>
+<body class="page-header-fixed page-quick-sidebar-over-content page-full-width">
+    <!-- BEGIN HEADER -->
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="index.html">
+                    <img src="~/Images/Web/logo2.png" alt="logo" class="logo-default margin-top-10" />
                 </a>
-                <ul class="nav user-sub-menu">
-                    <li class="light">
-                        <a href="javascript:;">
-                            <i class='icon-photon stop'></i>Light Version
-                        </a>
-                    </li>
-                    <li class="dark">
-                        <a href="javascript:;">
-                            <i class='icon-photon stop'></i>Dark Version
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="user-sub-menu-container">
-                <a href="javascript:;">
-                    <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>EN</i>
-                </a>
-                <ul class="nav user-sub-menu">
-                    <li class="">
-                        <a href="dashboard-En.html">
-                            <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />EN
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="dashboard-Ar.html">
-                            <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />AR
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="companyWebsite.html">
-                    <i class="icon-photon target"></i>
-
-                </a>
-            </li>
-            <li>
-                <a href="NotificationList(Admin,Employee with Auth)En.html">
-                    <i class="icon-photon comment_alt2_stroke"></i>
-                    <div class="notification-count">12</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-
-    <script>
-        $(function () {
-            setTimeout(function () {
-                $('.nav-fixed-topright').removeAttr('style');
-            }, 300);
-
-            $(window).scroll(function () {
-                if ($('.breadcrumb-container').length) {
-                    var scrollState = $(window).scrollTop();
-                    if (scrollState > 0) $('.nav-fixed-topright').addClass('nav-released');
-                    else $('.nav-fixed-topright').removeClass('nav-released')
-                }
-            });
-            $('.user-sub-menu-container').on('click', function () {
-                $(this).toggleClass('active-user-menu');
-            });
-            $('.user-sub-menu .light').on('click', function () {
-                if ($('body').is('.light-version')) return;
-                $('body').addClass('light-version');
-                setTimeout(function () {
-                    $.cookie('themeColor', 'light', {
-                        expires: 7,
-                        path: '/'
-                    });
-                }, 500);
-            });
-            $('.user-sub-menu .dark').on('click', function () {
-                if ($('body').is('.light-version')) {
-                    $('body').removeClass('light-version');
-                    $.cookie('themeColor', 'dark', {
-                        expires: 7,
-                        path: '/'
-                    });
-                }
-            });
-        });
-    </script>
-
-
-
-    <!-- Main content starts -->
-    <div class="main-content">
-        <div class="breadcrumb-container">
-            @*<ul class="xbreadcrumbs">
-                    <li>
-                        <a href="dashboard(Employee)En.html">
-                            <i class="icon-photon home"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="DepartmentsList(Admin)En.html">
-                            Department's List
-                        </a>
-                    </li>
-                    <li class="current">
-                        <a href="javascript:;">
-                            Department's View Edit Page
-                        </a>
-                    </li>
-
-                </ul>*@
-        </div>
-        <header>
-            <i class="icon-big-notepad"></i>
-            <h2><small>@ViewBag.Title</small></h2>
-        </header>
-
-        <!--Notifications begin-->
-        @*<div class="container-fluid">
-                <div class="control-group row-fluid">
-                    <div class="span12 span-inset">
-                        <div class="alert alert-success alert-block">
-                            <i class="icon-alert icon-alert-info"></i>
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Success</strong>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac risus vel lorem lobortis mattis nec eu est.</span>
-                        </div>
-
-                        <div class="alert alert-error alert-block">
-                            <i class="icon-alert icon-alert-info"></i>
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <strong>Error</strong>
-                            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac risus vel lorem lobortis mattis nec eu est.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-        <!--Notifications end-->
-        <form class="form-horizontal">
-            <div class="container-fluid">
-                @RenderBody()
             </div>
-        </form>
+            <!-- END LOGO -->
+            <!-- BEGIN HORIZANTAL MENU -->
+            <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+            <!-- DOC: This is desktop version of the horizontal menu. The mobile version is defined(duplicated) sidebar menu below. So the horizontal menu has 2 seperate versions -->
+            <div class="hor-menu hidden-sm hidden-xs">
+                <ul class="nav navbar-nav">
+                    <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
+                    <li class="classic-menu-dropdown active">
+                        <a href="index.html">
+                            Profile <span class="selected">
+                            </span>
+                        </a>
+                    </li>
+                    <li class="mega-menu-dropdown">
+                        <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
+                            Accounts <i class="fa fa-angle-down"></i>
+                        </a>
+                
+                    </li>
+                    <li class="mega-menu-dropdown mega-menu-full">
+                        <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
+                           Live Data <i class="fa fa-angle-down"></i>
+                        </a>
+                     
+                    </li>
+                    <li class="classic-menu-dropdown">
+                        <a data-toggle="dropdown" href="javascript:;">
+                            My Searches <i class="fa fa-angle-down"></i>
+                        </a>
+                       
+                    </li>
+                    <li>
+                        <a href="">
+                            News
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END HORIZANTAL MENU -->
+            <!-- BEGIN HEADER SEARCH BOX -->
+            <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
+            @*<form class="search-form" action="extra_search.html" method="GET">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search..." name="query">
+                    <span class="input-group-btn">
+                        <a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a>
+                    </span>
+                </div>
+            </form>*@
+            <!-- END HEADER SEARCH BOX -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <!-- BEGIN NOTIFICATION DROPDOWN -->
+                    <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-bell"></i>
+                            <span class="badge badge-default">
+                                7
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p>
+                                    You have 14 new notifications
+                                </p>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 250px;">
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-success">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                            New user registered. <span class="time">
+                                                Just now
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-danger">
+                                                <i class="fa fa-bolt"></i>
+                                            </span>
+                                            Server #12 overloaded. <span class="time">
+                                                15 mins
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-warning">
+                                                <i class="fa fa-bell-o"></i>
+                                            </span>
+                                            Server #2 not responding. <span class="time">
+                                                22 mins
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-info">
+                                                <i class="fa fa-bullhorn"></i>
+                                            </span>
+                                            Application error. <span class="time">
+                                                40 mins
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-danger">
+                                                <i class="fa fa-bolt"></i>
+                                            </span>
+                                            Database overloaded 68%. <span class="time">
+                                                2 hrs
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-danger">
+                                                <i class="fa fa-bolt"></i>
+                                            </span>
+                                            2 user IP blocked. <span class="time">
+                                                5 hrs
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-warning">
+                                                <i class="fa fa-bell-o"></i>
+                                            </span>
+                                            Storage Server #4 not responding. <span class="time">
+                                                45 mins
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-info">
+                                                <i class="fa fa-bullhorn"></i>
+                                            </span>
+                                            System Error. <span class="time">
+                                                55 mins
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="label label-sm label-icon label-danger">
+                                                <i class="fa fa-bolt"></i>
+                                            </span>
+                                            Database overloaded 68%. <span class="time">
+                                                2 hrs
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="external">
+                                <a href="#">
+                                    See all notifications <i class="m-icon-swapright"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END NOTIFICATION DROPDOWN -->
+                    <!-- BEGIN INBOX DROPDOWN -->
+                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-envelope-open"></i>
+                            <span class="badge badge-default">
+                                4
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p>
+                                    You have 12 new messages
+                                </p>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 250px;">
+                                    <li>
+                                        <a href="inbox.html?a=view">
+                                            <span class="photo">
+                                                <img src="../../assets/admin/layout/img/avatar2.jpg" alt="" />
+                                            </span>
+                                            <span class="subject">
+                                                <span class="from">
+                                                    Lisa Wong
+                                                </span>
+                                                <span class="time">
+                                                    Just Now
+                                                </span>
+                                            </span>
+                                            <span class="message">
+                                                Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="inbox.html?a=view">
+                                            <span class="photo">
+                                                <img src="../../assets/admin/layout/img/avatar3.jpg" alt="" />
+                                            </span>
+                                            <span class="subject">
+                                                <span class="from">
+                                                    Richard Doe
+                                                </span>
+                                                <span class="time">
+                                                    16 mins
+                                                </span>
+                                            </span>
+                                            <span class="message">
+                                                Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="inbox.html?a=view">
+                                            <span class="photo">
+                                                <img src="~/Content/admin/layout/img/avatar1.jpg" alt="" />
+                                            </span>
+                                            <span class="subject">
+                                                <span class="from">
+                                                    Bob Nilson
+                                                </span>
+                                                <span class="time">
+                                                    2 hrs
+                                                </span>
+                                            </span>
+                                            <span class="message">
+                                                Vivamus sed nibh auctor nibh congue nibh. auctor nibh auctor nibh...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="inbox.html?a=view">
+                                            <span class="photo">
+                                                <img src="../../assets/admin/layout/img/avatar2.jpg" alt="" />
+                                            </span>
+                                            <span class="subject">
+                                                <span class="from">
+                                                    Lisa Wong
+                                                </span>
+                                                <span class="time">
+                                                    40 mins
+                                                </span>
+                                            </span>
+                                            <span class="message">
+                                                Vivamus sed auctor 40% nibh congue nibh...
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="inbox.html?a=view">
+                                            <span class="photo">
+                                                <img src="../../assets/admin/layout/img/avatar3.jpg" alt="" />
+                                            </span>
+                                            <span class="subject">
+                                                <span class="from">
+                                                    Richard Doe
+                                                </span>
+                                                <span class="time">
+                                                    46 mins
+                                                </span>
+                                            </span>
+                                            <span class="message">
+                                                Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh...
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="external">
+                                <a href="inbox.html">
+                                    See all messages <i class="m-icon-swapright"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END INBOX DROPDOWN -->
+                    <!-- BEGIN TODO DROPDOWN -->
+                    <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-calendar"></i>
+                            <span class="badge badge-default">
+                                3
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu extended tasks">
+                            <li>
+                                <p>
+                                    You have 12 pending tasks
+                                </p>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 250px;">
+                                    <li>
+                                        <a href="#">
+                                            <span class="task">
+                                                <span class="desc">
+                                                    New release v1.2
+                                                </span>
+                                                <span class="percent">
+                                                    30%
+                                                </span>
+                                            </span>
+                                            <span class="progress">
+                                                <span style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">
+                                                        40% Complete
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="task">
+                                                <span class="desc">
+                                                    Application deployment
+                                                </span>
+                                                <span class="percent">
+                                                    65%
+                                                </span>
+                                            </span>
+                                            <span class="progress progress-striped">
+                                                <span style="width: 65%;" class="progress-bar progress-bar-danger" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">
+                                                        65% Complete
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="task">
+                                                <span class="desc">
+                                                    Mobile app release
+                                                </span>
+                                                <span class="percent">
+                                                    98%
+                                                </span>
+                                            </span>
+                                            <span class="progress">
+                                                <span style="width: 98%;" class="progress-bar progress-bar-success" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">
+                                                        98% Complete
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="task">
+                                                <span class="desc">
+                                                    Database migration
+                                                </span>
+                                                <span class="percent">
+                                                    10%
+                                                </span>
+                                            </span>
+                                            <span class="progress progress-striped">
+                                                <span style="width: 10%;" class="progress-bar progress-bar-warning" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">
+                                                        10% Complete
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="task">
+                                                <span class="desc">
+                                                    Web server upgrade
+                                                </span>
+                                                <span class="percent">
+                                                    58%
+                                                </span>
+                                            </span>
+                                            <span class="progress progress-striped">
+                                                <span style="width: 58%;" class="progress-bar progress-bar-info" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">
+                                                        58% Complete
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="task">
+                                                <span class="desc">
+                                                    Mobile development
+                                                </span>
+                                                <span class="percent">
+                                                    85%
+                                                </span>
+                                            </span>
+                                            <span class="progress progress-striped">
+                                                <span style="width: 85%;" class="progress-bar progress-bar-success" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">
+                                                        85% Complete
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="task">
+                                                <span class="desc">
+                                                    New UI release
+                                                </span>
+                                                <span class="percent">
+                                                    18%
+                                                </span>
+                                            </span>
+                                            <span class="progress progress-striped">
+                                                <span style="width: 18%;" class="progress-bar progress-bar-important" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">
+                                                        18% Complete
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="external">
+                                <a href="#">
+                                    See all tasks <i class="m-icon-swapright"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END TODO DROPDOWN -->
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <li class="dropdown dropdown-user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="" class="img-circle" src="~/Content/admin/layout/img/avatar3_small.jpg" />
+                            <span class="username username-hide-on-mobile">
+                                Bob
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="extra_profile.html">
+                                    <i class="icon-user"></i> My Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="page_calendar.html">
+                                    <i class="icon-calendar"></i> My Calendar
+                                </a>
+                            </li>
+                            <li>
+                                <a href="inbox.html">
+                                    <i class="icon-envelope-open"></i> My Inbox <span class="badge badge-danger">
+                                        3
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-rocket"></i> My Tasks <span class="badge badge-success">
+                                        7
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="divider">
+                            </li>
+                            <li>
+                                <a href="extra_lock.html">
+                                    <i class="icon-lock"></i> Lock Screen
+                                </a>
+                            </li>
+                            <li>
+                                <a href="login.html">
+                                    <i class="icon-key"></i> Log Out
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                    <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                    <li class="dropdown dropdown-quick-sidebar-toggler">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-logout"></i>
+                        </a>
+                    </li>
+                    <!-- END QUICK SIDEBAR TOGGLER -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END HEADER INNER -->
     </div>
-    @if (ViewBag.MessageVM != null)
-    {
-        <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
-        <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
-        <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
-        <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
-    }
-    <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
+    <!-- END HEADER -->
+    <div class="clearfix">
+    </div>
+    <div class="page-container">
+
+        <div class="page-content-wrapper">
+            <div class="page-content">
+
+                @RenderBody()
+                
+            </div>
+            </div>
+            </div>
+            <div class="page-footer">
+                <div class="page-footer-inner">
+                    2014 &copy; Metronic by keenthemes.
+                </div>
+                <div class="page-footer-tools">
+                    <span class="go-top">
+                        <i class="fa fa-angle-up"></i>
+                    </span>
+                </div>
+            </div>
+
+
+            <script src="~/Content/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+            <script src="~/Content/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+            <script src="~/Content/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+            <script src="~/Content/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+            <script src="~/Content/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+            <script src="~/Content/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+            <script src="~/Content/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+            <script src="~/Content/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+            <script src="~/Content/global/scripts/metronic.js" type="text/javascript"></script>
+
+            <script>
+                jQuery(document).ready(function () {
+                    Metronic.init(); // init metronic core components
+
+                });
+            </script>
+
 </body>
+
+
+
+
+    
+  
 </html>
