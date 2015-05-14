@@ -4,18 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="149d63c950554997821631b5961128b4" Name="Diagram1">
-        <EntityTypeShape EntityType="TMDModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDModel.AspNetUserClaim" Width="3" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <AssociationConnector Association="TMDModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="TMDModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="TMDModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="TMDModel.STGEbayBatchImport" Width="2.875" PointX="0.75" PointY="9.375" />
-        <EntityTypeShape EntityType="TMDModel.STGEbayItem" Width="3.75" PointX="6.375" PointY="7.125" />
+      <Diagram DiagramId="149d63c950554997821631b5961128b4" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="TMDModel.AspNetRole" Width="1.5" PointX="2.75" PointY="6.5" />
+        <EntityTypeShape EntityType="TMDModel.AspNetUserClaim" Width="1.5" PointX="7.25" PointY="5" />
+        <EntityTypeShape EntityType="TMDModel.AspNetUserLogin" Width="1.5" PointX="7.25" PointY="7.75" />
+        <EntityTypeShape EntityType="TMDModel.AspNetUser" Width="1.5" PointX="5" PointY="5.375" />
+        <EntityTypeShape EntityType="TMDModel.DWH_Dim_Comapany" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="TMDModel.DWH_Dim_Date" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="TMDModel.DWH_Dim_Product" Width="1.5" PointX="0.75" PointY="6.625" />
+        <EntityTypeShape EntityType="TMDModel.DWH_Dim_ProductType" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="TMDModel.DWH_Fact_Sale" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="TMDModel.STG_EBayBatchImports" Width="1.5" PointX="9.75" PointY="3.5" />
+        <EntityTypeShape EntityType="TMDModel.STG_EBayItems" Width="1.5" PointX="12" PointY="1.25" />
+        <EntityTypeShape EntityType="TMDModel.STG_ToyGraderBatchImports" Width="1.5" PointX="12" PointY="10.875" />
+        <EntityTypeShape EntityType="TMDModel.STG_ToyGraderItems" Width="1.5" PointX="14.25" PointY="2.25" />
+        <AssociationConnector Association="TMDModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="TMDModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Comapany" />
+        <AssociationConnector Association="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Date" />
+        <AssociationConnector Association="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_Product" />
+        <AssociationConnector Association="TMDModel.FK_DWH_Fact_Sale_DWH_Dim_ProductType" />
         <AssociationConnector Association="TMDModel.FK_STG_EBayItem_STG_EBayBatchImport" />
-        </Diagram>
+        <AssociationConnector Association="TMDModel.FK_STG_ToyGraderItem_STG_EBayItem" />
+        <AssociationConnector Association="TMDModel.FK_STG_ToyGraderItem_STG_ToyGraderBatchImport" />
+        <AssociationConnector Association="TMDModel.AspNetUserRoles" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

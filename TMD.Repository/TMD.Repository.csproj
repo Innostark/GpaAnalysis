@@ -135,6 +135,7 @@
     <Compile Include="Repositories\STGEbayItemRepository.cs" />
     <Compile Include="Repositories\STGEbayBatchImportsRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
+    <Compile Include="Repositories\UsersRepository.cs" />
     <Compile Include="Repositories\UserStore.cs" />
     <Compile Include="TypeRegistrations.cs" />
   </ItemGroup>
