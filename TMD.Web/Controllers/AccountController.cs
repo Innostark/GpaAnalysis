@@ -31,6 +31,8 @@ namespace IdentitySample.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
         private IAspNetUserService AspNetUserService;
+
+
         /// <summary>
         /// Set User Permission
         /// </summary>
@@ -251,17 +253,22 @@ namespace IdentitySample.Controllers
         }
 
 
-        [AllowAnonymous]
-        [SiteAuthorize(PermissionKey = "User")]
+        
+        //[SiteAuthorize(PermissionKey = "User")]
         public ActionResult Users()
         {
             //if (Session["UserID"] == null)
             //{
             //    return RedirectToAction("Login");
             //}
-            List<AspNetUser> oList = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().Users.ToList();
+
+            var users = AspNetUserService.GetAllUsers();
+            List <TMD.Web.Models.AspNetUserModel>  oUsers= users.Select(x => x.CreateFrom()).ToList();
+        
+
+            //List<AspNetUser> oList = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().Users.ToList();
             //var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
-            var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            //var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
 
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             //UserViewModel oVM = new UserViewModel();
@@ -281,7 +288,7 @@ namespace IdentitySample.Controllers
             //        });
             //    }
             //}
-            return View();
+            return View(oUsers);
         }
 
 

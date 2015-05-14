@@ -304,10 +304,12 @@
     <Compile Include="Integration\Ebay\TmdEbayIntegrationService.svc.cs">
       <DependentUpon>TmdEbayIntegrationService.svc</DependentUpon>
     </Compile>
+    <Compile Include="ModelMappers\AspNetUserMapper.cs" />
     <Compile Include="ModelMappers\FindingServiceSearchItemMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\AspNetUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\HR\Account.Designer.cs" />
     <Compile Include="Resources\HR\ContactsList.ar.Designer.cs" />

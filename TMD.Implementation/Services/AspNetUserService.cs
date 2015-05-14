@@ -26,7 +26,7 @@ namespace TMD.Implementation.Services
 
         public IEnumerable<AspNetUser> GetAllUsers()
         {
-            return repository.GetAll();
+            return repository.GetAllUsers();
         }
         public bool UpdateUser(AspNetUser user)
         {
