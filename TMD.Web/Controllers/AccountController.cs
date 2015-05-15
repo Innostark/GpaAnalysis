@@ -752,17 +752,19 @@ namespace IdentitySample.Controllers
         [Authorize]
         public ActionResult Profile()
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var ProfileViewModel = new ProfileViewModel
-            {
-                Email = result.Email,
-                UserName = result.UserName,
-                Address = result.Address,
-                ImageName = (result.ImageName != null && result.ImageName != string.Empty) ? result.ImageName : string.Empty,
-                ImagePath = ConfigurationManager.AppSettings["ProfileImage"].ToString() + result.ImageName
-            };
-            ViewBag.FilePath = ConfigurationManager.AppSettings["ProfileImage"] + ProfileViewModel.ImageName;//Server.MapPath
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            //AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            //var ProfileViewModel = new ProfileViewModel
+            //{
+            //    Email = result.Email,
+            //    UserName = result.UserName,
+            //    Address = result.Address,
+            //    ImageName = (result.ImageName != null && result.ImageName != string.Empty) ? result.ImageName : string.Empty,
+            //    ImagePath = ConfigurationManager.AppSettings["ProfileImage"].ToString() + result.ImageName
+            //};
+            //ViewBag.FilePath = ConfigurationManager.AppSettings["ProfileImage"] + ProfileViewModel.ImageName;//Server.MapPath
+            //ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            AspNetUserModel ProfileViewModel = new AspNetUserModel();
+            ProfileViewModel=AspNetUserService.FindById(User.Identity.GetUserId()).CreateFrom();
             return View(ProfileViewModel);
         }
 

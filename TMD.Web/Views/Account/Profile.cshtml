@@ -1,34 +1,115 @@
-﻿@model  TMD.Models.IdentityModels.ViewModels.ProfileViewModel
+﻿@model  TMD.Web.Models.AspNetUserModel
 @{
     ViewBag.Title = "My Profile";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = "2";
 }
 <!-- Navigation Bar -->
-<div class="breadcrumb-container">
-    <ul class="xbreadcrumbs">
-        <li>
-            <a href="~/Dashboard/Index">
-                <i class="icon-photon home"></i>
-            </a>
-        </li>
-        <li class="current">
-            <a href="javascript:;">@ViewBag.Title</a>
 
-
-        </li>
-    </ul>
-</div>
 <!-- Page heading -->
-<header>
-    <i class="icon-big-notepad"></i>
-    <h2><small>@ViewBag.Title</small></h2>
-    <img class="employeeImg" src='@Url.Content(ViewBag.FilePath)' alt="user" />
-</header>
+
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 
-<!-- Form starts.  -->
+@using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @*@Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)*@
+
+    <h3 class="page-title">
+        My Profile <small>View and Edit Profile</small>
+    </h3>
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Manage your profile
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+
+                @*@Html.HiddenFor(m => m.UserId)
+                    @Html.HiddenFor(m => m.oldRole)*@
+
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label">First Name</label>
+                    <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control input-circle mandatory", @readonly = "readonly", @placeholder = "Enter Name", @id = "Name" })
+                        @*<input type="text" name="FirstName" id="" class="form-control input-circle mandatory" placeholder="Enter First Name">*@
+                        @*@Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "required" })*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" name="LastName">Last Name</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-circle mandatory", @readonly = "readonly"})
+                    </div>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" name="LastName">Username</label>
+                    <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+                    </div>
+                    
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Email</label>
+                    <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+                    </div>
+                    
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Address</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+                    </div>
+                    
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Telephone</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+                    </div>
+                    
+                </div>
+
+
+                @if (Model != null)
+                {
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" name="LastName">Role</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+                            
+                        </div>
+                    </div>
+        }
+            </div>
+
+        </div>
+    </div>
+}
+
+
+@*<!-- Form starts.  -->
 @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
 {
     <div class="container-fluid">
@@ -136,4 +217,4 @@
                 }
             });
         });
-</script>
+</script>*@
