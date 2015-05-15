@@ -1,8 +1,11 @@
-﻿using TMD.Implementation.Identity;
+﻿using iTextSharp.text.pdf.qrcode;
+using TMD.Implementation.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
 using TMD.Models.IdentityModels.ViewModels;
 using TMD.Web.ModelMappers;
+using TMD.Web.Models;
+using TMD.Web.ViewModels;
 using TMD.WebBase.Mvc;
 using IdentitySample.Models;
 using Microsoft.AspNet.Identity;
@@ -19,6 +22,13 @@ using System.Web.Mvc;
 using System.Collections.Generic;
 using TMD.Web.ViewModels.Common;
 using System.Net;
+using ExternalLoginConfirmationViewModel = TMD.Models.IdentityModels.ViewModels.ExternalLoginConfirmationViewModel;
+using ForgotPasswordViewModel = TMD.Models.IdentityModels.ViewModels.ForgotPasswordViewModel;
+using LoginViewModel = TMD.Models.IdentityModels.ViewModels.LoginViewModel;
+using RegisterViewModel = TMD.Models.IdentityModels.ViewModels.RegisterViewModel;
+using ResetPasswordViewModel = TMD.Models.IdentityModels.ViewModels.ResetPasswordViewModel;
+using SendCodeViewModel = TMD.Models.IdentityModels.ViewModels.SendCodeViewModel;
+using VerifyCodeViewModel = TMD.Models.IdentityModels.ViewModels.VerifyCodeViewModel;
 
 namespace IdentitySample.Controllers
 {
@@ -220,34 +230,36 @@ namespace IdentitySample.Controllers
         {
             AuthenticationManager.SignOut();
             Session.Abandon();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
         #endregion
 
         #region Register
         //
         // GET: /Account/Register
-        [SiteAuthorize(PermissionKey = "UserCreate")]
+        //[SiteAuthorize(PermissionKey = "UserCreate")]
         public ActionResult Create(string userName)
         {
-            RegisterViewModel Result = new RegisterViewModel();
-            if (!string.IsNullOrEmpty(userName))
-            {
-                AspNetUser userToEdit = UserManager.FindByName(userName);
-                Result = new RegisterViewModel
-                {
-                    UserId = userToEdit.Id,
-                    SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
-                    UserName = userToEdit.UserName,
-                    Email = userToEdit.Email,
-                    //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
-                };
-                //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-                Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
-                return View(Result);
-            }
+            AspNetUsersViewModel Result = new AspNetUsersViewModel();
+            //if (!string.IsNullOrEmpty(userName))
+            //{
+            //    AspNetUser userToEdit = UserManager.FindByName(userName);
+            //    Result = new AspNetUsersViewModel();
+            //    {
+            //        UserId = userToEdit.Id,
+            //        SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
+            //        UserName = userToEdit.UserName,
+            //        Email = userToEdit.Email,
+                    
+            //    };
+             
+            //    Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
+            //    return View(Result);
+            //}
             //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-            Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
+            Result.AspNetUserModel= new AspNetUserModel();
+            Result.Roles = RoleManager.Roles.Where(r => r.Name == "Employee").ToList(); 
+                //RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
             
             return View(Result);
         }
@@ -269,7 +281,7 @@ namespace IdentitySample.Controllers
             //List<AspNetUser> oList = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().Users.ToList();
             //var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
             //var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-
+           // TempData["message"] = new MessageViewModel { Message = "Employee has been Added" ,IsSaved = true };
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             //UserViewModel oVM = new UserViewModel();
             //oVM.Data = new List<SystemUser>();
@@ -297,14 +309,14 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(RegisterViewModel model)
+        public async Task<ActionResult> Create(AspNetUsersViewModel model)
         {
-            if (!string.IsNullOrEmpty(model.UserId))
+           /* if (!string.IsNullOrEmpty(model.UserId))
             {
                 //Means Update
 
                 // Get role
-                var roleName = RoleManager.FindById(model.SelectedRole).Name;
+                var roleName = RoleManager.FindById(model.AspNetUserModel.RoleName).Name;
                 AspNetUser userResult = UserManager.FindById(model.UserId);
                 string userrRoleID = userResult.AspNetRoles.ToList()[0].Id;
                 string userRoleName = RoleManager.FindById(userrRoleID).Name;
@@ -363,33 +375,39 @@ namespace IdentitySample.Controllers
                 }
 
                 return RedirectToAction("Users");
-            }
+            }*/
 
             // Add new User
             if (ModelState.IsValid)
             {
                 // TODO:Check # of Users that Admin can create
-                var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
-                user.EmailConfirmed = true;
-                if (!String.IsNullOrEmpty(model.Password))
+                var user = new AspNetUser
                 {
-                    var result = await UserManager.CreateAsync(user, model.Password);
+                    UserName = model.AspNetUserModel.UserName,
+                    Email = model.AspNetUserModel.Email,
+                    Address = model.AspNetUserModel.Address, 
+                    Telephone = model.AspNetUserModel.Telephone,FirstName = model.AspNetUserModel.FirstName,LastName = model.AspNetUserModel.LastName
+                };
+                user.EmailConfirmed = true;
+                if (!String.IsNullOrEmpty(model.AspNetUserModel.Password))
+                {
+                    var result = await UserManager.CreateAsync(user, model.AspNetUserModel.Password);
                     if (result.Succeeded)
                     {
                         //Setting role
                         var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-                        var roleName = roleManager.FindById(model.SelectedRole).Name;
+                        var roleName = roleManager.FindById(model.AspNetUserModel.RoleId).Name;
                         UserManager.AddToRole(user.Id, roleName);
                         // Add User Preferences for Dashboards Widgets
                         
-                        TempData["message"] = new MessageViewModel { Message = TMD.Web.Resources.HR.Account.AddUser, IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = "Employee has been created", IsSaved = true };
                         return RedirectToAction("Users");
                     }
                 }
             }
             // If we got this far, something failed, redisplay form
             model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-            TempData["message"] = new MessageViewModel { Message = TMD.Web.Resources.HR.Account.ChkFields, IsError = true };
+            //TempData["message"] = new MessageViewModel { Message = TMD.Web.Resources.HR.Account.ChkFields, IsError = true };
             return View(model);
         }
 

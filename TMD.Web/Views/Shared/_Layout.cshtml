@@ -84,10 +84,11 @@
                 <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right">
                         @if(User.Identity.IsAuthenticated){
-                                <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\LogOff">Log Out</a></li>
-                            }
-                                else
-                                {
+                            <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\LogOff">Log Out</a></li>
+                            <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Admin\Home">Admin Panel</a></li>           
+                        }
+                        else
+                        {
                         <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\login">Log In</a></li>
                                     <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\login">Registration</a></li>
                                         <li><a href="#">Contact Us</a></li>

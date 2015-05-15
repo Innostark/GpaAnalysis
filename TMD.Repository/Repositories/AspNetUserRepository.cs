@@ -31,7 +31,12 @@ namespace TMD.Repository.Repositories
 
         public IEnumerable<AspNetUser> GetAllUsers()
         {
-            return DbSet.Where(x => x.Id != "53752d93-51ba-4374-86fe-c289a8662872");//AspNetRoles.Any(y => y.Name != "Admin")
+
+            var adminUsers = db.Users.Include("AspNetRoles").Where(x => x.Id != "53752d93-51ba-4374-86fe-c289a8662872").Where(t=>t.AspNetRoles.Any());
+            
+            var abc = adminUsers.ToList();
+            return adminUsers;
+            // return DbSet.Include("AspNetRoles").Where(x => x.Id != "53752d93-51ba-4374-86fe-c289a8662872");//AspNetRoles.Any(y => y.Name != "Admin")
 
             //.Where(x => x.AspNetRoles.Any(y => y.Name != "Admin"));//TEmperory check
         }

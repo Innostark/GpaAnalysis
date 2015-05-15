@@ -5,6 +5,13 @@ namespace TMD.Models.DomainModels
 {
     public partial class AspNetUser
     {
+        public AspNetUser()
+        {
+            AspNetUserClaims = new HashSet<AspNetUserClaim>();
+            AspNetUserLogins = new HashSet<AspNetUserLogin>();
+            AspNetRoles = new HashSet<AspNetRole>();
+        }
+
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -25,7 +32,8 @@ namespace TMD.Models.DomainModels
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+         
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<UserPrefrence> UserPrefrences { get; set; }
     }

@@ -1,51 +1,28 @@
-﻿@model  TMD.Models.IdentityModels.ViewModels.RegisterViewModel
+﻿@model  TMD.Web.ViewModels.AspNetUsersViewModel
 @{
     ViewBag.Title = "Register User";
     string btnText = "Save";
     var setDiasble = "false";
+    Session["MenuKey"] = 3;
     if (Model != null)
     {
-        if (!string.IsNullOrEmpty(Model.UserId))
+        if (!string.IsNullOrEmpty(Model.AspNetUserModel.Id))
         {
             ViewBag.Title = "Update User";
             btnText = "Update";
             setDiasble = "readonly";
         }
     }
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.MessageVM = TempData["message"];
 }
 
 @*<link rel="stylesheet" type="text/css" href="~/Scripts/App/select2/select2.css" />*@
-<script type="text/javascript" src="~/Scripts/App/select2/select2.js"></script>
+@*<script type="text/javascript" src="~/Scripts/App/select2/select2.js"></script>*@
 
 <!-- Navigation Bar -->
-<div class="breadcrumb-container">
-    <ul class="xbreadcrumbs">
-        <li>
-            <a href="dashboard-En.html">
-                <i class="icon-photon home"></i>
-            </a>
-        </li>
-        <li>
-            <a href="~/Account/Users">
-                Users
-            </a>
-        </li>
-        <li class="current">
-            <a href="">
-                @ViewBag.Title
-            </a>
-
-
-        </li>
-    </ul>
-</div>
 <!-- Page heading -->
-<header>
-    <i class="icon-big-notepad"></i>
-    <h2><small>@ViewBag.Title</small></h2>
-</header>
+
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
@@ -53,121 +30,167 @@
 <!-- Form starts.  -->
 @using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    <div class="container-fluid">
-        @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)*@
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
 
-        @Html.HiddenFor(m => m.UserId)
-        @Html.HiddenFor(m => m.oldRole)
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="UserName">Username</label>
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+            </a>*@
+
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event) && validateUserPassword(event));">Submit</button>
+                <a href="~/Account/Users">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = @setDiasble })
-                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="useremail">Email</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "useremail", placeholder = "Enter Email" })
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "required" })
-                </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Employees
             </div>
         </div>
-        @if (Model != null)
-        {
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="roleId">Role</label>
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { @class = "select2me", id = "roleId" })
-                        <label id="roleValidation"></label>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+
+                @*@Html.HiddenFor(m => m.UserId)
+                    @Html.HiddenFor(m => m.oldRole)*@
+                
+                <div class="form-group margin-top-20">
+                    <label class="col-md-3 control-label" >First Name</label>
+                    <div class="col-md-4">
+                        <input type="text" name="AspNetUserModel.FirstName" id="FirstName" class="form-control input-circle mandatory"  placeholder="Enter First Name">
+                        @*@Html.ValidationMessageFor(m => m.AspNetUserModel.FirstName, "", new { @class = "required" })*@
                     </div>
                 </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="password">Password</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = "Password", id = "password" })
-                        <label id="passwordAuthentication"></label>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" name="LastName">Last Name</label>
+                    <div class="col-md-4">
+                        <input type="text" name="sAspNetUserModel.LastName" id="LastName" class="form-control input-circle mandatory" placeholder="Enter Last Name">
                     </div>
+                    @Html.ValidationMessageFor(m => m.AspNetUserModel.LastName, "", new {@class = "required"})
                 </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="confirmPassword">Confirm Password</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ltr", placeholder = "Confirm Password", id = "confirmPassword" })
-                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "required" })
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" name="LastName">Username</label>
+                    <div class="col-md-4">
+                        <input type="text" name="AspNetUserModel.UserName" id="UserName" class="form-control input-circle mandatory" placeholder="Enter UserName">
                     </div>
+                    @Html.ValidationMessageFor(m => m.AspNetUserModel.UserName, "", new {@class = "required"})
                 </div>
-            </div>
-        }
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="return validateUserPassword(event);">@btnText</button>
-            </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" >Email</label>
+                    <div class="col-md-4">
+                        <input type="email" id="Email" name="AspNetUserModel.Email" class="form-control input-circle mandatory" placeholder="Enter email">
+                    </div>
+                    @Html.ValidationMessageFor(m => m.AspNetUserModel.Email, "", new {@class = "required"})
+                </div>
+
+            
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Address</label>
+                    <div class="col-md-4">
+                        <input id="Address" name="AspNetUserModel.Address" class="form-control input-circle mandatory" placeholder="Enter Address">
+                    </div>
+                    @Html.ValidationMessageFor(m => m.AspNetUserModel.Address, "", new { @class = "required" })
+                </div>
+            
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Telephone</label>
+                    <div class="col-md-4">
+                        <input id="Address" name="AspNetUserModel.Telephone" class="form-control input-circle mandatory" placeholder="Enter Telephone">
+                    </div>
+                    @Html.ValidationMessageFor(m => m.AspNetUserModel.Telephone, "", new { @class = "required" })
+                </div>
+
+
+                @if (Model != null)
+                {
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" name="LastName">Role</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(m => m.AspNetUserModel.RoleId, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { @class = "form-control", id = "RoleId" })
+                            <label id="roleValidation" style="display: none; color: red"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" name="LastName">Password</label>
+                        <div class="col-md-4">
+                            @Html.PasswordFor(m => m.AspNetUserModel.Password, new {@class = "form-control input-circle mandatory", placeholder = "Password", id = "Password"})
+
+                        </div>
+                        @Html.ValidationMessageFor(m => m.AspNetUserModel.Password, "", new {@class = "required"})
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" name="LastName">Password</label>
+                        <div class="col-md-4">
+                            @Html.PasswordFor(m => m.AspNetUserModel.ConfirmPassword, new {@class = "form-control input-circle mandatory", placeholder = "Confirm Password", id = "ConfirmPassword"})
+
+                        </div>
+                        @Html.ValidationMessageFor(m => m.AspNetUserModel.ConfirmPassword, "", new {@class = "required"})
+                    </div>
+
+
+                }
+            @*<div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="return validateUserPassword(event);">@btnText</button>
+                    </div>
+                </div>*@</div>
+            
         </div>
     </div>
 }
-<!-- Matter ends -->
+        <!-- Matter ends -->
 
-<script>
-    $(function () {
+        <script>
+            $(function () {
 
-        $("[readonly='false']").removeAttr("readonly");
+                $("[readonly='false']").removeAttr("readonly");
 
-    });
-    function validateUserPassword(event) {
-        var userPassword = $("#password").val();
-        var selectedRole = $("#roleId").val();
-        var model = @(Model.UserId == null ? "true" : "false");
-        var counter = 0;
-        if ((userPassword == null || userPassword == "") && model) {
-            $("#passwordAuthentication").text("Password Field is required");
-            $("#passwordAuthentication").addClass("Error");
-            counter++;
-        } else if (userPassword.length < 6 && model) {
-            $("#passwordAuthentication").text("Minimum Password length is 6 characters");
-            $("#passwordAuthentication").addClass("Error");
-            counter++;
-        }
-        else {
-            $("#passwordAuthentication").text("");
-            $("#passwordAuthentication").removeClass("Error");
-        }
-        if ((selectedRole == null || selectedRole == "" || selectedRole == undefined) && model) {
-            $("#roleValidation").text("Please Select Role");
-            $("#roleValidation").addClass("Error");
-            counter++;
-        } else {
-            $("#roleValidation").text("");
-            $("#roleValidation").removeClass("Error");
-        }
-        if (counter > 0) {
-            //implementing focus back to error
-            if ($(".Error").length > 0) {
-                var divId = $(".Error")[0].id;
-                if ($("#" + divId).length > 0)
-                    $("#" + divId).focus();
-                event.preventDefault();
-                return false;
+            });
+            function validateUserPassword(event) {
+                var userPassword = $("#password").val();
+                var selectedRole = $("#RoleId").val();
+                var model = @(Model.AspNetUserModel.Id == null ? "true" : "false");
+                var counter = 0;
+                //if ((userPassword == null || userPassword == "") && model) {
+                //    $("#passwordAuthentication").text("Password Field is required");
+                //    $("#passwordAuthentication").addClass("Error");
+                //    counter++;
+                //} else if (userPassword.length < 6 && model) {
+                //    $("#passwordAuthentication").text("Minimum Password length is 6 characters");
+                //    $("#passwordAuthentication").addClass("Error");
+                //    counter++;
+                //}
+                //else {
+                //    $("#passwordAuthentication").text("");
+                //    $("#passwordAuthentication").removeClass("Error");
+                //}
+                if ((selectedRole == null || selectedRole == "" || selectedRole == undefined) && model) {
+                    $("#roleValidation").text("Please Select Role");
+                    $("#roleValidation").addClass("Error");
+                    counter++;
+                } else {
+                    $("#roleValidation").text("");
+                    $("#roleValidation").removeClass("Error");
+                }
+                if (counter > 0) {
+                    //implementing focus back to error
+                    if ($(".Error").length > 0) {
+                        var divId = $(".Error")[0].id;
+                        if ($("#" + divId).length > 0)
+                            $("#" + divId).focus();
+                        event.preventDefault();
+                        return false;
+                    }
+                }
+                return true;
             }
-        }
-        return true;
-    }
 
-</script>
+        </script>

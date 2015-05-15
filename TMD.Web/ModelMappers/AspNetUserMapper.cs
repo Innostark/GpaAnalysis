@@ -17,13 +17,14 @@ namespace TMD.Web.ModelMappers
                 Address = source.Address,
                 DateOfBirth = source.DateOfBirth,
                 Email = source.Email,
-                FirstName = "First",
-                LastName = "Last",
+                FirstName = source.FirstName,
+                LastName = source.LastName,
                 Id = source.Id,
                 ImageName = source.ImageName,
                 Telephone = source.Telephone,
-                UserName = source.UserName
-                //RoleName = source.AspNetRoles.First().Name
+                UserName = source.UserName,
+                
+                RoleName = source.AspNetRoles.Any() ? source.AspNetRoles.First().Name : ""
 
             };
             return oModel;

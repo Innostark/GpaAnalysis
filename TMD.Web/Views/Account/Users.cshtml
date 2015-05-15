@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    Session["MenuKey"] = 2;
+    Session["MenuKey"] = 3;
 
 }
 
@@ -22,9 +22,11 @@
     </ul>
 </div>*@
 <header>
-    <i class="icon-big-notepad"></i>
-    <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/Account/Create">Add New User</a></small></h3>
+    
+    <h3 class="page-title">
+        Users <small>(employee and members)</small>
+    </h3>
+    @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -33,37 +35,62 @@
     <form class="form-horizontal">
         <div class="row-fluid">
             <div class="span12">
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>There are @(Model.Count) system Users
+                        </div>
+                        <div class="tools">
+                            <a href="~/Account/Create" style="color:white !important; font-size: 16px; text-decoration: underline; " >Add New Employee</a>
+                            <a href="javascript:;" class="collapse">
+                            </a>                        
+    @*
+                            <a href="#portlet-config" data-toggle="modal" class="config">
+                            </a>
+                            <a href="javascript:;" class="reload">
+                            </a>
+                            <a href="javascript:;" class="remove">
+                            </a>*@
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive">
+                            <table id="UserList" class="table table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Employee</th>
+                                        <th>User Name</th>
+                                        <th>Registered Email</th>
+                                        <th>Role</th>
+                                        <th>Address</th>
+                                        <th>Telephone</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { userName = item.UserName }) </td>
+                                            <td>@item.UserName</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.RoleName</td>
+                                            <td>@item.Address</td>
+                                            <td>@item.Telephone</td>
 
-                <table id="UserList" class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Employee</th>
-                            <th>User Name</th>
-                            <th>Registered Email</th>
-                            <th>Role</th>
-                            <th>Address</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { userName = item.UserName }) </td>
-                                <td>@item.UserName</td>
-                                <td>@item.Email</td>
-                                <td>@item.RoleName</td>
-                                <td>@item.Address</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
 
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                        </div>
+                    </div>
+                </div>
     </form>
 </div>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     $(document).ready(function () {
         $('#UserList').dataTable({
             "sPaginationType": "bootstrap",
@@ -74,4 +101,4 @@
             },
         });
     });
-</script>
+</script>*@

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -26,7 +27,11 @@ namespace TMD.Web.Models
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+        
 
         public string RoleName { get; set; }
+        public string RoleId { get; set; }
     }
 }
