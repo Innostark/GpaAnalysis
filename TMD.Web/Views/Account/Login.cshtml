@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Login";
 }
+<style>
+    ul {
+    list-style-type: none;
+}
+</style>
 <div class="main">
     <div class="container">
         @*<ul class="breadcrumb">
@@ -38,19 +43,20 @@
                                     <div class="form-group">
                                         <label for="email" class="col-lg-4 control-label">UserName <span class="require">*</span></label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" id="Email" name="Email">
+                                            <input type="text" class="form-control mandatory" id="UserName"  name="Email">
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "required" })
                                     </div>
                                     <div class="form-group">
                                         <label for="password" class="col-lg-4 control-label">Password <span class="require">*</span></label>
                                         <div class="col-lg-8">
-                                            <input type="password" class="form-control" id="Password" name="Password">
+                                            <input type="password" class="form-control  mandatory" id="Password" name="Password">
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-8 col-md-offset-4 padding-left-0 ">
-                                            <button type="submit" class="btn btn-primary">Login</button>
+                                            <button type="submit" onclick="return ValidateFields()" class="btn btn-primary">Login</button>
                                         </div>
                                     </div>
 
