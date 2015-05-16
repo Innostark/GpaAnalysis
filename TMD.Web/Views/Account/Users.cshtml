@@ -90,15 +90,15 @@
     </form>
 </div>
 
-@*<script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         $('#UserList').dataTable({
-            "sPaginationType": "bootstrap",
-            "fnInitComplete": function () {
-                $(".dataTables_wrapper select").select2({
-                    dropdownCssClass: 'noSearch'
-                });
-            },
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "bFilter": true,
+            "bLengthChange": false,
+            
+
         });
     });
-</script>*@
+</script>

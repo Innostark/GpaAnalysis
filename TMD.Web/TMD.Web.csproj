@@ -606,6 +606,12 @@
     <Content Include="Content\css\images\icon-bubble.png" />
     <Content Include="Content\css\images\nav-a-hover.svg" />
     <Content Include="Content\css\images\nav-a.svg" />
+    <Content Include="Content\css\images\sort_asc.png" />
+    <Content Include="Content\css\images\sort_asc_disabled.png" />
+    <Content Include="Content\css\images\sort_both.png" />
+    <Content Include="Content\css\images\sort_desc.png" />
+    <Content Include="Content\css\images\sort_desc_disabled.png" />
+    <Content Include="Content\css\jquery.dataTables.css" />
     <Content Include="Content\css\skel.css" />
     <Content Include="Content\css\style-1000px.css" />
     <Content Include="Content\css\style-desktop.css" />
@@ -1578,6 +1584,7 @@
     <Content Include="Content\global\plugins\bootstrap-hover-dropdown\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\slimScroll.jquery.json" />
+    <Content Include="Scripts\App\jquery.dataTables.js" />
     <Content Include="Scripts\App\toastr.min.js.map" />
     <Content Include="Content\css\toastr.less" />
     <Content Include="Content\css\toastr.scss" />
