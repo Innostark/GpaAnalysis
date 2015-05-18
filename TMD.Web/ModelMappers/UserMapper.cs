@@ -11,7 +11,8 @@ namespace TMD.Web.ModelMappers
             target.Telephone = source.Telephone;
             target.FirstName = source.FirstName;
             target.LastName = source.LastName;
-            
+            target.LockoutEnabled = source.LockoutEnabled;
+
 
         }
     }

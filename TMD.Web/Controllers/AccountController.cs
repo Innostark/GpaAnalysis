@@ -193,6 +193,14 @@ namespace IdentitySample.Controllers
                         ModelState.AddModelError("", "Email not confirmed");
                         return View(model);
                     }
+                    else
+                    {
+                        if (user.LockoutEnabled)
+                        {
+                            ModelState.AddModelError("", "User Is locked, Please contact admin to unlock the user");
+                            return View(model);
+                        }
+                    }
                 }
                 // This doen't count login failures towards lockout only two factor authentication
                 // To enable password failures to trigger lockout, change to shouldLockout: true
@@ -306,7 +314,7 @@ namespace IdentitySample.Controllers
                 //Means Update
 
                 // Get role
-                var roleName = RoleManager.FindById(model.AspNetUserModel.RoleName).Name;
+                var roleName = RoleManager.FindById(model.AspNetUserModel.RoleId).Name;
                 AspNetUser userResult = UserManager.FindById(model.AspNetUserModel.Id);
                 string userrRoleID = userResult.AspNetRoles.ToList()[0].Id;
                 string userRoleName = RoleManager.FindById(userrRoleID).Name;
@@ -342,8 +350,8 @@ namespace IdentitySample.Controllers
                 }
                 // Get user by UserId to Update User
                 AspNetUser userToUpdate = UserManager.FindById(model.AspNetUserModel.Id);
-                if (userToUpdate.Email != model.AspNetUserModel.Email)
-                {
+                //if (userToUpdate.Email != model.AspNetUserModel.Email)
+                //{
                     
                     if (userToUpdate != null)
                     {
@@ -358,7 +366,7 @@ namespace IdentitySample.Controllers
                             IsUpdated = true
                         };
                     }
-                }
+                //}
 
                 return RedirectToAction("Users");
             }
@@ -372,7 +380,7 @@ namespace IdentitySample.Controllers
                     UserName = model.AspNetUserModel.UserName,
                     Email = model.AspNetUserModel.Email,
                     Address = model.AspNetUserModel.Address, 
-                    Telephone = model.AspNetUserModel.Telephone,FirstName = model.AspNetUserModel.FirstName,LastName = model.AspNetUserModel.LastName
+                    Telephone = model.AspNetUserModel.Telephone,FirstName = model.AspNetUserModel.FirstName,LastName = model.AspNetUserModel.LastName, LockoutEnabled = false
                 };
                 user.EmailConfirmed = true;
                 if (!String.IsNullOrEmpty(model.AspNetUserModel.Password))
@@ -620,7 +628,7 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     ModelState.AddModelError("", "Email not found.");
