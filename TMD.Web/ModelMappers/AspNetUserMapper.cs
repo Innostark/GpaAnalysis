@@ -30,5 +30,27 @@ namespace TMD.Web.ModelMappers
             return oModel;
 
         }
+
+        //public static AspNetUser CreateFrom(this AspNetUserModel source)
+        //{
+        //    AspNetUserModel oModel = new AspNetUserModel
+        //    {
+
+        //        Address = source.Address,
+        //        DateOfBirth = source.DateOfBirth,
+        //        Email = source.Email,
+        //        FirstName = source.FirstName,
+        //        LastName = source.LastName,
+        //        Id = source.Id,
+        //        ImageName = source.ImageName,
+        //        Telephone = source.Telephone,
+        //        UserName = source.UserName,
+
+        //        RoleName = source..Any() ? source.AspNetRoles.First().Name : ""
+
+        //    };
+        //    return oModel;
+
+        //}
     }
 }

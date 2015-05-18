@@ -240,28 +240,18 @@ namespace IdentitySample.Controllers
         //[SiteAuthorize(PermissionKey = "UserCreate")]
         public ActionResult Create(string userName)
         {
+           // AspNetUsersViewModel Result = new AspNetUsersViewModel();
             AspNetUsersViewModel Result = new AspNetUsersViewModel();
-            //if (!string.IsNullOrEmpty(userName))
-            //{
-            //    AspNetUser userToEdit = UserManager.FindByName(userName);
-            //    Result = new AspNetUsersViewModel();
-            //    {
-            //        UserId = userToEdit.Id,
-            //        SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
-            //        UserName = userToEdit.UserName,
-            //        Email = userToEdit.Email,
-                    
-            //    };
-             
-            //    Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
-            //    return View(Result);
-            //}
-            //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-            Result.AspNetUserModel= new AspNetUserModel();
+            Result.AspNetUserModel = new AspNetUserModel();
             Result.Roles = RoleManager.Roles.Where(r => r.Name == "Employee").ToList(); 
-                //RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
-            
-            return View(Result);
+         
+            if (!string.IsNullOrEmpty(userName))
+            {
+                AspNetUser userToEdit = UserManager.FindByName(userName);
+                Result.AspNetUserModel = userToEdit.CreateFrom();
+                return View(Result);
+            }
+             return View(Result);
         }
 
 
@@ -311,29 +301,30 @@ namespace IdentitySample.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AspNetUsersViewModel model)
         {
-           /* if (!string.IsNullOrEmpty(model.UserId))
+           if (!string.IsNullOrEmpty(model.AspNetUserModel.Id))
             {
                 //Means Update
 
                 // Get role
                 var roleName = RoleManager.FindById(model.AspNetUserModel.RoleName).Name;
-                AspNetUser userResult = UserManager.FindById(model.UserId);
+                AspNetUser userResult = UserManager.FindById(model.AspNetUserModel.Id);
                 string userrRoleID = userResult.AspNetRoles.ToList()[0].Id;
                 string userRoleName = RoleManager.FindById(userrRoleID).Name;
 
                 // Check if role has been changed
-                if (userrRoleID != model.SelectedRole)
+               /************** DISABLING CHANGE ROLE IMPLEMENTATION/ UNCOMMENT TO RUN 
+               if (userrRoleID != model.AspNetUserModel.RoleId)
                 {
                     // Update User Role
-                    UserManager.RemoveFromRole(model.UserId, userRoleName);
-                    UserManager.AddToRole(model.UserId, roleName);
-                    TempData["message"] = new MessageViewModel { Message = TMD.Web.Resources.HR.Account.UpdateUser, IsUpdated = true };
-                }
+                    UserManager.RemoveFromRole(model.AspNetUserModel.Id, userRoleName);
+                    UserManager.AddToRole(model.AspNetUserModel.Id, roleName);
+                    TempData["message"] = new MessageViewModel { Message = "Role has been updated", IsUpdated = true };
+                }************************/
                 // Password Reset
-                if (!String.IsNullOrEmpty(model.Password))
+                if (!String.IsNullOrEmpty(model.AspNetUserModel.Password))
                 {
-                    var token = await UserManager.GeneratePasswordResetTokenAsync(model.UserId);
-                    var resetPwdResults = await UserManager.ResetPasswordAsync(model.UserId, token, model.Password);
+                    var token = await UserManager.GeneratePasswordResetTokenAsync(model.AspNetUserModel.Id);
+                    var resetPwdResults = await UserManager.ResetPasswordAsync(model.AspNetUserModel.Id, token, model.AspNetUserModel.Password);
 
                     if (resetPwdResults.Succeeded)
                     {
@@ -350,32 +341,27 @@ namespace IdentitySample.Controllers
                     }
                 }
                 // Get user by UserId to Update User
-                AspNetUser userToUpdate = UserManager.FindById(model.UserId);
-                if (userToUpdate.Email != model.Email)
+                AspNetUser userToUpdate = UserManager.FindById(model.AspNetUserModel.Id);
+                if (userToUpdate.Email != model.AspNetUserModel.Email)
                 {
                     
-                    AspNetUser currUser = new AspNetUser
-                    {
-                        Email = model.Email,
-                        EmailConfirmed = true,
-                    };
                     if (userToUpdate != null)
                     {
-                        userToUpdate.UpdateUserTo(currUser);
+                        userToUpdate.UpdateUserTo(model.AspNetUserModel);
                     }
                     var updateUserResult = await UserManager.UpdateAsync(userToUpdate);
                     if (updateUserResult.Succeeded)
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = TMD.Web.Resources.HR.Account.UpdateUser,
+                            Message = "User has been Updated",
                             IsUpdated = true
                         };
                     }
                 }
 
                 return RedirectToAction("Users");
-            }*/
+            }
 
             // Add new User
             if (ModelState.IsValid)
