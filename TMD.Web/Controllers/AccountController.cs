@@ -831,7 +831,7 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
 
-        public ActionResult SignUp(AspNetUserModel oModel)
+        public async Task<ActionResult> SignUp(AspNetUserModel oModel)
         {
             oModel.UserName = oModel.Email;
             Utility oUtility = new Utility();
@@ -858,10 +858,12 @@ namespace IdentitySample.Controllers
                         var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                         var roleName = roleManager.FindById(oModel.RoleId).Name;
                         UserManager.AddToRole(user.Id, roleName);
-                     
+
+                        return PreparePayPalPayment(oModel);
+
 
                         // Add User Preferences for Dashboards Widgets
-                        
+
                         //TempData["message"] = new MessageViewModel { Message = "Employee has been created", IsSaved = true };
                         //return RedirectToAction("Users");
                     }
@@ -870,6 +872,41 @@ namespace IdentitySample.Controllers
 
 
             return View(oModel);
+
+        }
+
+        private ActionResult PreparePayPalPayment(AspNetUserModel oModel)
+        {
+            string IP = ConfigurationManager.AppSettings["PayPalBaseUrl"];
+            string businessPaypalId = ConfigurationManager.AppSettings["BusinessPayPalId"];
+            string businessPaypalTransction = ConfigurationManager.AppSettings["PayPalTxnUrl"];
+
+            double itemCost = 10.00;
+            
+            string redirect2 = IP + @"Account/Login";
+            string IPN = IP + @"Account/PayPalIPN";
+            string Cancel = IP + @"Home/Index";
+            string redirect = businessPaypalTransction+"&business=" + businessPaypalId;
+            redirect += "&amount=" + itemCost;
+            redirect += "&custom=" + oModel.Email;
+            redirect += "&address1=" + oModel.Address;
+            redirect += "&email=" + oModel.Email;
+            redirect += "&item_number=1";
+            redirect += "&currency_code= USD";
+            redirect += "&return=" + redirect2;
+            redirect += "&cancel_return=" + Cancel;
+            redirect += "&notify_url=" + IPN;
+            return Redirect(redirect);
+        }
+
+        [AllowAnonymous]
+        public void PayPalIPN()
+        {
+            var p = Request.Params;
+            var email = p["custom"].ToString();
+            var txn = p["txn_id"].ToString();
+
+            
 
         }
 
