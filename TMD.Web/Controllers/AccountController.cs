@@ -810,6 +810,21 @@ namespace IdentitySample.Controllers
         }
         #endregion
 
+
+        #region Pricing
+        [AllowAnonymous]
+        public ActionResult Pricing()
+        {
+            return View();
+            
+        }
+        [AllowAnonymous]
+        public ActionResult SignUp(int PackageId)
+        {
+            return View();
+
+        }
+        #endregion
         private async Task SaveAccessToken(TMD.Models.DomainModels.AspNetUser user, ClaimsIdentity identity)
         {
             var userclaims = await UserManager.GetClaimsAsync(user.Id);

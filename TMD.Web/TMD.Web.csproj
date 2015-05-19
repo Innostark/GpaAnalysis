@@ -1674,6 +1674,8 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Views\Admin\Home.cshtml" />
+    <Content Include="Views\Account\Pricing.cshtml" />
+    <Content Include="Views\Account\SignUp.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
