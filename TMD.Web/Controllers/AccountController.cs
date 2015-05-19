@@ -3,6 +3,7 @@ using TMD.Implementation.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
 using TMD.Models.IdentityModels.ViewModels;
+using TMD.Web;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.ViewModels;
@@ -309,7 +310,9 @@ namespace IdentitySample.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AspNetUsersViewModel model)
         {
-           if (!string.IsNullOrEmpty(model.AspNetUserModel.Id))
+            model.AspNetUserModel.UserName = model.AspNetUserModel.Email;
+            #region Update
+            if (!string.IsNullOrEmpty(model.AspNetUserModel.Id))
             {
                 //Means Update
 
@@ -370,7 +373,7 @@ namespace IdentitySample.Controllers
 
                 return RedirectToAction("Users");
             }
-
+            #endregion
             // Add new User
             if (ModelState.IsValid)
             {
@@ -824,6 +827,53 @@ namespace IdentitySample.Controllers
             return View();
 
         }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult SignUp(AspNetUserModel oModel)
+        {
+            oModel.UserName = oModel.Email;
+            Utility oUtility = new Utility();
+            oModel.RoleId = Utility.MemberRoleId;
+            oModel.RoleName = Utility.MemberRoleName;
+            var user = new AspNetUser
+            {
+                UserName = oModel.UserName,
+                Email = oModel.Email,
+                Address = oModel.Address,
+                Telephone = oModel.Telephone,
+                FirstName = oModel.FirstName,
+                LastName = oModel.LastName,
+                LockoutEnabled = false
+            };
+
+                user.EmailConfirmed = true;
+                if (!String.IsNullOrEmpty(oModel.Password))
+                {
+                    var result = await UserManager.CreateAsync(user, oModel.Password);
+                    if (result.Succeeded)
+                    {
+                        //Setting role
+                        var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+                        var roleName = roleManager.FindById(oModel.RoleId).Name;
+                        UserManager.AddToRole(user.Id, roleName);
+                     
+
+                        // Add User Preferences for Dashboards Widgets
+                        
+                        //TempData["message"] = new MessageViewModel { Message = "Employee has been created", IsSaved = true };
+                        //return RedirectToAction("Users");
+                    }
+                    
+                }
+
+
+            return View(oModel);
+
+        }
+
+
         #endregion
         private async Task SaveAccessToken(TMD.Models.DomainModels.AspNetUser user, ClaimsIdentity identity)
         {

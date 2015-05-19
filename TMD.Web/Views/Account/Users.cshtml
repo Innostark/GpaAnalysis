@@ -59,7 +59,7 @@
                                 <thead>
                                     <tr>
                                         <th>Employee</th>
-                                        <th>User Name</th>
+                                        @*<th>User Name</th>*@
                                         <th>Registered Email</th>
                                         <th>Role</th>
                                         <th>Address</th>
@@ -73,7 +73,7 @@
                                     {
                                         <tr>
                                             <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { userName = item.UserName }) </td>
-                                            <td>@item.UserName</td>
+                                            @*<td>@item.UserName</td>*@
                                             <td>@item.Email</td>
                                             <td>@item.RoleName</td>
                                             <td>@item.Address</td>

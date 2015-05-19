@@ -8,6 +8,10 @@ namespace TMD.Web
 {
     public class Utility
     {
+        public const string MemberRoleId = "1";
+        public const string MemberRoleName = "Member";
+
+
         public static void SendEmailAsync(string email, string subject, string body)
         {
 

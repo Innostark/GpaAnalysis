@@ -1,8 +1,100 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "SignUp";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Sign Up</h2>
+<div class="main">
+    <div class="container">
+        <div class="row margin-bottom-40 margin-top-20">
+            <div class="sidebar col-md-3 col-sm-3">
+                </div>
+@using (Html.BeginForm("Signup", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal form-without-legend", role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new {@class = "alert alert-danger"})
+
+    <div class="col-md-9 col-sm-9">
+        <h1>Create an account</h1>
+        <div class="content-form-page">
+            <div class="row">
+                <div class="col-md-7 col-sm-7">
+                    <form class="form-horizontal" role="form">
+                        <fieldset>
+                            <legend>Your personal details</legend>
+                            <div class="form-group">
+                                <label  class="col-lg-4 control-label">First Name <span class="require">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control mandatory" name="FirstName" id="First Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-lg-4 control-label">Last Name <span class="require">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="LastName" id="Last Name">
+                                </div>
+                            </div>
+                                        
+                            <div class="form-group">
+                                <label  class="col-lg-4 control-label">Address<span class="require">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Address" id="Address">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">Telephone<span class="require">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Telephone" id="Address">
+                                </div>
+                            </div>
+                                       
+                        </fieldset>
+                                    
+                        <fieldset>
+                            <legend>Your Account Details</legend>
+                            <div class="form-group">
+                                <label for="email" class="col-lg-4 control-label">Email <span class="require">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="Email" class="form-control" id="email">
+                                </div>
+                            </div>
+                                        
+                            <div class="form-group">
+                                <label for="password" class="col-lg-4 control-label">Password <span class="require">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="Password" class="form-control" id="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password" class="col-lg-4 control-label">Confirm password <span class="require">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="ConfirmPassword" class="form-control" id="confirm-password">
+                                </div>
+                            </div>
+
+                                        
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
+                                <button type="submit" onclick=" return ValidateFields(); " class="btn btn-primary">Create an account</button>
+                                           
+                                <button type="button" class="btn btn-default">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4 col-sm-4 pull-right">
+                    <div class="form-info">
+                        <h2><em>Important</em> Information</h2>
+                        <p>You have selected the premium package. In this we offer Duis autem vel eum iriure at dolor vulputate velit esse vel molestie at dolore. Duis autem vel eum iriure at dolor vulputate velit esse vel molestie at dolore.</p>
+                        <p>Duis autem vel eum iriure at dolor vulputate velit esse vel molestie at dolore.</p>
+                        <button type="button" class="btn btn-default">More details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}       
+     </div>
+        </div>
+</div>
 

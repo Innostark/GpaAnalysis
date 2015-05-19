@@ -74,14 +74,13 @@
                     @Html.ValidationMessageFor(m => m.AspNetUserModel.LastName, "", new {@class = "required"})
                 </div>
 
-                <div class="form-group">
+                @*<div class="form-group">
                     <label class="col-md-3 control-label" name="LastName">Username</label>
                     <div class="col-md-4">
-                        @*<input type="text" name="AspNetUserModel.UserName" id="UserName" readonly=@setDiasble class="form-control input-circle mandatory" placeholder="Enter UserName">*@
                         @Html.TextBoxFor(m => m.AspNetUserModel.UserName, new { @class = "form-control input-circle mandatory", @readonly=setDiasble, placeholder = "User Name", id = "User Name" })
                     </div>
                     @Html.ValidationMessageFor(m => m.AspNetUserModel.UserName, "", new {@class = "required"})
-                </div>
+                </div>*@
 
 
                 <div class="form-group">
