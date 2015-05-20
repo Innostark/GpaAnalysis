@@ -34,11 +34,11 @@ namespace TMD.Models.DomainModels
 
         public string RegisterPayPalTxnID { get; set; }
         public DateTime ? RegisterPayPalDate { get; set; }
-        public double PayPalAmount { get; set; }
-        public double PayPalAmountAfterDeduct { get; set; }
+        public double ? PayPalAmount { get; set; }
+        public double ? PayPalAmountAfterDeduct { get; set; }
         public string PayPalMisc { get; set; }
         
-        public int Package { get; set; }
+        public int ? Package { get; set; }
         
             
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }

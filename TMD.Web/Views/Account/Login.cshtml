@@ -4,6 +4,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Login";
+    Session["MenuKey"] = "Login";
 }
 <style>
     ul {
@@ -23,7 +24,7 @@
             <div class="sidebar col-md-3 col-sm-3">
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <li class="list-group-item clearfix"><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\ForgotPassword"><i class="fa fa-angle-right"></i> Restore Password</a></li>
-                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Register</a></li>
+                    <li class="list-group-item clearfix"><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\Pricing"><i class="fa fa-angle-right"></i> Register</a></li>
                     
                     
                 </ul>

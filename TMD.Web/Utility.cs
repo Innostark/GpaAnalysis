@@ -8,7 +8,7 @@ namespace TMD.Web
 {
     public class Utility
     {
-        public const string MemberRoleId = "1";
+        public const string MemberRoleId = "3";
         public const string MemberRoleName = "Member";
 
 

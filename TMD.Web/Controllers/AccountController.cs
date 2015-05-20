@@ -226,6 +226,11 @@ namespace IdentitySample.Controllers
                         {
                             SetUserPermissions(user.Email);
                             SetCultureInfo(user.Id);
+                                           var role = user.AspNetRoles.FirstOrDefault();
+                            if (role.Id == Utility.MemberRoleId)
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
                             if (string.IsNullOrEmpty(returnUrl))
                                 return RedirectToAction("Home", "Admin");
                             return RedirectToLocal(returnUrl);
