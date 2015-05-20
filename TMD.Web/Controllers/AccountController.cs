@@ -926,6 +926,8 @@ namespace IdentitySample.Controllers
             redirect += "&currency_code= USD";
             redirect += "&return=" + redirect2;
             redirect += "&cancel_return=" + Cancel;
+            redirect += "&item_name=" + "Basic Package";
+            
             redirect += "&notify_url=" + IPN;
             return Redirect(redirect);
         }
@@ -936,8 +938,9 @@ namespace IdentitySample.Controllers
             var p = Request.Params;
             var email = p["custom"].ToString();
             var txn = p["txn_id"].ToString();
+            var amount = double.Parse(p["amount"].ToString());
 
-
+            
             AspNetUser userToUpdate = UserManager.FindByEmail(email);
             //if (userToUpdate.Email != model.AspNetUserModel.Email)
             //{
