@@ -938,9 +938,10 @@ namespace IdentitySample.Controllers
             var p = Request.Params;
             var email = p["custom"].ToString();
             var txn = p["txn_id"].ToString();
-            var amount = double.Parse(p["amount"].ToString());
-
+            var amount = double.Parse(p["mc_gross"].ToString());
+            var tax = double.Parse(p["mc_fee"].ToString());
             
+
             AspNetUser userToUpdate = UserManager.FindByEmail(email);
             //if (userToUpdate.Email != model.AspNetUserModel.Email)
             //{
@@ -950,6 +951,9 @@ namespace IdentitySample.Controllers
                 userToUpdate.Package = 1;
                 userToUpdate.RegisterPayPalDate = DateTime.Now;
                 userToUpdate.RegisterPayPalTxnID = txn;
+                userToUpdate.PayPalAmount = amount;
+                userToUpdate.PayPalAmountAfterDeduct = amount-tax;
+                userToUpdate.PayPalMisc = p.ToString();
             }
             var updateUserResult =  UserManager.Update(userToUpdate);
             //if (updateUserResult.Succeeded)

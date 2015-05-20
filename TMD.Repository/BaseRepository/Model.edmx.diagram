@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="149d63c950554997821631b5961128b4" Name="Diagram1" ZoomLevel="72">
+      <Diagram DiagramId="149d63c950554997821631b5961128b4" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="TMDModel.AspNetRole" Width="1.5" PointX="2.75" PointY="6.5" />
         <EntityTypeShape EntityType="TMDModel.AspNetUserClaim" Width="1.5" PointX="7.25" PointY="5" />
         <EntityTypeShape EntityType="TMDModel.AspNetUserLogin" Width="1.5" PointX="7.25" PointY="7.75" />
@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="TMDModel.DWH_Dim_Product" Width="1.5" PointX="20.5" PointY="6.875" />
         <EntityTypeShape EntityType="TMDModel.DWH_Dim_ProductType" Width="1.5" PointX="20.5" PointY="4.75" />
         <EntityTypeShape EntityType="TMDModel.DWH_Fact_Sale" Width="1.5" PointX="18.125" PointY="6.125" />
-        <EntityTypeShape EntityType="TMDModel.STG_EBayBatchImports" Width="1.5" PointX="9.75" PointY="3.5" />
+        <EntityTypeShape EntityType="TMDModel.STG_EBayBatchImports" Width="2.375" PointX="9.25" PointY="3.5" />
         <EntityTypeShape EntityType="TMDModel.STG_EBayItems" Width="1.5" PointX="12" PointY="1.25" />
         <EntityTypeShape EntityType="TMDModel.STG_ToyGraderBatchImports" Width="1.5" PointX="12" PointY="10.875" />
         <EntityTypeShape EntityType="TMDModel.STG_ToyGraderItems" Width="1.5" PointX="14.25" PointY="2.25" />
