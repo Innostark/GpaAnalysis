@@ -201,6 +201,17 @@ namespace IdentitySample.Controllers
                             ModelState.AddModelError("", "User Is locked, Please contact admin to unlock the user");
                             return View(model);
                         }
+                        else
+                        {
+                            var role = user.AspNetRoles.FirstOrDefault();
+                            if (role.Id == Utility.MemberRoleId)
+                            {
+                                if (string.IsNullOrEmpty(user.RegisterPayPalTxnID ))
+                                {
+                                  return  RedirectToAction("Pricing","Account", new { vkpy = user.Email });
+                                }
+                            }
+                        }
                     }
                 }
                 // This doen't count login failures towards lockout only two factor authentication
@@ -383,7 +394,8 @@ namespace IdentitySample.Controllers
                     UserName = model.AspNetUserModel.UserName,
                     Email = model.AspNetUserModel.Email,
                     Address = model.AspNetUserModel.Address, 
-                    Telephone = model.AspNetUserModel.Telephone,FirstName = model.AspNetUserModel.FirstName,LastName = model.AspNetUserModel.LastName, LockoutEnabled = false
+                    Telephone = model.AspNetUserModel.Telephone,FirstName = model.AspNetUserModel.FirstName,LastName = model.AspNetUserModel.LastName, LockoutEnabled = false,
+                    RegisterPayPalDate = null
                 };
                 user.EmailConfirmed = true;
                 if (!String.IsNullOrEmpty(model.AspNetUserModel.Password))
@@ -813,17 +825,36 @@ namespace IdentitySample.Controllers
         }
         #endregion
 
+        #region Thank you
+
+        [AllowAnonymous]
+        public ActionResult ThankYou()
+        {
+            return View();
+        }
+        #endregion
 
         #region Pricing
         [AllowAnonymous]
         public ActionResult Pricing()
         {
+
             return View();
             
         }
         [AllowAnonymous]
-        public ActionResult SignUp(int PackageId)
+        public ActionResult SignUp(int PackageId,string vkpy)
         {
+            if (!string.IsNullOrEmpty(vkpy))
+            {
+
+               //means we need to go direct to payment
+                AspNetUser oModel = UserManager.FindByEmail(vkpy);
+                if(oModel!=null)
+                return PreparePayPalPayment(oModel);
+
+            }
+
             return View();
 
         }
@@ -859,7 +890,7 @@ namespace IdentitySample.Controllers
                         var roleName = roleManager.FindById(oModel.RoleId).Name;
                         UserManager.AddToRole(user.Id, roleName);
 
-                        return PreparePayPalPayment(oModel);
+                        return PreparePayPalPayment(user);
 
 
                         // Add User Preferences for Dashboards Widgets
@@ -875,7 +906,7 @@ namespace IdentitySample.Controllers
 
         }
 
-        private ActionResult PreparePayPalPayment(AspNetUserModel oModel)
+        private ActionResult PreparePayPalPayment(AspNetUser oModel)
         {
             string IP = ConfigurationManager.AppSettings["PayPalBaseUrl"];
             string businessPaypalId = ConfigurationManager.AppSettings["BusinessPayPalId"];
@@ -883,7 +914,7 @@ namespace IdentitySample.Controllers
 
             double itemCost = 10.00;
             
-            string redirect2 = IP + @"Account/Login";
+            string redirect2 = IP + @"Account/Thankyou";
             string IPN = IP + @"Account/PayPalIPN";
             string Cancel = IP + @"Home/Index";
             string redirect = businessPaypalTransction+"&business=" + businessPaypalId;
@@ -906,6 +937,27 @@ namespace IdentitySample.Controllers
             var email = p["custom"].ToString();
             var txn = p["txn_id"].ToString();
 
+
+            AspNetUser userToUpdate = UserManager.FindByEmail(email);
+            //if (userToUpdate.Email != model.AspNetUserModel.Email)
+            //{
+
+            if (userToUpdate != null)
+            {
+                userToUpdate.Package = 1;
+                userToUpdate.RegisterPayPalDate = DateTime.Now;
+                userToUpdate.RegisterPayPalTxnID = txn;
+            }
+            var updateUserResult =  UserManager.Update(userToUpdate);
+            //if (updateUserResult.Succeeded)
+            //{
+                //TempData["message"] = new MessageViewModel
+                //{
+                //    Message = "User has been Updated",
+                //    IsUpdated = true
+                //};
+            //}
+                
             
 
         }

@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Thank You";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main">
+<div class="container">
+    
+    <div class="row margin-bottom-40 margin-top-20">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-3">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                <li class="list-group-item clearfix"><a href="@(System.Configuration.ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\Login"><i class="fa fa-angle-right"></i> Login</a></li>
+                <li class="list-group-item clearfix"><a href="@(System.Configuration.ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\ForgotPassword"><i class="fa fa-angle-right"></i> Restore Password</a></li>
+                
+
+
+            </ul>
+        </div>
+        <div class="col-md-9 col-sm-9">
+            <h1>Thank You for Becoming Paid Member</h1>
+            
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
+            <div class="row front-lists-v1">
+                <div class="col-md-6">
+                    <ul class="list-unstyled margin-bottom-20">
+                        <li><i class="fa fa-check"></i> Officia deserunt molliti</li>
+                        <li><i class="fa fa-check"></i> Consectetur adipiscing </li>
+                        <li><i class="fa fa-check"></i> Deserunt fpicia</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-check"></i> Officia deserunt molliti</li>
+                        <li><i class="fa fa-check"></i> Consectetur adipiscing </li>
+                        <li><i class="fa fa-check"></i> Deserunt fpicia</li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+
+
+        </div>
+    </div>
+    </div>
+

@@ -31,6 +31,13 @@ namespace TMD.Models.DomainModels
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
+
+        public string RegisterPayPalTxnID { get; set; }
+        public DateTime ? RegisterPayPalDate { get; set; }
+        
+        public int Package { get; set; }
+        
+            
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
          public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
          

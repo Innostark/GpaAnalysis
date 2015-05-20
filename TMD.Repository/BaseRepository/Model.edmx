@@ -58,6 +58,9 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
           <Property Name="LastName" Type="nvarchar" MaxLength="200" />
           <Property Name="Telephone" Type="nvarchar" MaxLength="200" />
+          <Property Name="Package" Type="int" />
+          <Property Name="RegisterPayPalTxnID" Type="varchar" MaxLength="250" />
+          <Property Name="RegisterPayPalDate" Type="datetime" />
         </EntityType>
         <EntityType Name="DWH_Dim_Comapany">
           <Key>
@@ -509,6 +512,9 @@
           <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Telephone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Package" Type="Int32" />
+          <Property Name="RegisterPayPalTxnID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterPayPalDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="DWH_Dim_Comapany">
           <Key>
@@ -842,6 +848,9 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="TMDModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="RegisterPayPalDate" ColumnName="RegisterPayPalDate" />
+                <ScalarProperty Name="RegisterPayPalTxnID" ColumnName="RegisterPayPalTxnID" />
+                <ScalarProperty Name="Package" ColumnName="Package" />
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />

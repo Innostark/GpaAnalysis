@@ -31,7 +31,10 @@ namespace TMD.Web.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        
+        public string RegisterPayPalTxnID { get; set; }
+        public DateTime  ? RegisterPayPalDate { get; set; }
+
+        public int Package { get; set; }
 
         public string RoleName { get; set; }
         public string RoleId { get; set; }
