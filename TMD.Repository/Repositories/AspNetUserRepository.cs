@@ -32,7 +32,7 @@ namespace TMD.Repository.Repositories
         public IEnumerable<AspNetUser> GetAllUsers()
         {
 
-            var adminUsers = db.Users.Include("AspNetRoles").Where(x => x.Id != "53752d93-51ba-4374-86fe-c289a8662872").Where(t=>t.AspNetRoles.Any());
+            var adminUsers = db.Users.Include("AspNetRoles").Where(t=>t.AspNetRoles.Any() && t.AspNetRoles.Any(x=>x.Name!="Admin"));
             
             var abc = adminUsers.ToList();
             return adminUsers;
