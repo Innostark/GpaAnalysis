@@ -1,7 +1,7 @@
 ﻿-- =============================================
 -- Author:		Bilal Rehman
 -- Create date: 14 May 2015
--- Description:	Checks if a ebay items exists in the STG_EBayItems table for a
+-- Description:	Checks if a ebay items exists in the StagingEBayItems table for a
 --              respective ItemId (passed as the parameter). TRIMS the parameter
 --              & Lower case comparision.
 --              Return the number of row found (logically this should be 0 or 1)
@@ -49,7 +49,7 @@ BEGIN
 		  ,[SubTitle]
 		  ,[Title]
 		  ,[ViewItemUrL]
-	FROM   [dbo].[STG_EBayItems] AS sei WITH(NOLOCK)
+	FROM   [dbo].[StagingEBayItems] AS sei WITH(NOLOCK)
 	WHERE  sei.ItemId = @itemId;
 
 	RETURN @@ROWCOUNT;

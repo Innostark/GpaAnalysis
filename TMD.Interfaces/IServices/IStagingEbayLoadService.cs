@@ -9,8 +9,8 @@ namespace TMD.Interfaces.IServices
 
         void LoadEbayData();
 
-        STGEbayBatchImport CreateNewStagingEbayLoadBatch();
+        StagingEbayBatchImport CreateNewStagingEbayLoadBatch();
 
-        bool EbayItemExists(string itemId, out STGEbayItem item);
+        bool EbayItemExists(string itemId, out StagingEbayItem item);
     }
 }

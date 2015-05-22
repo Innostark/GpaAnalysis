@@ -8,10 +8,10 @@ namespace TMD.Implementation.Services
     public class EbayStagingLoadService : IStagingEbayLoadService
     {
        #region 'Private and Constructor'
-        private readonly ISTGEbayBatchImportsRepository istgEbayBatchImportsRepository;
-        private readonly ISTGEbayItemRepository istgEbayItemRepository;
+        private readonly IStagingEbayBatchImportsRepository istgEbayBatchImportsRepository;
+        private readonly IStagingEbayItemRepository istgEbayItemRepository;
 
-        public EbayStagingLoadService(ISTGEbayBatchImportsRepository istgEbayBatchImportsRepository, ISTGEbayItemRepository istgEbayItemRepository)
+        public EbayStagingLoadService(IStagingEbayBatchImportsRepository istgEbayBatchImportsRepository, IStagingEbayItemRepository istgEbayItemRepository)
         {
             this.istgEbayBatchImportsRepository = istgEbayBatchImportsRepository;
             this.istgEbayItemRepository = istgEbayItemRepository;
@@ -29,20 +29,18 @@ namespace TMD.Implementation.Services
             throw new System.NotImplementedException();
         }
 
-        public STGEbayBatchImport CreateNewStagingEbayLoadBatch()
+        public StagingEbayBatchImport CreateNewStagingEbayLoadBatch()
         {
-            var toBeSave = istgEbayBatchImportsRepository.Create();
+            var newBatch = istgEbayBatchImportsRepository.Create();
 
-            toBeSave.CompletedOn =  DateTime.Now;
-            toBeSave.EbayVersion = "V1.0.0.1";
-               istgEbayBatchImportsRepository.Add(toBeSave);
-            istgEbayBatchImportsRepository.SaveChanges();
+            newBatch.CreatedOn =  DateTime.Now;
+            istgEbayBatchImportsRepository.Add(newBatch);
 
-            return new STGEbayBatchImport();
+            return newBatch;
 
         }
 
-        public bool EbayItemExists(string itemId, out STGEbayItem item)
+        public bool EbayItemExists(string itemId, out StagingEbayItem item)
         {
             this.istgEbayItemRepository.EbayItemExists(itemId);
 

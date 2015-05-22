@@ -80,9 +80,11 @@ namespace TMD.Repository.BaseRepository
         /// <summary>
         /// Staging Ebay
         /// </summary>
-        public DbSet<STGEbayBatchImport> STGEbayBatchImports { get; set; }
+        public DbSet<StagingEbayBatchImport> StagingEbayBatchImports { get; set; }
 
-        public DbSet<STGEbayItem> STGEbayItems { get; set; }
+        public DbSet<StagingEbayItem> StagingEbayItems { get; set; }
+
+        public DbSet<Configuration> Configurations { get; set; }
 
         /// <summary>
         /// Calls the database stored procedure spIsEbayLoadRunning
@@ -91,7 +93,7 @@ namespace TMD.Repository.BaseRepository
         /// <returns>true if load is running, otherwise false</returns>
         public bool IsEbayLoadRunning()
         {
-            ObjectResult<int?> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<int?>("spIsEbayLoadRunning");
+            ObjectResult<int> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<int>("spIsEbayLoadRunning");
 
             foreach(int?  result in results)
             {
@@ -111,7 +113,7 @@ namespace TMD.Repository.BaseRepository
         /// <returns>true if load is running, otherwise false</returns>
         public bool EbayItemExists(string itemId)
         {
-            ObjectResult<Collection<STGEbayItem>> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Collection<STGEbayItem>>("EbayItemExists", new ObjectParameter[] { new ObjectParameter("itemId", itemId) });
+            ObjectResult<Collection<StagingEbayItem>> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Collection<StagingEbayItem>>("EbayItemExists", new ObjectParameter[] { new ObjectParameter("itemId", itemId) });
 
             //foreach (int? result in results)
             //{

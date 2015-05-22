@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[StagingToyGraderItems] (
+    [ToyGraderItemId]         INT           IDENTITY (1, 1) NOT NULL,
+    [ToyGraderBatchImporttId] INT           NULL,
+    [CreatedBy]               INT           NOT NULL,
+    [CreatedOn]               DATETIME      CONSTRAINT [DF_STG_ToyGraderItem_CreatedOn] DEFAULT (getutcdate()) NOT NULL,
+    [ModifiedBy]              INT           NULL,
+    [ModifiedOn]              DATETIME      CONSTRAINT [DF_STG_ToyGraderItem_ModifiedOn] DEFAULT (getutcdate()) NULL,
+    [Deleted]                 BIT           CONSTRAINT [DF_STG_ToyGraderItem_Deleted] DEFAULT ((0)) NOT NULL,
+    [DeletedOn]               DATETIME      NULL,
+    [DeletedBy]               INT           NULL,
+    [AfaSerial]               NVARCHAR (30) NULL,
+    [Blister]                 INT           NULL,
+    [Card]                    INT           NULL,
+    [Company]                 NVARCHAR (50) NULL,
+    [DateGraded]              DATETIME      NULL,
+    [Figure]                  INT           NULL,
+    [Grade]                   INT           NULL,
+    [Name]                    NVARCHAR (50) NULL,
+    [Price]                   MONEY         NULL,
+    [Quantity]                INT           NULL,
+    [Series]                  NVARCHAR (50) NULL,
+    [Title]                   NVARCHAR (50) NULL,
+    [Variation]               NVARCHAR (50) NULL,
+    [Year]                    INT           NULL,
+    CONSTRAINT [PK_STG_ToyGraderItem] PRIMARY KEY CLUSTERED ([ToyGraderItemId] ASC),
+    CONSTRAINT [FK_StagingToyGraderItems_StagingToyGraderBatchImports] FOREIGN KEY ([ToyGraderBatchImporttId]) REFERENCES [dbo].[StagingToyGraderBatchImports] ([ToyGraderBatchImporttId])
+);
+
