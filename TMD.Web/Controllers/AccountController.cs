@@ -413,9 +413,25 @@ namespace IdentitySample.Controllers
                         var roleName = roleManager.FindById(model.AspNetUserModel.RoleId).Name;
                         UserManager.AddToRole(user.Id, roleName);
                         // Add User Preferences for Dashboards Widgets
-                        
-                        TempData["message"] = new MessageViewModel { Message = "Employee has been created", IsSaved = true };
+
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Employee has been created",
+                            IsSaved = true
+                        };
                         return RedirectToAction("Users");
+                    }
+                    else
+                    {
+                        var resultStr = "";
+                        if (result.Errors.Count() > 0)
+                            resultStr = result.Errors.ToList()[0].ToString();
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = resultStr,
+                            IsError = true
+                        };
+                        ViewBag.MessageVM = TempData["message"] as MessageViewModel;
                     }
                 }
             }
