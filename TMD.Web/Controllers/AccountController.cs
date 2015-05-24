@@ -6,6 +6,7 @@ using TMD.Models.IdentityModels.ViewModels;
 using TMD.Web;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.PayPal;
 using TMD.Web.ViewModels;
 using TMD.WebBase.Mvc;
 using IdentitySample.Models;
@@ -851,7 +852,74 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult ThankYou()
         {
-            return View();
+            NVPAPICaller PPAPICaller = new NVPAPICaller();
+            NVPCodec decoder = new NVPCodec();
+            string token = string.Empty;
+            string payerID = string.Empty;
+            string finalPaymentAmount = string.Empty;
+            string retMsg = string.Empty;
+            string currency = string.Empty;
+            string email = string.Empty;
+            string transactionId = string.Empty;
+            token = Session["token"].ToString();
+            var payPalFee = string.Empty;
+            AspNetUser userToUpdate = null;
+            //use the PayPal token to get the details of payment - this could include shipping details
+            bool ret = PPAPICaller.GetDetails(token, ref decoder, ref retMsg);
+            if (ret)
+            {
+                payerID = decoder["PayerID"];
+                token = decoder["token"];
+                finalPaymentAmount = decoder["PAYMENTREQUEST_0_AMT"];
+                currency = decoder["CURRENCYCODE"];
+                email = decoder["PAYMENTREQUEST_0_CUSTOM"];
+                transactionId = token;
+                payPalFee = "0"; //decoder["PAYMENTINFO_n_FEEAMT"];
+                // string Success= "Payment successful for - PayerID: " + payerID + "; Amount: " + finalPaymentAmount;
+            }
+            else
+            {
+                //error.LogError();
+            }
+
+            NVPCodec confirmdecoder = new NVPCodec();
+
+            //confirm that payment was taken
+            bool ret2 = PPAPICaller.ConfirmPayment(finalPaymentAmount, token, payerID, currency, ref confirmdecoder, ref retMsg);
+            if (ret2)
+            {
+                //if payment was taken do some back end processing to mark order as paid
+                //use token to work out which order to mark as paid
+                token = confirmdecoder["token"];
+
+
+                var txn = transactionId;
+                var amount = finalPaymentAmount;
+             
+                userToUpdate = UserManager.FindByEmail(email);
+                if (userToUpdate != null)
+                {
+                    userToUpdate.Package = 1;
+                    userToUpdate.RegisterPayPalDate = DateTime.Now;
+                    userToUpdate.RegisterPayPalTxnID = txn;
+                    userToUpdate.PayPalAmount = double.Parse(amount);
+                    userToUpdate.PayPalAmountAfterDeduct = double.Parse(amount) - double.Parse(payPalFee);
+                    userToUpdate.PayPalMisc = "PayerID="+payerID;
+                }
+                var updateUserResult = UserManager.Update(userToUpdate);
+           
+            }
+            else
+            {
+                //payment has not been successful - don't send goods!
+            }
+
+            PaypalPaymentModel oThankyouModel = new PaypalPaymentModel();
+            oThankyouModel.AmountPaid = userToUpdate.PayPalAmount.ToString();
+            oThankyouModel.TxnString = userToUpdate.RegisterPayPalTxnID;
+
+
+            return View(oThankyouModel);
         }
         #endregion
 
@@ -929,28 +997,44 @@ namespace IdentitySample.Controllers
 
         private ActionResult PreparePayPalPayment(AspNetUser oModel)
         {
-            string IP = ConfigurationManager.AppSettings["PayPalBaseUrl"];
-            string businessPaypalId = ConfigurationManager.AppSettings["BusinessPayPalId"];
-            string businessPaypalTransction = ConfigurationManager.AppSettings["PayPalTxnUrl"];
 
-            double itemCost = 10.00;
+            string token = string.Empty;
+            string retMsg = string.Empty;
+         
+              NVPAPICaller PPCaller = new NVPAPICaller();
+            bool ret = PPCaller.ExpressCheckout(oModel.FirstName +" "+oModel.LastName +" Basic Product", "BASIC", "220", "1", "USD",  oModel.Email, ref token, ref retMsg);
+            if (ret)
+            {
+               Session["token"] = token;
+               return  Redirect(retMsg);
+            }
+            else
+            {
+                //PayPal has not responded successfully, let user know
+                //lblError.Text = "PayPal is not responding, please try again in a few moments.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            //string IP = ConfigurationManager.AppSettings["PayPalBaseUrl"];
+            //string businessPaypalId = ConfigurationManager.AppSettings["BusinessPayPalId"];
+            //string businessPaypalTransction = ConfigurationManager.AppSettings["PayPalTxnUrl"];
+            //double itemCost = 10.00;
+            //string redirect2 = IP + @"Account/Thankyou";
+            //string IPN = IP + @"Account/PayPalIPN";
+            //string Cancel = IP + @"Home/Index";
+            //string redirect = businessPaypalTransction+"&business=" + businessPaypalId;
+            //redirect += "&amount=" + itemCost;
+            //redirect += "&custom=" + oModel.Email;
+            //redirect += "&address1=" + oModel.Address;
+            //redirect += "&email=" + oModel.Email;
+            //redirect += "&item_number=1";
+            //redirect += "&currency_code= USD";
+            //redirect += "&return=" + redirect2;
+            //redirect += "&cancel_return=" + Cancel;
+            //redirect += "&item_name=" + "Basic Package";
             
-            string redirect2 = IP + @"Account/Thankyou";
-            string IPN = IP + @"Account/PayPalIPN";
-            string Cancel = IP + @"Home/Index";
-            string redirect = businessPaypalTransction+"&business=" + businessPaypalId;
-            redirect += "&amount=" + itemCost;
-            redirect += "&custom=" + oModel.Email;
-            redirect += "&address1=" + oModel.Address;
-            redirect += "&email=" + oModel.Email;
-            redirect += "&item_number=1";
-            redirect += "&currency_code= USD";
-            redirect += "&return=" + redirect2;
-            redirect += "&cancel_return=" + Cancel;
-            redirect += "&item_name=" + "Basic Package";
-            
-            redirect += "&notify_url=" + IPN;
-            return Redirect(redirect);
+            //redirect += "&notify_url=" + IPN;
+            //return Redirect(redirect);
         }
 
         [AllowAnonymous]
@@ -961,12 +1045,7 @@ namespace IdentitySample.Controllers
             var txn = p["txn_id"].ToString();
             var amount = double.Parse(p["mc_gross"].ToString());
             var tax = double.Parse(p["mc_fee"].ToString());
-            
-
             AspNetUser userToUpdate = UserManager.FindByEmail(email);
-            //if (userToUpdate.Email != model.AspNetUserModel.Email)
-            //{
-
             if (userToUpdate != null)
             {
                 userToUpdate.Package = 1;
