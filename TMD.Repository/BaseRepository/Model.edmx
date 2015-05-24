@@ -270,10 +270,10 @@
             <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
           </AssociationSet>
           <EntitySet Name="Configurations" EntityType="TMDModel.Configuration" />
-          <FunctionImport Name="spUpsertEbayLoadStartTimeFromConfiguration">
+          <FunctionImport Name="spUpsertEbayLoadStartTimeFromConfiguration" ReturnType="Collection(Int32)">
           <Parameter Name="EbayLoadStartTimeFrom" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="spGetEbayLoadStartTimeFrom" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="spGetEbayLoadStartTimeFrom" ReturnType="Collection(String)" />
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>

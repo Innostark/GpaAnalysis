@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Linq;
 using TMD.Models.DomainModels;
 using TMD.Models.LoggerModels;
 using TMD.Models.MenuModels;
 using Microsoft.Practices.Unity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
+using System;
 
 namespace TMD.Repository.BaseRepository
 {
@@ -126,5 +128,32 @@ namespace TMD.Repository.BaseRepository
             return true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetEbayLoadStartTimeFrom()
+        {
+            ObjectResult<string> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("spGetEbayLoadStartTimeFrom");
+
+            foreach (string result in results)
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        public int UpsertEbayLoadStartTimeFromConfiguration(DateTime ebayLoadStartTimeFrom)
+        {
+            ObjectResult<int> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<int>("spUpsertEbayLoadStartTimeFromConfiguration", new ObjectParameter("EbayLoadStartTimeFrom", typeof(DateTime)) { Value = ebayLoadStartTimeFrom });
+
+            foreach (int result in results)
+            {
+                return result;
+            }
+
+            return int.MinValue;
+        }
     }
 }

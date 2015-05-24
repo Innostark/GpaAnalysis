@@ -31,6 +31,7 @@ namespace TMD.Web.Integration.Ebay
             {
                 if (stagingEbayLoadService.CanExecuteEbayLoad())
                 {
+                    string ebayLoadStartTimeFromConfiguration = stagingEbayLoadService.GetEbayLoadStartTimeFrom();
                     //StagingEbayBatchImport stagingEbayBatchImport = stagingEbayLoadService.CreateNewStagingEbayLoadBatch();
 
                     //Ebay.FindingService
@@ -46,41 +47,29 @@ namespace TMD.Web.Integration.Ebay
 
                     // Create request object
                     FindItemsByKeywordsRequest request = new FindItemsByKeywordsRequest();
-                    // Set request parameters
-                    request.keywords = "afa star wars -ready -lot -set -worthy";
-                    PaginationInput pi = new PaginationInput();
-                    pi.entriesPerPage = 2;
-                    pi.entriesPerPageSpecified = true;
-                    request.paginationInput = pi;
-
-                    //// Call the service
-                    //FindItemsByKeywordsResponse response = client.findItemsByKeywords(request);
-
-                    //// Show output
-                    //logger.Info("Ack = " + response.ack);
-                    //logger.Info("Find " + response.searchResult.count + " items.");
-                    //SearchItem[] items = response.searchResult.item;
-                    //for (int i = 0; i < items.Length; i++)
-                    //{
-                    //    logger.Info(items[i].title);
-                    //}
-
-                    //FindItemsByKeywordsRequest request = new FindItemsByKeywordsRequest();
-
                     request.keywords = "afa star wars -ready -lot -set -worthy";
 
-                    ItemFilter filterEndTimeFrom = new ItemFilter();
-                    filterEndTimeFrom.name = ItemFilterType.StartTimeFrom;
-                    filterEndTimeFrom.value = new string[] { DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'") };
+                    List<ItemFilter> itemFilters = new List<ItemFilter>();
+                    itemFilters.Add( new ItemFilter()
+                    {
+                        name = ItemFilterType.AvailableTo,
+                        value = new string[] { "US" }
+                    });
 
+                    if (!String.IsNullOrWhiteSpace(ebayLoadStartTimeFromConfiguration))
+                    {
+                        itemFilters.Add(new ItemFilter()
+                        {
+                            name = ItemFilterType.StartTimeFrom,
+                            value = new string[] { (Convert.ToDateTime(ebayLoadStartTimeFromConfiguration)).ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'") }
+                        });
+                        
+                    }
 
-                    ItemFilter filterAvailableTo = new ItemFilter();
-                    filterAvailableTo.name = ItemFilterType.AvailableTo;
-                    filterAvailableTo.value = new string[] { "US" };
-
-                    request.itemFilter = new ItemFilter[] { filterAvailableTo, filterEndTimeFrom };
+                    request.itemFilter = itemFilters.ToArray();                    
 
                     FindItemsByKeywordsResponse check = client.findItemsByKeywords(request);
+                    DateTime ebayCheckTime = DateTime.UtcNow;
 
                     int totalKeywordMatchedEntriesInEbay = check.paginationOutput.totalEntries;
                     int totalKeywordMatchedEntriesWithGlobalIdEbayUs = 0;
@@ -123,6 +112,9 @@ namespace TMD.Web.Integration.Ebay
                         }
 
                     }
+
+                    stagingEbayLoadService.UpsertEbayLoadStartTimeFromConfiguration(ebayCheckTime);
+
                     //using (FindingServicePortTypeClient client = new FindingServicePortTypeClient())
                     //{
                     //    MessageHeader header = MessageHeader.CreateHeader("My-CustomHeader", "http://www.toymarketdata.com", "Custom Header");

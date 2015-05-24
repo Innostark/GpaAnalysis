@@ -10,11 +10,13 @@ namespace TMD.Implementation.Services
        #region 'Private and Constructor'
         private readonly IStagingEbayBatchImportsRepository istgEbayBatchImportsRepository;
         private readonly IStagingEbayItemRepository istgEbayItemRepository;
+        private readonly IConfigurationRepository iCongifRepository;
 
-        public EbayStagingLoadService(IStagingEbayBatchImportsRepository istgEbayBatchImportsRepository, IStagingEbayItemRepository istgEbayItemRepository)
+        public EbayStagingLoadService(IStagingEbayBatchImportsRepository istgEbayBatchImportsRepository, IStagingEbayItemRepository istgEbayItemRepository, IConfigurationRepository iCongifRepository)
         {
             this.istgEbayBatchImportsRepository = istgEbayBatchImportsRepository;
             this.istgEbayItemRepository = istgEbayItemRepository;
+            this.iCongifRepository = iCongifRepository;
         }
 
        #endregion 'Private and Constructor'
@@ -47,6 +49,16 @@ namespace TMD.Implementation.Services
             item = null;
             return false;
 
+        }
+
+        public string GetEbayLoadStartTimeFrom()
+        {
+            return this.iCongifRepository.GetEbayLoadStartTimeFrom();
+        }
+
+        public int UpsertEbayLoadStartTimeFromConfiguration(DateTime ebayLoadStartTimeFrom)
+        {
+            return iCongifRepository.UpsertEbayLoadStartTimeFromConfiguration(ebayLoadStartTimeFrom);
         }
 
         public void Dispose()

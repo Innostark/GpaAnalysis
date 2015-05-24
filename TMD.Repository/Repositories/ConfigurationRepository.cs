@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.Repository;
 using TMD.Models.DomainModels;
@@ -25,5 +26,15 @@ namespace TMD.Repository.Repositories
             get { return db.Configurations; }
         }
         #endregion
+
+        public string GetEbayLoadStartTimeFrom()
+        {
+            return db.GetEbayLoadStartTimeFrom();
+        }
+
+        public int UpsertEbayLoadStartTimeFromConfiguration(DateTime ebayLoadStartTimeFrom)
+        {
+            return db.UpsertEbayLoadStartTimeFromConfiguration(ebayLoadStartTimeFrom);
+        }
     }
 }
