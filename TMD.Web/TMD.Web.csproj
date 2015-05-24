@@ -310,6 +310,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\AspNetUserModel.cs" />
+    <Compile Include="Models\PaypalPaymentModel.cs" />
+    <Compile Include="PayPal\NVPAPICaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\HR\Account.Designer.cs" />
     <Compile Include="Resources\HR\ContactsList.ar.Designer.cs" />
