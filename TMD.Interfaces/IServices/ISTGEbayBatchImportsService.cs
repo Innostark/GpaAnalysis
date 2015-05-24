@@ -9,6 +9,6 @@ namespace TMD.Interfaces.IServices
 {
     public interface ISTGEbayBatchImportsService
     {
-        IEnumerable<STGEbayBatchImport> GetAllImports();
+     //   IEnumerable<STGEbayBatchImport> GetAllImports();
     }
 }
