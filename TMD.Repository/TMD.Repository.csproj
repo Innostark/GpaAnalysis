@@ -132,8 +132,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\AspNetUserRepository.cs" />
-    <Compile Include="Repositories\STGEbayItemRepository.cs" />
-    <Compile Include="Repositories\STGEbayBatchImportsRepository.cs" />
+    <Compile Include="Repositories\ConfigurationRepository.cs" />
+    <Compile Include="Repositories\StagingEbayItemRepository.cs" />
+    <Compile Include="Repositories\StagingEbayBatchImportsRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
     <Compile Include="Repositories\UserStore.cs" />

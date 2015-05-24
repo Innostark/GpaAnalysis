@@ -63,8 +63,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
     <Compile Include="Repository\IBaseRepository.cs" />
-    <Compile Include="Repository\ISTGEbayBatchImportsRepository.cs" />
-    <Compile Include="Repository\ISTGEbayItemRepository.cs" />
+    <Compile Include="Repository\IConfigurationRepository.cs" />
+    <Compile Include="Repository\IStagingEbayBatchImportsRepository.cs" />
+    <Compile Include="Repository\IStagingEbayItemRepository.cs" />
     <Compile Include="Repository\IUsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E4098FF-362D-4EDD-B285-41D61209D141}"
+	ProjectSection(SolutionItems) = preProject
+		Solution Items\SLF.dll = Solution Items\SLF.dll
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.WebBase", "TMD.WebBase\TMD.WebBase.csproj", "{BCB8BCFD-0163-430C-8088-224074D6E384}"
 EndProject
@@ -18,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMD.Web", "TMD.Web\TMD.Web.csproj", "{426080DD-D8CB-49F2-9645-DFD962ADFFDF}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TDM.Database", "TDM.Database\TDM.Database.sqlproj", "{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eBay.Services", "eBay.Services\eBay.Services.csproj", "{742D29F1-BBCE-4C7F-ABA8-239DE44F8D60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +60,10 @@ Global
 		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1E7D7B34-E98D-4827-9D6A-1BAA4E6C0FC5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{742D29F1-BBCE-4C7F-ABA8-239DE44F8D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742D29F1-BBCE-4C7F-ABA8-239DE44F8D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742D29F1-BBCE-4C7F-ABA8-239DE44F8D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742D29F1-BBCE-4C7F-ABA8-239DE44F8D60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

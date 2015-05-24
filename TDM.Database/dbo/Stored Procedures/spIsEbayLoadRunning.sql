@@ -12,6 +12,6 @@ BEGIN
 
     -- Statement to select all in process records
 	SELECT COUNT(*) As RunningCount
-	FROM   STG_EBayBatchImports WITH(NOLOCK)
+	FROM   StagingEBayBatchImports WITH(NOLOCK)
 	WHERE  InProcess = 1;
 END

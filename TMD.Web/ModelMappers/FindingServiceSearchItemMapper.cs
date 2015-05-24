@@ -1,12 +1,12 @@
 ﻿using System;
+using eBay.Services.Finding;
 using TMD.Models.DomainModels;
-using TMD.Web.Ebay.FindingService;
 
 namespace TMD.Web.ModelMappers
 {
     public static class FindingServiceSearchItemMapper
     {
-        public static void SearchItemToStgEbayItem(SearchItem ebayItem, STGEbayItem stgItem)
+        public static void SearchItemToStgEbayItem(SearchItem ebayItem, StagingEbayItem stgItem)
         {
             //Condition
             if (ebayItem.condition != null && ebayItem.condition.conditionIdSpecified)

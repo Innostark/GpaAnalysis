@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Linq.Expressions;
 using TMD.Interfaces.Repository;
 using TMD.Models.DomainModels;
 using Microsoft.Practices.Unity;
@@ -112,8 +113,16 @@ namespace TMD.Repository.BaseRepository
         /// </summary>
         public void SaveChanges()
         {
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Exception a = e;
+            }
         }
+        
         /// <summary>
         /// Delete an entry
         /// </summary>

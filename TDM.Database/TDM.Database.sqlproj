@@ -69,16 +69,19 @@
     <Build Include="dbo\Tables\AspNetUserLogins.sql" />
     <Build Include="dbo\Tables\AspNetUserRoles.sql" />
     <Build Include="dbo\Tables\AspNetUsers.sql" />
-    <Build Include="dbo\Tables\DWH_Dim_Comapany.sql" />
-    <Build Include="dbo\Tables\DWH_Dim_Date.sql" />
-    <Build Include="dbo\Tables\DWH_Dim_Product.sql" />
-    <Build Include="dbo\Tables\DWH_Dim_ProductType.sql" />
-    <Build Include="dbo\Tables\DWH_Fact_Sale.sql" />
-    <Build Include="dbo\Tables\STG_EBayBatchImports.sql" />
-    <Build Include="dbo\Tables\STG_EBayItems.sql" />
-    <Build Include="dbo\Tables\STG_ToyGraderBatchImports.sql" />
-    <Build Include="dbo\Tables\STG_ToyGraderItems.sql" />
     <Build Include="dbo\Stored Procedures\spIsEbayLoadRunning.sql" />
     <Build Include="dbo\Stored Procedures\spEbayItemExists.sql" />
+    <Build Include="dbo\Tables\StagingToyGraderItems.sql" />
+    <Build Include="dbo\Tables\StagingToyGraderBatchImports.sql" />
+    <Build Include="dbo\Tables\StagingEbayItems.sql" />
+    <Build Include="dbo\Tables\StagingEbayBatchImports.sql" />
+    <Build Include="dbo\Tables\DataWarehouseFactSale.sql" />
+    <Build Include="dbo\Tables\DataWarehouseDimProductType.sql" />
+    <Build Include="dbo\Tables\DataWarehouseDimProduct.sql" />
+    <Build Include="dbo\Tables\DataWarehouseDimDate.sql" />
+    <Build Include="dbo\Tables\DataWarehouseDimComapany.sql" />
+    <Build Include="dbo\Tables\Configurations.sql" />
+    <Build Include="dbo\Stored Procedures\spUpsertEbayLoadStartTimeFromConfiguration.sql" />
+    <Build Include="dbo\Stored Procedures\spGetEbayLoadStartTimeFrom.sql" />
   </ItemGroup>
 </Project>
