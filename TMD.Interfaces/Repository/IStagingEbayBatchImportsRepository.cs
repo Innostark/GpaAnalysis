@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
 
 namespace TMD.Interfaces.Repository
 {
@@ -7,5 +8,6 @@ namespace TMD.Interfaces.Repository
     {
         bool IsEbayLoadRunning();
         IEnumerable<StagingEbayBatchImport> GetAllImports();
+        IEnumerable<StagingEbayBatchImport> GetImports(BatchImportSearchRequest oReq);
     }
 }

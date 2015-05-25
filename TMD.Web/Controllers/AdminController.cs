@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
 
 namespace TMD.Web.Controllers
 {
@@ -85,5 +87,14 @@ namespace TMD.Web.Controllers
                 return View();
             }
         }
+
+        public ActionResult BatchImportLV()
+        {
+
+            //BatchImportSearchResponse oReq = new BatchImportSearchResponse();
+            
+            return View();
+        }
+
     }
 }
