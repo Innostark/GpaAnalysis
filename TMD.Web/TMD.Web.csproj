@@ -306,10 +306,12 @@
     </Compile>
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
     <Compile Include="ModelMappers\FindingServiceSearchItemMapper.cs" />
+    <Compile Include="ModelMappers\StagingEbayBatchImportMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\AspNetUserModel.cs" />
+    <Compile Include="Models\Common\BoolDropDownModel.cs" />
     <Compile Include="Models\StagingEbayBatchImportModel.cs" />
     <Compile Include="Models\PaypalPaymentModel.cs" />
     <Compile Include="PayPal\NVPAPICaller.cs" />
@@ -347,6 +349,7 @@
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\AspNetUsersViewModel.cs" />
+    <Compile Include="ViewModels\BatchImportViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1602,6 +1605,7 @@
     <Content Include="Views\Account\Pricing.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Account\ThankYou.cshtml" />
+    <Content Include="Views\Admin\BatchImportLV.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2662,18 +2666,12 @@
     <Content Include="Views\Admin\NewsAddEdit.cshtml" />
     <Content Include="Views\Admin\HomeSlider.cshtml" />
     <Content Include="Views\Admin\KaluAnaa.cshtml" />
-    <Content Include="Views\Admin\Gallery.cshtml" />
-    <Content Include="Views\Admin\Days.cshtml" />
     <Content Include="Views\Admin\HomeText.cshtml" />
     <Content Include="Views\Admin\KaluAnaaLV.cshtml" />
     <Content Include="Views\Admin\HomeSliderLV.cshtml" />
     <Content Include="Views\Admin\NewsLV.cshtml" />
-    <Content Include="Views\Admin\GeneralAddEdit.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
-    <Content Include="Views\Admin\GeneralAddEditLV.cshtml" />
     <Content Include="Views\Account\Users.cshtml" />
-    <Content Include="Views\Admin\AppointmentLV.cshtml" />
-    <Content Include="Views\Admin\GalleryLV.cshtml" />
     <Content Include="Views\Shared\ES.Master" />
     <Content Include="Views\RolesAdmin\RightsManagement.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
