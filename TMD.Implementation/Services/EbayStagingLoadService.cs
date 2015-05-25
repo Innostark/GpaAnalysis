@@ -31,7 +31,7 @@ namespace TMD.Implementation.Services
             throw new System.NotImplementedException();
         }
 
-        public StagingEbayBatchImport CreateNewStagingEbayLoadBatch()
+        public StagingEbayBatchImport CreateStagingEbayLoadBatch()
         {
             var newBatch = istgEbayBatchImportsRepository.Create();
 
@@ -49,6 +49,17 @@ namespace TMD.Implementation.Services
             item = null;
             return false;
 
+        }
+
+        public void CreateStagingEbayItem(StagingEbayItem item, bool commit = false)
+        {
+            var newStagingEbayItem = istgEbayItemRepository.Create();
+            istgEbayItemRepository.LoadStagingEbayItemToRepositoryObjectForCreate(item, ref newStagingEbayItem);
+            istgEbayItemRepository.Add(newStagingEbayItem);
+            if (commit)
+            {
+                istgEbayItemRepository.SaveChanges();
+            }
         }
 
         public string GetEbayLoadStartTimeFrom()

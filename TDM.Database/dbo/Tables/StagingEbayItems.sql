@@ -27,14 +27,16 @@
     [SellingStatusBidCount]        INT             NULL,
     [SellingStatusCurrentPrice]    MONEY           NULL,
     [SellingStatusSellingState]    NVARCHAR (20)   NULL,
-    [SellingStatusTimeLeft]        DATETIME        NULL,
+    [SellingStatusTimeLeft]        NVARCHAR (30)   NULL,
     [StoreInfoStoreName]           NVARCHAR (200)  NULL,
     [StoreInfoStoreURL]            NVARCHAR (2048) NULL,
     [SubTitle]                     NVARCHAR (1024) NULL,
     [Title]                        NVARCHAR (1024) NULL,
-    [ViewItemUrL]                  NVARCHAR (2048) NULL,
+    [ViewItemUrl]                  NVARCHAR (2048) NULL,
     CONSTRAINT [PK_STG_EBayItem] PRIMARY KEY CLUSTERED ([EbayItemtId] ASC),
     CONSTRAINT [FK_StagingEbayItems_StagingEbayBatchImports] FOREIGN KEY ([EbayBatchImportId]) REFERENCES [dbo].[StagingEbayBatchImports] ([EbayBatchImportId]),
     CONSTRAINT [FK_StagingEbayItems_StagingToyGraderItems] FOREIGN KEY ([ToyGraderItemId]) REFERENCES [dbo].[StagingToyGraderItems] ([ToyGraderItemId])
 );
+
+
 

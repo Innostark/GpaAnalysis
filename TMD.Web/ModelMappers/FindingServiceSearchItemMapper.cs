@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 using eBay.Services.Finding;
 using TMD.Models.DomainModels;
 
@@ -6,8 +7,9 @@ namespace TMD.Web.ModelMappers
 {
     public static class FindingServiceSearchItemMapper
     {
-        public static void SearchItemToStgEbayItem(SearchItem ebayItem, StagingEbayItem stgItem)
+        public static StagingEbayItem SearchItemToStgEbayItem(SearchItem ebayItem)
         {
+            StagingEbayItem stgItem = new StagingEbayItem();
             //Condition
             if (ebayItem.condition != null && ebayItem.condition.conditionIdSpecified)
             {
@@ -24,7 +26,10 @@ namespace TMD.Web.ModelMappers
                 if (listingInfo.buyItNowAvailableSpecified)
                 {
                     stgItem.ListingInfoBuyItNowAvailable = listingInfo.buyItNowAvailable;
-                    stgItem.ListingInfoBuyItNowPrice = Convert.ToDecimal(listingInfo.buyItNowPrice.Value);
+                    if (listingInfo.buyItNowPrice != null)
+                    {
+                        stgItem.ListingInfoBuyItNowPrice = Convert.ToDecimal(listingInfo.buyItNowPrice.Value);
+                    }
                 }
                 else
                 {
@@ -69,10 +74,12 @@ namespace TMD.Web.ModelMappers
                 {
                     stgItem.SellingStatusBidCount = sellingStatus.bidCount;
                 }
-
-                stgItem.SellingStatusCurrentPrice = Convert.ToDecimal(sellingStatus.currentPrice.Value);
+                if (sellingStatus.currentPrice != null)
+                { 
+                    stgItem.SellingStatusCurrentPrice = Convert.ToDecimal(sellingStatus.currentPrice.Value);
+                }
                 stgItem.SellingStatusSellingState = sellingStatus.sellingState;
-                stgItem.SellingStatusTimeLeft = Convert.ToDateTime(sellingStatus.timeLeft);
+                stgItem.SellingStatusTimeLeft = sellingStatus.timeLeft;
             }
             //Store Info
             if (ebayItem.storeInfo != null)
@@ -83,8 +90,9 @@ namespace TMD.Web.ModelMappers
             }
             stgItem.SubTitle = ebayItem.subtitle;
             stgItem.Title = ebayItem.title;
-            stgItem.ViewItemUrL = ebayItem.viewItemURL;
+            stgItem.ViewItemUrl = ebayItem.viewItemURL;
 
+            return stgItem;
         }
     }
 }

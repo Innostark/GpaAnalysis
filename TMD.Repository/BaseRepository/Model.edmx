@@ -122,12 +122,12 @@
           <Property Name="SellingStatusBidCount" Type="int" />
           <Property Name="SellingStatusCurrentPrice" Type="money" />
           <Property Name="SellingStatusSellingState" Type="nvarchar" MaxLength="20" />
-          <Property Name="SellingStatusTimeLeft" Type="datetime" />
+          <Property Name="SellingStatusTimeLeft" Type="nvarchar" MaxLength="30" />
           <Property Name="StoreInfoStoreName" Type="nvarchar" MaxLength="200" />
           <Property Name="StoreInfoStoreURL" Type="nvarchar" MaxLength="2048" />
           <Property Name="SubTitle" Type="nvarchar" MaxLength="1024" />
           <Property Name="Title" Type="nvarchar" MaxLength="1024" />
-          <Property Name="ViewItemUrL" Type="nvarchar" MaxLength="2048" />
+          <Property Name="ViewItemUrl" Type="nvarchar" MaxLength="2048" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -257,12 +257,6 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <FunctionImport Name="spEbayItemExists" ReturnType="Collection(TMDModel.spEbayItemExists_Result)">
-          <Parameter Name="itemId" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="EbayItemExists">
-          <Parameter Name="itemId" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="StagingEbayBatchImports" EntityType="TMDModel.StagingEbayBatchImport" />
           <EntitySet Name="StagingEbayItems" EntityType="TMDModel.StagingEbayItem" />
           <AssociationSet Name="FK_StagingEbayItems_StagingEbayBatchImports" Association="TMDModel.FK_StagingEbayItems_StagingEbayBatchImports">
@@ -274,6 +268,9 @@
           <Parameter Name="EbayLoadStartTimeFrom" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="spGetEbayLoadStartTimeFrom" ReturnType="Collection(String)" />
+          <FunctionImport Name="spEbayItemExists" ReturnType="Collection(TMDModel.spEbayItemExists_SProcResult)">
+          <Parameter Name="itemId" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -365,42 +362,6 @@
           <End Type="TMDModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <ComplexType Name="spEbayItemExists_Result">
-          <Property Type="Int32" Name="EBayItemtId" Nullable="false" />
-          <Property Type="Int32" Name="EBayBatchImportId" Nullable="false" />
-          <Property Type="Int32" Name="ToyGraderItemId" Nullable="true" />
-          <Property Type="Int32" Name="CreatedBy" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="ModifiedBy" Nullable="true" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="true" Precision="23" />
-          <Property Type="Boolean" Name="Deleted" Nullable="false" />
-          <Property Type="DateTime" Name="DeletedOn" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="DeletedBy" Nullable="true" />
-          <Property Type="String" Name="Condition" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CountryCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="GalleryURL" Nullable="true" MaxLength="2048" />
-          <Property Type="String" Name="GlobalId" Nullable="true" MaxLength="12" />
-          <Property Type="String" Name="ItemId" Nullable="false" MaxLength="19" />
-          <Property Type="Boolean" Name="ListingInfoBuyItNowAvailable" Nullable="true" />
-          <Property Type="Decimal" Name="ListingInfoBuyItNowPrice" Nullable="true" Precision="19" />
-          <Property Type="DateTime" Name="ListingInfoEndTime" Nullable="true" Precision="23" />
-          <Property Type="Boolean" Name="ListingInfoGift" Nullable="true" />
-          <Property Type="String" Name="ListingInfoListingType" Nullable="true" MaxLength="20" />
-          <Property Type="DateTime" Name="ListingInfoStartTime" Nullable="true" Precision="23" />
-          <Property Type="String" Name="PrimaryCategory" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="ProducitId" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="SecondaryCategory" Nullable="true" MaxLength="30" />
-          <Property Type="Boolean" Name="SellerInfoTopRatedSeller" Nullable="true" />
-          <Property Type="Int32" Name="SellingStatusBidCount" Nullable="true" />
-          <Property Type="Decimal" Name="SellingStatusCurrentPrice" Nullable="true" Precision="19" />
-          <Property Type="String" Name="SellingStatusSellingState" Nullable="true" MaxLength="20" />
-          <Property Type="DateTime" Name="SellingStatusTimeLeft" Nullable="true" Precision="23" />
-          <Property Type="String" Name="StoreInfoStoreName" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="StoreInfoStoreURL" Nullable="true" MaxLength="2048" />
-          <Property Type="String" Name="SubTitle" Nullable="true" MaxLength="1024" />
-          <Property Type="String" Name="Title" Nullable="true" MaxLength="1024" />
-          <Property Type="String" Name="ViewItemUrL" Nullable="true" MaxLength="2048" />
-        </ComplexType>
         <EntityType Name="StagingEbayBatchImport">
           <Key>
             <PropertyRef Name="EbayBatchImportId" />
@@ -450,13 +411,13 @@
           <Property Name="SellingStatusBidCount" Type="Int32" />
           <Property Name="SellingStatusCurrentPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SellingStatusSellingState" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SellingStatusTimeLeft" Type="DateTime" Precision="3" />
+          <Property Name="SellingStatusTimeLeft" Type="String" MaxLength="30" />
           <Property Name="StoreInfoStoreName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="StoreInfoStoreURL" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <Property Name="SubTitle" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <Property Name="ViewItemUrL" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="StagingEbayBatchImport" Relationship="TMDModel.FK_StagingEbayItems_StagingEbayBatchImports" FromRole="StagingEbayItem" ToRole="StagingEbayBatchImport" />
+          <Property Name="ViewItemUrl" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_StagingEbayItems_StagingEbayBatchImports">
           <End Type="TMDModel.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="1" />
@@ -479,6 +440,42 @@
           <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Value" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="spEbayItemExists_SProcResult">
+          <Property Type="Int32" Name="EbayItemtId" Nullable="false" />
+          <Property Type="Int32" Name="EbayBatchImportId" Nullable="false" />
+          <Property Type="Int32" Name="ToyGraderItemId" Nullable="true" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ModifiedBy" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="Deleted" Nullable="false" />
+          <Property Type="DateTime" Name="DeletedOn" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="DeletedBy" Nullable="true" />
+          <Property Type="String" Name="Condition" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CountryCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="GalleryURL" Nullable="true" MaxLength="2048" />
+          <Property Type="String" Name="GlobalId" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="ItemId" Nullable="false" MaxLength="19" />
+          <Property Type="Boolean" Name="ListingInfoBuyItNowAvailable" Nullable="true" />
+          <Property Type="Decimal" Name="ListingInfoBuyItNowPrice" Nullable="true" Precision="19" />
+          <Property Type="DateTime" Name="ListingInfoEndTime" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="ListingInfoGift" Nullable="true" />
+          <Property Type="String" Name="ListingInfoListingType" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="ListingInfoStartTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PrimaryCategory" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ProducitId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecondaryCategory" Nullable="true" MaxLength="30" />
+          <Property Type="Boolean" Name="SellerInfoTopRatedSeller" Nullable="true" />
+          <Property Type="Int32" Name="SellingStatusBidCount" Nullable="true" />
+          <Property Type="Decimal" Name="SellingStatusCurrentPrice" Nullable="true" Precision="19" />
+          <Property Type="String" Name="SellingStatusSellingState" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="SellingStatusTimeLeft" Nullable="true" Precision="23" />
+          <Property Type="String" Name="StoreInfoStoreName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="StoreInfoStoreURL" Nullable="true" MaxLength="2048" />
+          <Property Type="String" Name="SubTitle" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="ViewItemUrl" Nullable="true" MaxLength="2048" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -548,47 +545,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="spEbayItemExists" FunctionName="TMDModel.Store.spEbayItemExists">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TMDModel.spEbayItemExists_Result">
-                <ScalarProperty Name="EBayItemtId" ColumnName="EBayItemtId" />
-                <ScalarProperty Name="EBayBatchImportId" ColumnName="EBayBatchImportId" />
-                <ScalarProperty Name="ToyGraderItemId" ColumnName="ToyGraderItemId" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="Condition" ColumnName="Condition" />
-                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
-                <ScalarProperty Name="GalleryURL" ColumnName="GalleryURL" />
-                <ScalarProperty Name="GlobalId" ColumnName="GlobalId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="ListingInfoBuyItNowAvailable" ColumnName="ListingInfoBuyItNowAvailable" />
-                <ScalarProperty Name="ListingInfoBuyItNowPrice" ColumnName="ListingInfoBuyItNowPrice" />
-                <ScalarProperty Name="ListingInfoEndTime" ColumnName="ListingInfoEndTime" />
-                <ScalarProperty Name="ListingInfoGift" ColumnName="ListingInfoGift" />
-                <ScalarProperty Name="ListingInfoListingType" ColumnName="ListingInfoListingType" />
-                <ScalarProperty Name="ListingInfoStartTime" ColumnName="ListingInfoStartTime" />
-                <ScalarProperty Name="PrimaryCategory" ColumnName="PrimaryCategory" />
-                <ScalarProperty Name="ProducitId" ColumnName="ProducitId" />
-                <ScalarProperty Name="SecondaryCategory" ColumnName="SecondaryCategory" />
-                <ScalarProperty Name="SellerInfoTopRatedSeller" ColumnName="SellerInfoTopRatedSeller" />
-                <ScalarProperty Name="SellingStatusBidCount" ColumnName="SellingStatusBidCount" />
-                <ScalarProperty Name="SellingStatusCurrentPrice" ColumnName="SellingStatusCurrentPrice" />
-                <ScalarProperty Name="SellingStatusSellingState" ColumnName="SellingStatusSellingState" />
-                <ScalarProperty Name="SellingStatusTimeLeft" ColumnName="SellingStatusTimeLeft" />
-                <ScalarProperty Name="StoreInfoStoreName" ColumnName="StoreInfoStoreName" />
-                <ScalarProperty Name="StoreInfoStoreURL" ColumnName="StoreInfoStoreURL" />
-                <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ViewItemUrL" ColumnName="ViewItemUrL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="EbayItemExists" FunctionName="TMDModel.Store.spEbayItemExists" />
           <EntitySetMapping Name="StagingEbayBatchImports">
             <EntityTypeMapping TypeName="TMDModel.StagingEbayBatchImport">
               <MappingFragment StoreEntitySet="StagingEbayBatchImports">
@@ -609,7 +565,7 @@
           <EntitySetMapping Name="StagingEbayItems">
             <EntityTypeMapping TypeName="TMDModel.StagingEbayItem">
               <MappingFragment StoreEntitySet="StagingEbayItems">
-                <ScalarProperty Name="ViewItemUrL" ColumnName="ViewItemUrL" />
+                <ScalarProperty Name="ViewItemUrl" ColumnName="ViewItemUrl" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
                 <ScalarProperty Name="StoreInfoStoreURL" ColumnName="StoreInfoStoreURL" />
@@ -658,6 +614,46 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spUpsertEbayLoadStartTimeFromConfiguration" FunctionName="TMDModel.Store.spUpsertEbayLoadStartTimeFromConfiguration" />
           <FunctionImportMapping FunctionImportName="spGetEbayLoadStartTimeFrom" FunctionName="TMDModel.Store.spGetEbayLoadStartTimeFrom" />
+          <FunctionImportMapping FunctionImportName="spEbayItemExists" FunctionName="TMDModel.Store.spEbayItemExists" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TMDModel.spEbayItemExists_SProcResult">
+                <ScalarProperty Name="EbayItemtId" ColumnName="EbayItemtId" />
+                <ScalarProperty Name="EbayBatchImportId" ColumnName="EbayBatchImportId" />
+                <ScalarProperty Name="ToyGraderItemId" ColumnName="ToyGraderItemId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="Condition" ColumnName="Condition" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="GalleryURL" ColumnName="GalleryURL" />
+                <ScalarProperty Name="GlobalId" ColumnName="GlobalId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="ListingInfoBuyItNowAvailable" ColumnName="ListingInfoBuyItNowAvailable" />
+                <ScalarProperty Name="ListingInfoBuyItNowPrice" ColumnName="ListingInfoBuyItNowPrice" />
+                <ScalarProperty Name="ListingInfoEndTime" ColumnName="ListingInfoEndTime" />
+                <ScalarProperty Name="ListingInfoGift" ColumnName="ListingInfoGift" />
+                <ScalarProperty Name="ListingInfoListingType" ColumnName="ListingInfoListingType" />
+                <ScalarProperty Name="ListingInfoStartTime" ColumnName="ListingInfoStartTime" />
+                <ScalarProperty Name="PrimaryCategory" ColumnName="PrimaryCategory" />
+                <ScalarProperty Name="ProducitId" ColumnName="ProducitId" />
+                <ScalarProperty Name="SecondaryCategory" ColumnName="SecondaryCategory" />
+                <ScalarProperty Name="SellerInfoTopRatedSeller" ColumnName="SellerInfoTopRatedSeller" />
+                <ScalarProperty Name="SellingStatusBidCount" ColumnName="SellingStatusBidCount" />
+                <ScalarProperty Name="SellingStatusCurrentPrice" ColumnName="SellingStatusCurrentPrice" />
+                <ScalarProperty Name="SellingStatusSellingState" ColumnName="SellingStatusSellingState" />
+                <ScalarProperty Name="SellingStatusTimeLeft" ColumnName="SellingStatusTimeLeft" />
+                <ScalarProperty Name="StoreInfoStoreName" ColumnName="StoreInfoStoreName" />
+                <ScalarProperty Name="StoreInfoStoreURL" ColumnName="StoreInfoStoreURL" />
+                <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ViewItemUrl" ColumnName="ViewItemUrl" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

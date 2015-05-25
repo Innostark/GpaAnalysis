@@ -115,7 +115,9 @@ namespace TMD.Repository.BaseRepository
         /// <returns>true if load is running, otherwise false</returns>
         public bool EbayItemExists(string itemId)
         {
-            ObjectResult<Collection<StagingEbayItem>> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Collection<StagingEbayItem>>("EbayItemExists", new ObjectParameter[] { new ObjectParameter("itemId", itemId) });
+            //ObjectResult<Collection<StagingEbayItem>> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Collection<StagingEbayItem>>("spEbayItemExists", new ObjectParameter[] { new ObjectParameter("itemId", itemId) });
+            ObjectResult<Collection<StagingEbayItem>> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Collection<StagingEbayItem>>("spEbayItemExists", new ObjectParameter[] { new ObjectParameter("itemId", itemId) });
+
 
             //foreach (int? result in results)
             //{
