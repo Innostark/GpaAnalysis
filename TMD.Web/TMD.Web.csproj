@@ -307,6 +307,7 @@
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
     <Compile Include="ModelMappers\FindingServiceSearchItemMapper.cs" />
     <Compile Include="ModelMappers\StagingEbayBatchImportMapper.cs" />
+    <Compile Include="ModelMappers\StagingEbayItemMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
@@ -314,6 +315,7 @@
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
     <Compile Include="Models\StagingEbayBatchImportModel.cs" />
     <Compile Include="Models\PaypalPaymentModel.cs" />
+    <Compile Include="Models\StagingEbayItemModel.cs" />
     <Compile Include="PayPal\NVPAPICaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\HR\Account.Designer.cs" />
@@ -356,6 +358,7 @@
     <Compile Include="ViewModels\Common\MessageViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\EbayItemViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1606,6 +1609,7 @@
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Account\ThankYou.cshtml" />
     <Content Include="Views\Admin\BatchImportLV.cshtml" />
+    <Content Include="Views\Admin\EbayItemImportLV.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

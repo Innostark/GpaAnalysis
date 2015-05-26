@@ -18,10 +18,12 @@ namespace TMD.Web.Controllers
     {
 
         private readonly IStagingEbayBatchImportsService STGEbayBatchImportsService;
+        private readonly IStagingEbayLoadService StagingEbayLoadService;
 
-        public AdminController(IStagingEbayBatchImportsService iSTGEbayBatchImportsService)
+        public AdminController(IStagingEbayBatchImportsService iSTGEbayBatchImportsService, IStagingEbayLoadService iStagingEbayLoadService)
         {
             STGEbayBatchImportsService = iSTGEbayBatchImportsService;
+            StagingEbayLoadService = iStagingEbayLoadService;
         }
 
         // GET: Admin
@@ -102,6 +104,8 @@ namespace TMD.Web.Controllers
             }
         }
 
+
+        #region Batch Import
         public ActionResult BatchImportLV()
         {
             BatchImportSearchRequest viewModel = Session["PageMetaData"] as BatchImportSearchRequest;
@@ -128,8 +132,39 @@ namespace TMD.Web.Controllers
            var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
             return toReturn;
         }
+        #endregion
+
+        #region Ebay Item Import
+        public ActionResult EbayItemImportLV()
+        {
+            StagingEbayItemRequest viewModel = Session["PageMetaData"] as StagingEbayItemRequest;
+            Session["PageMetaData"] = null;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(new EbayItemViewModel
+            {
+                SearchRequest = viewModel ?? new StagingEbayItemRequest()
+            });
+        }
 
 
+        [HttpPost]
+        public ActionResult EbayItemImportLV(StagingEbayItemRequest oRequest)
+        {
+            EbayItemSearchResponse oResponse = StagingEbayLoadService.GetImports(oRequest);
+            List<StagingEbayItemModel> oList = oResponse.EbayItemImports.Select(x => x.CreateFrom()).ToList();
+            EbayItemViewModel oVModel = new EbayItemViewModel();
+            oVModel.data = oList;
+
+            oVModel.recordsTotal = oResponse.TotalCount;
+            oVModel.recordsFiltered = oResponse.FilteredCount;
+
+
+            Session["PageMetaData"] = oRequest;
+            var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
+            return toReturn;
+        }
+      
+        #endregion
 
     }
 }

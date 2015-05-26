@@ -1,9 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using TMD.Interfaces.Repository;
+using TMD.Models.Common;
 using TMD.Models.DomainModels;
+using TMD.Models.ResponseModels;
 using TMD.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
+using System;
+using System.Linq.Expressions;
 
 namespace TMD.Repository.Repositories
 {
@@ -73,6 +78,47 @@ namespace TMD.Repository.Repositories
             repositoryItem.SubTitle = item.SubTitle; 
             repositoryItem.Title = item.Title; 
             repositoryItem.ViewItemUrl = item.ViewItemUrl;
+        }
+
+
+
+        Dictionary<StagingEbayItemRequestByColumn, Func<StagingEbayItem, object>> batchClause =
+            new Dictionary<StagingEbayItemRequestByColumn, Func<StagingEbayItem, object>>
+                {
+                    
+                    {StagingEbayItemRequestByColumn.EbayBatchImportId, c => c.EbayBatchImportId},
+                    {StagingEbayItemRequestByColumn.StoreInfoStoreName, c => c.StoreInfoStoreName},
+                    {StagingEbayItemRequestByColumn.SubTitle, c => c.SubTitle},
+                    {StagingEbayItemRequestByColumn.Title, c => c.Title},
+                    {StagingEbayItemRequestByColumn.ViewItemUrl, c => c.ViewItemUrl}
+                   
+                };
+        public Models.ResponseModels.EbayItemSearchResponse GetImports(Models.RequestModels.StagingEbayItemRequest searchRequest)
+        {
+            
+            int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
+            int toRow = searchRequest.PageSize;
+            Expression<Func<StagingEbayItem, bool>> query =
+                    s => (
+                            (searchRequest.Title == string.Empty || s.Title.Contains(searchRequest.Title))
+
+
+                        );
+            IEnumerable<StagingEbayItem> oList =
+                searchRequest.IsAsc
+                    ? DbSet.Where(query)
+                        .OrderBy(batchClause[searchRequest.EbayItemOrderBy])
+                        .Skip(fromRow)
+                        .Take(toRow)
+                        .ToList()
+                    : DbSet.Where(query)
+                        .OrderByDescending(batchClause[searchRequest.EbayItemOrderBy])
+                        .Skip(fromRow)
+                        .Take(toRow)
+                        .ToList();
+
+            return new EbayItemSearchResponse { EbayItemImports = oList, TotalCount = DbSet.Count(), FilteredCount = DbSet.Count(query) };
+
         }
     }
 }

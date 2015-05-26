@@ -1,0 +1,143 @@
+﻿@model TMD.Web.ViewModels.EbayItemViewModel
+@{
+    ViewBag.Title = "Ebay Item Import";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 4;
+    
+    }
+
+<header>
+
+    <h3 class="page-title">
+        Item Import <small>(Ebay Integration Summary)</small>
+    </h3>
+    @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
+</header>
+
+<div class="container-fluid">
+    <form class="form-horizontal">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="portlet-title">
+                    @*<div class="caption">
+                        <i class="fa fa-filter"></i>Filters
+                    </div>*@
+                    <div class="tools">
+                        <input type="button" class="btn green" id="btnFltr" value="Filter" />
+                        <input type="button" class="btn green titleButton" id="btnResetFltr" value="Reset">
+                        <a href="javascript:;" class="collapse">
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-actions">
+                        <div>
+                            <table class="responsive">
+                                <tr>
+                                    <td >
+                                        <label class="control-label"> Title </label>
+                                    </td>
+                                    <td class="col-md-5">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            <input type="text" name="Title" id="Title"/>
+
+                                        </div>
+
+                                    </td>
+                                    <td class="col-md-5">
+                                        </td>
+</tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="portlet box blue">
+                    <table id="dataTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Item Url</th>
+                                <th>Sub Title</th>
+                                <th>Batch Id</th>
+                                <th>Store Name</th>
+                               
+                                
+                                @*<th class="textAlignRight">Points</th>
+                                <th class="textAlignRight">Fb Points</th>
+                                <th>Active</th>*@
+                                @*<th></th>*@
+                                @*<th>Delete</th>*@
+                            </tr>
+                        </thead>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function($) {
+
+        var siteURL =  $('#siteURL').val();
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+
+        var oTable = $('#dataTable').dataTable({
+            "iDisplayLength": 11,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+
+            "columns": [
+                { "data": "Title" },
+                { "data": "ViewItemUrl" },
+                { "data": "SubTitle", },
+                { "data": "EbayBatchImportId" },
+                { "data": "StoreInfoStoreName" }
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: siteURL + "Admin/EbayItemImportLV",
+                type: "POST",
+                dataType: "json",
+                data: function(params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    //if (params.SortBy === 0) {
+                    //    params.SortBy = 1;
+                    //}
+                    params.IsAsc = params.order[0].dir === "asc";
+
+                    params.Title = $('#Title').text();
+                }
+             
+            }
+
+        });
+        $('#btnFltr').on('click', function(e) {
+            oTable.fnDraw();
+        });
+
+        $('#btnResetFltr').on('click', function(e) {
+            $('#InProcess').val("0");
+            oTable.fnFilter('');
+        });
+    });
+
+    function fnActivityComplete(data, e) {
+        debugger
+    }
+
+</script>
