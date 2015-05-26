@@ -15,6 +15,6 @@ namespace TMD.Interfaces.IServices
         string GetEbayLoadStartTimeFrom();
         int UpsertEbayLoadStartTimeFromConfiguration(DateTime ebayLoadStartTimeFrom);
 
-        BatchImportSearchResponse GetImports(BatchImportSearchRequest oReq);
+        
     }
 }

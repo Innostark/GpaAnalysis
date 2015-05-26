@@ -78,10 +78,6 @@ namespace TMD.Implementation.Services
         }
 
 
-        public Models.ResponseModels.BatchImportSearchResponse GetImports(Models.RequestModels.BatchImportSearchRequest oReq)
-        {
-            return istgEbayBatchImportsRepository.GetImports(oReq);
-            //return orep
-        }
+       
     }
 }

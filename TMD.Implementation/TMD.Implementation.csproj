@@ -126,6 +126,7 @@
     <Compile Include="Identity\IdentityOperation.cs" />
     <Compile Include="Services\AspNetUserService.cs" />
     <Compile Include="Services\EbayStagingLoadService.cs" />
+    <Compile Include="Services\StagingEbayBatchImportsService.cs" />
     <Compile Include="Services\UsersService.cs" />
     <Compile Include="Services\LoggerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

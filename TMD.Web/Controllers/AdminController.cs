@@ -17,9 +17,9 @@ namespace TMD.Web.Controllers
     public class AdminController : BaseController
     {
 
-        private readonly IStagingEbayLoadService STGEbayBatchImportsService;
+        private readonly IStagingEbayBatchImportsService STGEbayBatchImportsService;
 
-        public AdminController(IStagingEbayLoadService iSTGEbayBatchImportsService)
+        public AdminController(IStagingEbayBatchImportsService iSTGEbayBatchImportsService)
         {
             STGEbayBatchImportsService = iSTGEbayBatchImportsService;
         }
