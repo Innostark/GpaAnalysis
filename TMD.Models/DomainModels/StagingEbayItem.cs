@@ -32,12 +32,12 @@ namespace TMD.Models.DomainModels
         public int? SellingStatusBidCount  {get; set;}
         public decimal? SellingStatusCurrentPrice  {get; set;} 
         public string SellingStatusSellingState  {get; set;}
-        public DateTime? SellingStatusTimeLeft  {get; set;} 
+        public string SellingStatusTimeLeft  {get; set;} 
         public string StoreInfoStoreName  {get; set;}
         public string StoreInfoStoreURL  {get; set;} 
         public string SubTitle  {get; set;} 
         public string Title  {get; set;} 
-        public string ViewItemUrL  {get; set;}
+        public string ViewItemUrl  {get; set;}
 
         public virtual StagingEbayBatchImport StagingEbayBatchImport { get; set; }
     }

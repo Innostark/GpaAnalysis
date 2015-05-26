@@ -5,6 +5,7 @@ using eBay.Services.Finding;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
+using TMD.Web.ModelMappers;
 using TMD.WebBase.UnityConfiguration;
 using eBay.Services;
 
@@ -32,7 +33,7 @@ namespace TMD.Web.Integration.Ebay
                 if (stagingEbayLoadService.CanExecuteEbayLoad())
                 {
                     string ebayLoadStartTimeFromConfiguration = stagingEbayLoadService.GetEbayLoadStartTimeFrom();
-                    //StagingEbayBatchImport stagingEbayBatchImport = stagingEbayLoadService.CreateNewStagingEbayLoadBatch();
+                    StagingEbayBatchImport stagingEbayBatchImport = stagingEbayLoadService.CreateStagingEbayLoadBatch();
 
                     //Ebay.FindingService
 
@@ -96,10 +97,20 @@ namespace TMD.Web.Integration.Ebay
                                         !String.IsNullOrWhiteSpace(i.globalId) &&
                                         i.globalId.ToUpper().Equals("EBAY-US"));
 
-                            foreach (SearchItem item in searchItems)
+                            foreach (SearchItem ebaySearchItem in searchItems)
                             {
-                                StagingEbayItem stgItem;
-                                //stagingEbayLoadService.EbayItemExists(item.itemId, out stgItem);
+                                StagingEbayItem stagingEbayItem = FindingServiceSearchItemMapper.SearchItemToStgEbayItem(ebaySearchItem);
+                                stagingEbayLoadService.CreateStagingEbayItem(stagingEbayItem, true);
+
+                                //if (stagingEbayLoadService.EbayItemExists(item.itemId, out stgItem))
+                                //{
+                                //}
+                                //else
+                                //{
+                                    
+                                //}
+
+
                                 totalKeywordMatchedEntriesWithGlobalIdEbayUs++;
                                 //if (item.sellingStatus.sellingState)
                                 //{
@@ -114,74 +125,6 @@ namespace TMD.Web.Integration.Ebay
                     }
 
                     stagingEbayLoadService.UpsertEbayLoadStartTimeFromConfiguration(ebayCheckTime);
-
-                    //using (FindingServicePortTypeClient client = new FindingServicePortTypeClient())
-                    //{
-                    //    MessageHeader header = MessageHeader.CreateHeader("My-CustomHeader", "http://www.toymarketdata.com", "Custom Header");
-                    //    using (OperationContextScope operationContextScope = new OperationContextScope(client.InnerChannel))
-                    //    {
-                    //        OperationContext.Current.OutgoingMessageHeaders.Add(header);
-                    //        HttpRequestMessageProperty httpRequestProperty = new HttpRequestMessageProperty();
-
-                    //        httpRequestProperty.Headers.Add("X-EBAY-SOA-SECURITY-APPNAME", "InnoSTAR-8fa0-4259-ad7d-b348e40fe0f4");
-                    //        httpRequestProperty.Headers.Add("X-EBAY-SOA-OPERATION-NAME", "findItemsByKeywords");
-                    //        httpRequestProperty.Headers.Add("X-EBAY-SOA-GLOBAL-ID", "EBAY-US");
-                    //        OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = httpRequestProperty;
-
-                    //        FindItemsByKeywordsRequest request = new FindItemsByKeywordsRequest();
-
-                    //        request.keywords = "afa star wars -ready -lot -set -worthy";
-                    //        ItemFilter filterEndTimeFrom = new ItemFilter();
-                    //        filterEndTimeFrom.name = ItemFilterType.EndTimeFrom;
-                    //        filterEndTimeFrom.value = new string[] { DateTime.Now.AddDays(-30).ToString("yyyy-MM-ddT00:00:00.000Z") };
-                    //        request.itemFilter = new ItemFilter[] { filterEndTimeFrom };
-
-                    //        FindItemsByKeywordsResponse check = client.findItemsByKeywords(request);
-
-                    //        int totalKeywordMatchedEntriesInEbay = check.paginationOutput.totalEntries;
-                    //        int totalKeywordMatchedEntriesWithGlobalIdEbayUs = 0;
-                    //        int totalPages = (int)Math.Ceiling((double)totalKeywordMatchedEntriesInEbay / 100.00);
-                    //        bool flag = true;
-
-                    //        for (int curPage = 1; curPage <= totalPages; curPage++)
-                    //        {
-                    //            request.paginationInput = new PaginationInput()
-                    //            {
-                    //                entriesPerPageSpecified = true,
-                    //                entriesPerPage = 100,
-                    //                pageNumberSpecified = true,
-                    //                pageNumber = curPage,
-                    //            };
-
-                    //            FindItemsByKeywordsResponse response = client.findItemsByKeywords(request);
-
-                    //            if (response.searchResult.item != null && response.searchResult.item.Length > 0)
-                    //            {
-                    //                IEnumerable<SearchItem> searchItems =
-                    //                    response.searchResult.item.Where(
-                    //                        i =>
-                    //                            !String.IsNullOrWhiteSpace(i.globalId) &&
-                    //                            i.globalId.ToUpper().Equals("EBAY-US"));
-
-                    //                foreach (SearchItem item in searchItems)
-                    //                {
-                    //                    StagingEbayItem stgItem;
-                    //                    //stagingEbayLoadService.EbayItemExists(item.itemId, out stgItem);
-                    //                    totalKeywordMatchedEntriesWithGlobalIdEbayUs++;
-                    //                    //if (item.sellingStatus.sellingState)
-                    //                    //{
-                    //                    //Console.WriteLine(item.viewItemURL + "," + item.sellingStatus.sellingState);
-
-                    //                    //tw.WriteLine(item.viewItemURL.ToString() + "," + item.sellingStatus.sellingState);
-                    //                    //}
-
-                    //                }
-                    //            }
-
-                    //        }
-
-                    //    }
-
                 }
             }
         }

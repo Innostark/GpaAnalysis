@@ -58,7 +58,6 @@
     <Compile Include="IServices\IAspNetUserService.cs" />
     <Compile Include="IServices\IStagingEbayLoadService.cs" />
     <Compile Include="IServices\ILogger.cs" />
-    <Compile Include="IServices\ISTGEbayBatchImportsService.cs" />
     <Compile Include="IServices\IUsersService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />

@@ -36,7 +36,7 @@ BEGIN
 					,'DateTime'
 					, @EbayLoadStartTimeFrom);
 		
-		RETURN 1;	
+		SELECT 1;	
 	END
 	ELSE 
 	BEGIN
@@ -46,8 +46,8 @@ BEGIN
 		SET [Value] = @EbayLoadStartTimeFrom
 		WHERE [Id] = @EbayLoadStartTimeFromId;
 
-		RETURN 2;
+		SELECT 2;
 	END
 
-	RETURN -1;
+	SELECT -1;
 END

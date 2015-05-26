@@ -31,7 +31,7 @@ namespace TMD.Implementation.Services
             throw new System.NotImplementedException();
         }
 
-        public StagingEbayBatchImport CreateNewStagingEbayLoadBatch()
+        public StagingEbayBatchImport CreateStagingEbayLoadBatch()
         {
             var newBatch = istgEbayBatchImportsRepository.Create();
 
@@ -51,6 +51,17 @@ namespace TMD.Implementation.Services
 
         }
 
+        public void CreateStagingEbayItem(StagingEbayItem item, bool commit = false)
+        {
+            var newStagingEbayItem = istgEbayItemRepository.Create();
+            istgEbayItemRepository.LoadStagingEbayItemToRepositoryObjectForCreate(item, ref newStagingEbayItem);
+            istgEbayItemRepository.Add(newStagingEbayItem);
+            if (commit)
+            {
+                istgEbayItemRepository.SaveChanges();
+            }
+        }
+
         public string GetEbayLoadStartTimeFrom()
         {
             return this.iCongifRepository.GetEbayLoadStartTimeFrom();
@@ -64,6 +75,13 @@ namespace TMD.Implementation.Services
         public void Dispose()
         {
             
+        }
+
+
+        public Models.ResponseModels.BatchImportSearchResponse GetImports(Models.RequestModels.BatchImportSearchRequest oReq)
+        {
+            return istgEbayBatchImportsRepository.GetImports(oReq);
+            //return orep
         }
     }
 }
