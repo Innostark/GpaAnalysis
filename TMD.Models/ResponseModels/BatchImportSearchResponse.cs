@@ -23,8 +23,10 @@ namespace TMD.Models.ResponseModels
         /// <summary>
         /// Total Count
         /// </summary>
+        
         public int TotalCount { get; set; }
 
+        public int FilteredCount { get; set; }
 
     }
 }

@@ -3,13 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TMD.Implementation.Services;
+using TMD.Interfaces.IServices;
 using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
+using TMD.Web.ModelMappers;
+using TMD.Web.Models;
+using TMD.Web.ViewModels;
+using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
     public class AdminController : Controller
     {
+
+        private readonly ISTGEbayBatchImportsService STGEbayBatchImportsService;
+
+        public AdminController(ISTGEbayBatchImportsService iSTGEbayBatchImportsService)
+        {
+            STGEbayBatchImportsService = iSTGEbayBatchImportsService;
+        }
+
         // GET: Admin
         public ActionResult Home()
         {
@@ -90,11 +104,32 @@ namespace TMD.Web.Controllers
 
         public ActionResult BatchImportLV()
         {
+            BatchImportSearchRequest viewModel = Session["PageMetaData"] as BatchImportSearchRequest;
+            Session["PageMetaData"] = null;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(new BatchImportViewModel
+            {
+                SearchRequest = viewModel ?? new BatchImportSearchRequest()
+            });
+         }
+        [HttpPost]
+        public ActionResult BatchImportLV(BatchImportSearchRequest oRequest)
+        {
+            BatchImportSearchResponse oResponse =  STGEbayBatchImportsService.GetImports(oRequest);
+            List<StagingEbayBatchImportModel> oList = oResponse.EbayBatchImports.Select(x => x.CreateFrom()).ToList();
+            BatchImportViewModel oVModel = new BatchImportViewModel();
+            oVModel.data = oList;
 
-            //BatchImportSearchResponse oReq = new BatchImportSearchResponse();
-            
-            return View();
+            oVModel.recordsTotal = oResponse.TotalCount;
+            oVModel.recordsFiltered = oResponse.FilteredCount;
+
+
+            Session["PageMetaData"] = oRequest;
+           var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
+            return toReturn;
         }
+
+
 
     }
 }

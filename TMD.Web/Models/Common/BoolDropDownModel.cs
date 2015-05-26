@@ -13,7 +13,12 @@ namespace TMD.Web.Models.Common
         public string Name { get; set; }
         public BoolDropDownModel()
         {
-            oList = new List<BoolDropDownModel>();
+           
+        }
+
+        public void InitilizeList()
+        {
+             oList = new List<BoolDropDownModel>();
 
             oList.Add(new BoolDropDownModel
             {

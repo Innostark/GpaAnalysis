@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMD.Models.DomainModels;
 using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
 
 namespace TMD.Interfaces.IServices
 {
@@ -12,7 +13,7 @@ namespace TMD.Interfaces.IServices
     {
      //   IEnumerable<STGEbayBatchImport> GetAllImports();
 
-        IEnumerable<StagingEbayBatchImport> GetImports(BatchImportSearchRequest oReq);
+        BatchImportSearchResponse GetImports(BatchImportSearchRequest oReq);
     }
 
 }

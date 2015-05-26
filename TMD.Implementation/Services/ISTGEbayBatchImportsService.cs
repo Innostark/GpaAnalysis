@@ -7,6 +7,7 @@ using TMD.Interfaces.IServices;
 using TMD.Interfaces.Repository;
 using TMD.Models.Common;
 using TMD.Models.DomainModels;
+using TMD.Models.ResponseModels;
 
 namespace TMD.Implementation.Services
 {
@@ -21,9 +22,9 @@ namespace TMD.Implementation.Services
             }
 
 
-     
 
-        public IEnumerable<Models.DomainModels.StagingEbayBatchImport> GetImports(Models.RequestModels.BatchImportSearchRequest oReq)
+
+        public BatchImportSearchResponse GetImports(Models.RequestModels.BatchImportSearchRequest oReq)
         {
 
            return oRepository.GetImports(oReq);

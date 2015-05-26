@@ -5,6 +5,7 @@ using System.Linq;
 using TMD.Interfaces.Repository;
 using TMD.Models.Common;
 using TMD.Models.DomainModels;
+using TMD.Models.ResponseModels;
 using TMD.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
 using System.Linq.Expressions;
@@ -16,9 +17,17 @@ namespace TMD.Repository.Repositories
         private readonly Dictionary<BatchImportSearchRequestByColumn, Func<StagingEbayBatchImport, object>> batchClause =
              new Dictionary<BatchImportSearchRequestByColumn, Func<StagingEbayBatchImport, object>>
                 {
+                    {BatchImportSearchRequestByColumn.EbayBatchImportId, c => c.EbayBatchImportId},
                     {BatchImportSearchRequestByColumn.InProcess, c => c.InProcess},
+                    {BatchImportSearchRequestByColumn.CreatedOn, c => c.CreatedOn},
+                    {BatchImportSearchRequestByColumn.StartedOn, c => c.StartedOn},
                     {BatchImportSearchRequestByColumn.CompletedOn, c => c.CompletedOn},
-                    {BatchImportSearchRequestByColumn.EbayBatchImportId, c => c.EbayBatchImportId}
+                    {BatchImportSearchRequestByColumn.Imported, c => c.Imported},
+                    {BatchImportSearchRequestByColumn.Failed, c => c.Failed},
+                    {BatchImportSearchRequestByColumn.Auctions, c => c.Auctions},
+                    {BatchImportSearchRequestByColumn.FixedPrice, c => c.FixedPrice},
+                    {BatchImportSearchRequestByColumn.EbayTimestamp, c => c.EbayTimestamp},
+                    {BatchImportSearchRequestByColumn.EbayVersion, c => c.EbayVersion}
                 };
         #region Constructor
         /// <summary>
@@ -49,14 +58,17 @@ namespace TMD.Repository.Repositories
         }
 
 
-        public IEnumerable<StagingEbayBatchImport> GetImports(Models.RequestModels.BatchImportSearchRequest searchRequest)
+        public BatchImportSearchResponse GetImports(Models.RequestModels.BatchImportSearchRequest searchRequest)
         {
+            bool flag = false;
+            if (searchRequest.InProcess == 1)
+                flag = true;
             int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
             int toRow = searchRequest.PageSize;
             Expression<Func<StagingEbayBatchImport, bool>> query =
                     s => (
-                            (searchRequest.InProcess == 1 || searchRequest.InProcess == 2)
-                            && (s.InProcess.Equals(searchRequest.InProcess == 1 ? true : false))
+                            (searchRequest.InProcess == 0 || s.InProcess.Equals(flag))
+                            
                             
                         );
             IEnumerable<StagingEbayBatchImport> oList =
@@ -72,8 +84,8 @@ namespace TMD.Repository.Repositories
                         .Take(toRow)
                         .ToList();
 
-
-            return oList;
+            return new BatchImportSearchResponse {EbayBatchImports = oList, TotalCount = DbSet.Count(),FilteredCount = DbSet.Count(query)};
+            
         }
     }
 }

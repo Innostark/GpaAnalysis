@@ -10,14 +10,14 @@ namespace TMD.Web.Models
     {
         public int EbayBatchImportId { get; set; }
         public bool InProcess { get; set; }
-        public DateTime? CreatedOn { get; set; }
-        public DateTime? StartedOn { get; set; }
-        public DateTime? CompletedOn { get; set; }
+        public string CreatedOn { get; set; }
+        public string StartedOn { get; set; }
+        public string CompletedOn { get; set; }
         public int? Imported { get; set; }
         public int? Failed { get; set; }
         public int? Auctions { get; set; }
         public int? FixedPrice { get; set; }
-        public DateTime? EbayTimestamp { get; set; }
+        public string EbayTimestamp { get; set; }
         public string EbayVersion { get; set; }
 
     //    public virtual ICollection<StagingEbayItem> StagingEbayItems { get; set; }

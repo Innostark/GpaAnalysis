@@ -14,16 +14,16 @@ namespace TMD.Web.ModelMappers
             var oModel = new StagingEbayBatchImportModel
             {
                 Auctions = source.Auctions,
-                CompletedOn = source.CompletedOn,
-                CreatedOn = source.CreatedOn,
+                CompletedOn = source.CompletedOn!=null ? source.CompletedOn.Value.ToShortDateString() : "",
+                CreatedOn = source.CreatedOn != null ? source.CreatedOn.Value.ToShortDateString() : "",
                 EbayBatchImportId = source.EbayBatchImportId,
-                EbayTimestamp = source.EbayTimestamp,
+                EbayTimestamp = source.EbayTimestamp != null ? source.EbayTimestamp.Value.ToShortDateString() : "",
                 EbayVersion = source.EbayVersion,
                 Failed = source.Failed,
                 FixedPrice = source.FixedPrice,
                 Imported = source.Imported,
                 InProcess = source.InProcess,
-                StartedOn = source.StartedOn
+                StartedOn = source.StartedOn != null ? source.StartedOn.Value.ToShortDateString() : "",
             };
 
             return oModel;

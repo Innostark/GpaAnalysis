@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TMD.Web.ViewModels.BatchImportViewModel
+@{
     ViewBag.Title = "Batch Import";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -16,9 +17,9 @@
         <div class="row-fluid">
             <div class="span12">
                 <div class="portlet-title">
-                    <div class="caption">
+                    @*<div class="caption">
                         <i class="fa fa-filter"></i>Filters
-                    </div>
+                    </div>*@
                     <div class="tools">
                         <input type="button" class="btn green" id="btnFltr" value="Filter" />
                         <input type="button" class="btn green titleButton" id="btnResetFltr" value="Reset">
@@ -37,7 +38,8 @@
                                     <td>
                                         <div class="input-icon">
                                             <i class="fa fa-question-circle"></i>
-                                            @Html.TextBox("SearchString", "", new { @class = "searchInputs form-control input-circle", @id = "SearchInput", @placeholder = "Activity Name" })
+                                            @Html.DropDownList("InProcess", new SelectList(Model.BoolDropDownModels, "Id", "Name"), new { @class = "form-control", id = "InProcess" })
+
                                         </div>
 
                                     </td>
@@ -51,11 +53,101 @@
 
                 </div>
                 <div class="portlet box blue">
-
-                    
-
+                    <table id="dataTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>In Process</th>
+                                <th>Created On</th>
+                                <th>Started On</th>
+                                <th>Completed On</th>
+                                <th>Imported</th>
+                                <th>Failed</th>
+                                <th>Auctions</th>
+                                <th>Fixed Price</th>
+                                <th>Ebay Time</th>
+                                <th>Ebay Version</th>
+                                
+                                @*<th class="textAlignRight">Points</th>
+                                <th class="textAlignRight">Fb Points</th>
+                                <th>Active</th>*@
+                                @*<th></th>*@
+                                @*<th>Delete</th>*@
+                            </tr>
+                        </thead>
+                        
+                    </table>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function($) {
+
+        var siteURL = "http://localhost/TMD.Web/"; //$('#siteURL').val();
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+
+        var oTable = $('#dataTable').dataTable({
+            "iDisplayLength": 11,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+
+            "columns": [
+                { "data": "EbayBatchImportId" },
+                { "data": "InProcess" },
+                { "data": "CreatedOn", },
+                { "data": "StartedOn" },
+                { "data": "CompletedOn" },
+                { "data": "Imported" },
+                { "data": "Failed" },
+                { "data": "Auctions" },
+                { "data": "FixedPrice" },
+                { "data": "EbayTimestamp" },
+                { "data": "EbayVersion" }
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: siteURL + "Admin/BatchImportLV",
+                type: "POST",
+                dataType: "json",
+                data: function(params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    //if (params.SortBy === 0) {
+                    //    params.SortBy = 1;
+                    //}
+                    params.IsAsc = params.order[0].dir === "asc";
+                    var e = document.getElementById('InProcess');
+                    params.InProcess = e.options[e.selectedIndex].value;
+                }
+             
+            }
+
+        });
+        $('#btnFltr').on('click', function(e) {
+            oTable.fnDraw();
+        });
+
+        $('#btnResetFltr').on('click', function(e) {
+            $('#InProcess').val("0");
+            oTable.fnFilter('');
+        });
+    });
+
+    function fnActivityComplete(data, e) {
+        debugger
+    }
+
+</script>
