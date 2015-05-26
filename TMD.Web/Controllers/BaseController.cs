@@ -24,13 +24,13 @@ namespace TMD.Web.Controllers
 
         #region Protected
         // GET: Base
-        //protected override async void Initialize(RequestContext requestContext)
-        //{
-        //    base.Initialize(requestContext);
-        //    if (Session["FullName"] == null || Session["FullName"].ToString() == string.Empty)
-        //        SetUserDetail();
-        //    SetCultureInfo();
-        //}
+        protected override async void Initialize(RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+            if (Session["FullName"] == null || Session["FullName"].ToString() == string.Empty)
+                SetUserDetail();
+           // SetCultureInfo();
+        }
         #endregion
 
         #region Public
@@ -50,7 +50,8 @@ namespace TMD.Web.Controllers
                     .Get<ApplicationRoleManager>()
                     .FindById(result.AspNetRoles.ToList()[0].Id)
                     .Name;
-            Session["FullName"] = result.UserName;
+            Session["FirstName"] = result.FirstName;
+            Session["LastName"] = result.LastName;
             Session["UserID"] = result.Id;
             Session["RoleName"] = role;
             

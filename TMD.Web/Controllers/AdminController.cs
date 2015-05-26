@@ -14,7 +14,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
 
         private readonly IStagingEbayLoadService STGEbayBatchImportsService;

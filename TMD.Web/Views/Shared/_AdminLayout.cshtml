@@ -70,9 +70,10 @@
                         </a>
 
                     </li>
-                    <li class="mega-menu-dropdown mega-menu-full">
-                        <a href="javascript:;" >
-                           Live Data
+                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active" : "")>
+                        <a href="~/Admin/BatchImportLV">
+                            Batch Import <span class="selected">
+                            </span>
                         </a>
 
                     </li>
@@ -123,7 +124,7 @@
                             @*<img alt="" class="img-circle" src="~/Content/admin/layout/img/avatar3_small.jpg" />*@
                             <span class="username username-hide-on-mobile" style="color: white">
                                 @*@("Hello"+User.Identity.Name)*@
-                                Hello  (First Last Name)
+                                Welcome  @Session["FirstName"]
                             </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
@@ -193,6 +194,7 @@
                         <i class="fa fa-angle-up"></i>
                     </span>
                 </div>
+                <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["HostURL"].ToString())" />
             </div>
 
 

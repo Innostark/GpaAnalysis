@@ -2,7 +2,9 @@
 @{
     ViewBag.Title = "Batch Import";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+    Session["MenuKey"] = 4;
+    
+    }
 
 <header>
 
@@ -32,21 +34,20 @@
                         <div>
                             <table class="responsive">
                                 <tr>
-                                    <td>
-                                        <label class="control-label"> Search: </label>
+                                    <td >
+                                        <label class="control-label"> In Process? </label>
                                     </td>
-                                    <td>
+                                    <td class="col-md-5">
                                         <div class="input-icon">
-                                            <i class="fa fa-question-circle"></i>
+                                            <i class="fa fa-search"></i>
                                             @Html.DropDownList("InProcess", new SelectList(Model.BoolDropDownModels, "Id", "Name"), new { @class = "form-control", id = "InProcess" })
 
                                         </div>
 
                                     </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                    <td class="col-md-5">
+                                        </td>
+</tr>
                             </table>
                         </div>
                     </div>
@@ -87,7 +88,7 @@
 
     jQuery(document).ready(function($) {
 
-        var siteURL = "http://localhost/TMD.Web/"; //$('#siteURL').val();
+        var siteURL =  $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
