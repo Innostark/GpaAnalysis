@@ -1610,6 +1610,7 @@
     <Content Include="Views\Account\ThankYou.cshtml" />
     <Content Include="Views\Admin\BatchImportLV.cshtml" />
     <Content Include="Views\Admin\EbayItemImportLV.cshtml" />
+    <Content Include="Views\Admin\EbayItemImportDetail.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

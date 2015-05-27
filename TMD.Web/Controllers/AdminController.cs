@@ -164,7 +164,12 @@ namespace TMD.Web.Controllers
             var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
             return toReturn;
         }
-      
+
+        public ActionResult EbayItemImportDetail(string vpek)
+        {
+         var Item=   StagingEbayLoadService.GetEbayImportById(vpek).CreateFrom();
+            return View(Item);
+        }
         #endregion
 
     }

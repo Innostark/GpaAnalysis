@@ -88,5 +88,11 @@ namespace TMD.Implementation.Services
         {
             return istgEbayItemRepository.GetImports(oReq);
         }
+
+
+        public StagingEbayItem GetEbayImportById(string Id)
+        {
+            return istgEbayItemRepository.GetEbayImportById(Id);
+        }
     }
 }

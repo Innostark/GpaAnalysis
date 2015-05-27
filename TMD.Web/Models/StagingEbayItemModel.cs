@@ -41,5 +41,6 @@ namespace TMD.Web.Models
         public string SubTitle { get; set; }
         public string Title { get; set; }
         public string ViewItemUrl { get; set; }
+        public string EbayItemDetails { get; set; }
     }
 }

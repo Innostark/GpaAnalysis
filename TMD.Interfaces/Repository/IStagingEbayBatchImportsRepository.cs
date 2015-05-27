@@ -10,5 +10,6 @@ namespace TMD.Interfaces.Repository
         bool IsEbayLoadRunning();
         IEnumerable<StagingEbayBatchImport> GetAllImports();
         BatchImportSearchResponse GetImports(BatchImportSearchRequest oReq);
+        
     }
 }

@@ -126,5 +126,12 @@ namespace TMD.Repository.Repositories
             return new EbayItemSearchResponse { EbayItemImports = oList, TotalCount = DbSet.Count(), FilteredCount = DbSet.Count(query) };
 
         }
+
+
+        public StagingEbayItem GetEbayImportById(string szId)
+        {
+            int Id = int.Parse(szId);
+            return DbSet.Where(x => x.EbayItemtId == Id).FirstOrDefault();
+        }
     }
 }
