@@ -8,7 +8,7 @@ namespace TMD.Web.Models
 {
     public class StagingEbayBatchImportModel
     {
-        public int EbayBatchImportId { get; set; }
+        public string EbayBatchImportId { get; set; }
         public bool InProcess { get; set; }
         public string CreatedOn { get; set; }
         public string StartedOn { get; set; }

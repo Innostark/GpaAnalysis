@@ -11,6 +11,7 @@ namespace TMD.Interfaces.Repository
         bool EbayItemExists(string itemId);
         void LoadStagingEbayItemToRepositoryObjectForCreate(StagingEbayItem item, ref  StagingEbayItem repositoryItem);
         EbayItemSearchResponse GetImports(StagingEbayItemRequest oReq);
+        StagingEbayItem GetEbayImportById(string Id);
     
     }
 }

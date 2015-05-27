@@ -95,12 +95,18 @@ namespace TMD.Repository.Repositories
                 };
         public Models.ResponseModels.EbayItemSearchResponse GetImports(Models.RequestModels.StagingEbayItemRequest searchRequest)
         {
-            
+            int batchId = 0;
+            if (!string.IsNullOrEmpty(searchRequest.BatchId))
+            {
+                batchId = int.Parse(searchRequest.BatchId);
+            }
             int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
             int toRow = searchRequest.PageSize;
             Expression<Func<StagingEbayItem, bool>> query =
                     s => (
-                            (searchRequest.Title == string.Empty || s.Title.Contains(searchRequest.Title))
+                            (
+                            (string.IsNullOrEmpty(searchRequest.Title) || s.Title.Contains(searchRequest.Title))
+                            && (batchId ==0 || s.EbayBatchImportId.Equals(batchId)))
 
 
                         );
@@ -119,6 +125,13 @@ namespace TMD.Repository.Repositories
 
             return new EbayItemSearchResponse { EbayItemImports = oList, TotalCount = DbSet.Count(), FilteredCount = DbSet.Count(query) };
 
+        }
+
+
+        public StagingEbayItem GetEbayImportById(string szId)
+        {
+            int Id = int.Parse(szId);
+            return DbSet.Where(x => x.EbayItemtId == Id).FirstOrDefault();
         }
     }
 }

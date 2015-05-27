@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using TMD.Models.DomainModels;
@@ -13,6 +14,8 @@ namespace TMD.Web.ModelMappers
 
         public static StagingEbayItemModel CreateFrom(this StagingEbayItem source)
         {
+            var hostURL = ConfigurationManager.AppSettings["HostURL"];
+
             var oModel = new StagingEbayItemModel
             {
                 EbayItemtId = source.EbayItemtId,
@@ -48,10 +51,11 @@ namespace TMD.Web.ModelMappers
                 StoreInfoStoreName = source.StoreInfoStoreName,
                 StoreInfoStoreURL = source.StoreInfoStoreURL,
                 SubTitle = source.SubTitle,
-                Title = source.Title,
-                ViewItemUrl = source.ViewItemUrl
+                Title = "<a href='" + hostURL + "Admin/EbayItemImportDetail?vpek=" + source.EbayItemtId + "'>"+source.Title+"</a>",
+                ViewItemUrl = "<a href='"+source.ViewItemUrl+"' target='_blank'>View Item </a>",
+                EbayItemDetails = "<a href='" + hostURL + "Admin/EbayItemImportDetail?vpek=" + source.EbayItemtId+ "'>Details</a>"
             };
-            return new StagingEbayItemModel();
+            return oModel;
 
 
         }

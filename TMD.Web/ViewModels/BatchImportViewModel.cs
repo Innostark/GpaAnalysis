@@ -11,8 +11,7 @@ namespace TMD.Web.ViewModels
     public class BatchImportViewModel
     {
         public BatchImportSearchRequest SearchRequest { get; set; }
-
-        public List<BoolDropDownModel> BoolDropDownModels { get; set; }
+       public List<BoolDropDownModel> BoolDropDownModels { get; set; }
 
         public List<StagingEbayBatchImportModel> data { get; set; }
 
