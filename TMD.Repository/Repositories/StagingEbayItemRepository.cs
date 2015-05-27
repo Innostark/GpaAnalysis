@@ -95,13 +95,18 @@ namespace TMD.Repository.Repositories
                 };
         public Models.ResponseModels.EbayItemSearchResponse GetImports(Models.RequestModels.StagingEbayItemRequest searchRequest)
         {
-            
+            int batchId = 0;
+            if (!string.IsNullOrEmpty(searchRequest.BatchId))
+            {
+                batchId = int.Parse(searchRequest.BatchId);
+            }
             int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
             int toRow = searchRequest.PageSize;
             Expression<Func<StagingEbayItem, bool>> query =
                     s => (
-                            (string.IsNullOrEmpty(searchRequest.Title) || s.Title.Contains(searchRequest.Title)
-                            &&(string.IsNullOrEmpty(searchRequest.BatchId) || s.EbayBatchImportId.Equals(int.Parse(searchRequest.BatchId)) ))
+                            (
+                            (string.IsNullOrEmpty(searchRequest.Title) || s.Title.Contains(searchRequest.Title))
+                            && (batchId ==0 || s.EbayBatchImportId.Equals(batchId)))
 
 
                         );

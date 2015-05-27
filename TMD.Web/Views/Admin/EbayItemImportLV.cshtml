@@ -42,7 +42,7 @@
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
                                             @Html.TextBox("Title", "", new { @class = "searchInputs form-control", @id = "Title", @placeholder = "Search Title" })
-
+                                            <input name="QS" id="QS" type="hidden" />
                                         </div>
 
                                     </td>
@@ -84,6 +84,7 @@
 
     jQuery(document).ready(function($) {
 
+        $('#QS').val(getParameterByName('vpek'));
         var siteURL =  $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
@@ -122,7 +123,7 @@
                     params.IsAsc = params.order[0].dir === "asc";
 
                     params.Title = $('#Title').val();
-                    params.BatchId = getParameterByName('vpek');
+                    params.BatchId = $('#QS').val();
                 }
              
             }
@@ -134,6 +135,7 @@
 
         $('#btnResetFltr').on('click', function(e) {
             $('#Title').val("");
+            $('#QS').val("");
             oTable.fnFilter('');
         });
     });
