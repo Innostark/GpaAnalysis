@@ -100,6 +100,7 @@ namespace TMD.Web.Integration.Ebay
                             foreach (SearchItem ebaySearchItem in searchItems)
                             {
                                 StagingEbayItem stagingEbayItem = FindingServiceSearchItemMapper.SearchItemToStgEbayItem(ebaySearchItem);
+                                stagingEbayItem.EbayBatchImportId = 1;
                                 stagingEbayLoadService.CreateStagingEbayItem(stagingEbayItem, true);
 
                                 //if (stagingEbayLoadService.EbayItemExists(item.itemId, out stgItem))
