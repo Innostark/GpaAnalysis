@@ -55,9 +55,6 @@ namespace TMD.Implementation.Services
         {
             var newStagingEbayItem = istgEbayItemRepository.Create();
             istgEbayItemRepository.LoadStagingEbayItemToRepositoryObjectForCreate(item, ref newStagingEbayItem);
-            //newStagingEbayItem.ModifiedOn = DateTime.Now;
-            //newStagingEbayItem.CreatedOn = DateTime.Now; 
-            //newStagingEbayItem.DeletedOn = DateTime.Now;
             istgEbayItemRepository.Add(newStagingEbayItem);
             if (commit)
             {

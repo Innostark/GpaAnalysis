@@ -120,6 +120,7 @@ namespace TMD.Repository.BaseRepository
             catch (Exception e)
             {
                 Exception a = e;
+                throw e;
             }
         }
         

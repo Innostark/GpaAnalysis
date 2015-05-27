@@ -7,13 +7,13 @@ namespace TMD.Models.DomainModels
         public int EbayItemtId  {get; set;} 
         public int EbayBatchImportId  {get; set;}  
         public int? ToyGraderItemId  {get; set;} 
-        public int CreatedBy  {get; set;}
-        public DateTime? CreatedOn { get; set; }
-        public int? ModifiedBy  {get; set;}
-        public DateTime ModifiedOn  {get; set;}
+        public string CreatedBy  {get; set;}
+        public DateTime CreatedOn { get; set; }
+        public string ModifiedBy  {get; set;}
+        public DateTime? ModifiedOn  {get; set;}
         public bool Deleted  {get; set;}
         public DateTime? DeletedOn  {get; set;}
-        public int? DeletedBy  {get; set;}
+        public string DeletedBy  {get; set;}
         public string Condition  {get; set;}
         public string CountryCode  {get; set;}
         public string GalleryURL  {get; set;}
@@ -40,5 +40,8 @@ namespace TMD.Models.DomainModels
         public string ViewItemUrl  {get; set;}
 
         public virtual StagingEbayBatchImport StagingEbayBatchImport { get; set; }
+        public virtual AspNetUser AspNetUserCreatedBy { get; set; }
+        public virtual AspNetUser AspNetUserDeletedBy { get; set; }
+        public virtual AspNetUser AspNetUserModifiedBy { get; set; }
     }
 }

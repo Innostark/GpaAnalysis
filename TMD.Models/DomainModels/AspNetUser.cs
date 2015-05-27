@@ -46,5 +46,13 @@ namespace TMD.Models.DomainModels
          
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<UserPrefrence> UserPrefrences { get; set; }
+
+        public virtual ICollection<StagingEbayBatchImport> StagingEbayBatchesImportCreatedBy { get; set; }
+        public virtual ICollection<StagingEbayBatchImport> StagingEbayBatchesImportDeletedBy { get; set; }
+
+        public virtual ICollection<StagingEbayItem> StagingEbayItemsCreatedBy { get; set; }
+        public virtual ICollection<StagingEbayItem> StagingEbayItemsDeletedBy { get; set; }
+        public virtual ICollection<StagingEbayItem> StagingEbayItemsModifiedBy { get; set; }
+
     }
 }

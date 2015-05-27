@@ -8,6 +8,7 @@ using TMD.Models.DomainModels;
 using TMD.Web.ModelMappers;
 using TMD.WebBase.UnityConfiguration;
 using eBay.Services;
+using System.Configuration;
 
 namespace TMD.Web.Integration.Ebay
 {
@@ -32,39 +33,48 @@ namespace TMD.Web.Integration.Ebay
             {
                 if (stagingEbayLoadService.CanExecuteEbayLoad())
                 {
+                    string userId = "0141f5f5-c1d8-4550-921e-099d21c248f1";
+                    string iso8601DatetimeFormat = ConfigurationManager.AppSettings["EbayISO8601DateTimeFormat"];
                     string ebayLoadStartTimeFromConfiguration = stagingEbayLoadService.GetEbayLoadStartTimeFrom();
                     StagingEbayBatchImport stagingEbayBatchImport = stagingEbayLoadService.CreateStagingEbayLoadBatch();
 
                     //Ebay.FindingService
 
-                    ClientConfig config = new ClientConfig();
-                    // Initialize service end-point configuration
-                    config.EndPointAddress = "https://svcs.ebay.com/services/search/FindingService/v1";
-                    // set eBay developer account AppID
-                    config.ApplicationId = "InnoSTAR-8fa0-4259-ad7d-b348e40fe0f4";
+                    ClientConfig config = new ClientConfig()
+                    {
+                        // Finding API service end-point configuration
+                        EndPointAddress = ConfigurationManager.AppSettings["EbayFindingAPIEndPointAddress"],
+                        // eBay developer account AppID
+                        ApplicationId = ConfigurationManager.AppSettings["EbayFindindAPIApplicationId"],
+                        // timeout value for this call
+                        HttpTimeout = 1500000 //25 minutes
+                    };
 
                     // Create a service client
                     FindingServicePortTypeClient client = FindingServiceClientFactory.getServiceClient(config);
 
                     // Create request object
-                    FindItemsByKeywordsRequest request = new FindItemsByKeywordsRequest();
-                    request.keywords = "afa star wars -ready -lot -set -worthy";
-
-                    List<ItemFilter> itemFilters = new List<ItemFilter>();
-                    itemFilters.Add( new ItemFilter()
+                    FindItemsByKeywordsRequest request = new FindItemsByKeywordsRequest
                     {
-                        name = ItemFilterType.AvailableTo,
-                        value = new string[] { "US" }
-                    });
+                        keywords = ConfigurationManager.AppSettings["EbayFindingApiKeywords"]
+                    };
+
+                    List<ItemFilter> itemFilters = new List<ItemFilter>
+                    {
+                        new ItemFilter()
+                        {
+                            name = ItemFilterType.AvailableTo,
+                            value = new string[] {ConfigurationManager.AppSettings["EbayAvailableToItemFilter"]}
+                        }
+                    };
 
                     if (!String.IsNullOrWhiteSpace(ebayLoadStartTimeFromConfiguration))
                     {
                         itemFilters.Add(new ItemFilter()
                         {
                             name = ItemFilterType.StartTimeFrom,
-                            value = new string[] { (Convert.ToDateTime(ebayLoadStartTimeFromConfiguration)).ToString("yyyy-MM-dd'T'HH:mm:ss.fff'Z'") }
+                            value = new string[] { (Convert.ToDateTime(ebayLoadStartTimeFromConfiguration)).ToString(iso8601DatetimeFormat) }
                         });
-                        
                     }
 
                     request.itemFilter = itemFilters.ToArray();                    
@@ -95,21 +105,29 @@ namespace TMD.Web.Integration.Ebay
                                 response.searchResult.item.Where(
                                     i =>
                                         !String.IsNullOrWhiteSpace(i.globalId) &&
-                                        i.globalId.ToUpper().Equals("EBAY-US"));
+                                        i.globalId.ToUpper().Equals(ConfigurationManager.AppSettings["EbayGlobalIdUS"]));
 
                             foreach (SearchItem ebaySearchItem in searchItems)
                             {
-                                StagingEbayItem stagingEbayItem = FindingServiceSearchItemMapper.SearchItemToStgEbayItem(ebaySearchItem);
-                                stagingEbayItem.EbayBatchImportId = 1;
-                                stagingEbayLoadService.CreateStagingEbayItem(stagingEbayItem, true);
+                                StagingEbayItem stagingEbayItem = null;
+                                if (stagingEbayLoadService.EbayItemExists(ebaySearchItem.itemId, out stagingEbayItem))
+                                {
+                                    //TODO: Add to failed as ebay item id is unique
+                                }
+                                else
+                                {
+                                    stagingEbayItem = FindingServiceSearchItemMapper.SearchItemToStgEbayItem(ebaySearchItem);
+                                    stagingEbayItem.EbayBatchImportId = 4;
+                                    //Set the created-on for staging ebay item record
+                                    stagingEbayItem.CreatedOn = ebayCheckTime;
+                                    stagingEbayItem.CreatedBy = userId;
+                                    //Need to set the datetime to null because the default values are the start of time
+                                    stagingEbayItem.DeletedOn = null;
+                                    stagingEbayItem.ModifiedOn = null;
 
-                                //if (stagingEbayLoadService.EbayItemExists(item.itemId, out stgItem))
-                                //{
-                                //}
-                                //else
-                                //{
-                                    
-                                //}
+                                    //Call service create ebay item method
+                                    stagingEbayLoadService.CreateStagingEbayItem(stagingEbayItem, true);
+                                }
 
 
                                 totalKeywordMatchedEntriesWithGlobalIdEbayUs++;
@@ -122,7 +140,6 @@ namespace TMD.Web.Integration.Ebay
 
                             }
                         }
-
                     }
 
                     stagingEbayLoadService.UpsertEbayLoadStartTimeFromConfiguration(ebayCheckTime);

@@ -10,13 +10,13 @@ namespace TMD.Web.Models
         public int EbayItemtId { get; set; }
         public int EbayBatchImportId { get; set; }
         public int? ToyGraderItemId { get; set; }
-        public int CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public string CreatedOn { get; set; }
-        public int? ModifiedBy { get; set; }
+        public string ModifiedBy { get; set; }
         public string ModifiedOn { get; set; }
         public bool Deleted { get; set; }
         public string DeletedOn { get; set; }
-        public int? DeletedBy { get; set; }
+        public string DeletedBy { get; set; }
         public string Condition { get; set; }
         public string CountryCode { get; set; }
         public string GalleryURL { get; set; }

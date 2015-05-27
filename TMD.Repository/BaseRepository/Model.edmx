@@ -80,6 +80,7 @@
           </Key>
           <Property Name="EbayBatchImportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="InProcess" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="StartedOn" Type="datetime" />
           <Property Name="CompletedOn" Type="datetime" />
@@ -89,6 +90,9 @@
           <Property Name="FixedPrice" Type="int" />
           <Property Name="EbayTimestamp" Type="datetime" />
           <Property Name="EbayVersion" Type="nvarchar" MaxLength="25" />
+          <Property Name="Deleted" Type="bit" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="StagingEbayItems">
           <Key>
@@ -97,13 +101,13 @@
           <Property Name="EbayItemtId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EbayBatchImportId" Type="int" Nullable="false" />
           <Property Name="ToyGraderItemId" Type="int" />
-          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
           <Property Name="ModifiedOn" Type="datetime" />
           <Property Name="Deleted" Type="bit" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
-          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedBy" Type="nvarchar" MaxLength="128" />
           <Property Name="Condition" Type="nvarchar" MaxLength="50" />
           <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
           <Property Name="GalleryURL" Type="nchar" MaxLength="2048" />
@@ -185,6 +189,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="StagingEbayBatchImports" Type="Self.StagingEbayBatchImports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayBatchImports">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayBatchImports_AspNetUsers_DeletedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="StagingEbayBatchImports" Type="Self.StagingEbayBatchImports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayBatchImports">
+              <PropertyRef Name="DeletedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayItems_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="StagingEbayItems" Type="Self.StagingEbayItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayItems">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayItems_AspNetUsers_DeletedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="StagingEbayItems" Type="Self.StagingEbayItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayItems">
+              <PropertyRef Name="DeletedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayItems_AspNetUsers_ModifiedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="StagingEbayItems" Type="Self.StagingEbayItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayItems">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StagingEbayItems_StagingEbayBatchImports">
           <End Role="StagingEbayBatchImports" Type="Self.StagingEbayBatchImports" Multiplicity="1" />
           <End Role="StagingEbayItems" Type="Self.StagingEbayItems" Multiplicity="*" />
@@ -230,6 +294,26 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" Association="Self.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayBatchImports" EntitySet="StagingEbayBatchImports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" Association="Self.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayBatchImports" EntitySet="StagingEbayBatchImports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_CreatedBy" Association="Self.FK_StagingEbayItems_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayItems" EntitySet="StagingEbayItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_DeletedBy" Association="Self.FK_StagingEbayItems_AspNetUsers_DeletedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayItems" EntitySet="StagingEbayItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_ModifiedBy" Association="Self.FK_StagingEbayItems_AspNetUsers_ModifiedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayItems" EntitySet="StagingEbayItems" />
+          </AssociationSet>
           <AssociationSet Name="FK_StagingEbayItems_StagingEbayBatchImports" Association="Self.FK_StagingEbayItems_StagingEbayBatchImports">
             <End Role="StagingEbayBatchImports" EntitySet="StagingEbayBatchImports" />
             <End Role="StagingEbayItems" EntitySet="StagingEbayItems" />
@@ -268,9 +352,29 @@
           <Parameter Name="EbayLoadStartTimeFrom" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="spGetEbayLoadStartTimeFrom" ReturnType="Collection(String)" />
-          <FunctionImport Name="spEbayItemExists" ReturnType="Collection(TMDModel.spEbayItemExists_SProcResult)">
+          <FunctionImport Name="spEbayItemExists" EntitySet="StagingEbayItems" ReturnType="Collection(TMDModel.StagingEbayItem)">
           <Parameter Name="itemId" Mode="In" Type="String" />
           </FunctionImport>
+          <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" Association="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayBatchImport" EntitySet="StagingEbayBatchImports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" Association="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayBatchImport" EntitySet="StagingEbayBatchImports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_CreatedBy" Association="TMDModel.FK_StagingEbayItems_AspNetUsers_CreatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_DeletedBy" Association="TMDModel.FK_StagingEbayItems_AspNetUsers_DeletedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_ModifiedBy" Association="TMDModel.FK_StagingEbayItems_AspNetUsers_ModifiedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -329,6 +433,11 @@
           <Property Name="PayPalAmount" Type="Double" />
           <Property Name="PayPalAmountAfterDeduct" Type="Double" />
           <Property Name="PayPalMisc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StagingEbayBatchesImportCreatedBy" Relationship="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" FromRole="AspNetUser" ToRole="StagingEbayBatchImport" />
+          <NavigationProperty Name="StagingEbayBatchesImportDeletedBy" Relationship="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayBatchImport" />
+          <NavigationProperty Name="StagingEbayItemsCreatedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_CreatedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
+          <NavigationProperty Name="StagingEbayItemsDeletedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
+          <NavigationProperty Name="StagingEbayItemsModifiedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -378,6 +487,12 @@
           <Property Name="EbayTimestamp" Type="DateTime" Precision="3" />
           <Property Name="EbayVersion" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="StagingEbayItems" Relationship="TMDModel.FK_StagingEbayItems_StagingEbayBatchImports" FromRole="StagingEbayBatchImport" ToRole="StagingEbayItem" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="Boolean" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserCreatedBy" Relationship="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" FromRole="StagingEbayBatchImport" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUserDeletedBy" Relationship="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" FromRole="StagingEbayBatchImport" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="StagingEbayItem">
           <Key>
@@ -386,13 +501,13 @@
           <Property Name="EbayItemtId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EbayBatchImportId" Type="Int32" Nullable="false" />
           <Property Name="ToyGraderItemId" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
-          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedBy" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="Condition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GalleryURL" Type="String" MaxLength="2048" FixedLength="true" Unicode="true" />
@@ -411,13 +526,16 @@
           <Property Name="SellingStatusBidCount" Type="Int32" />
           <Property Name="SellingStatusCurrentPrice" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SellingStatusSellingState" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="SellingStatusTimeLeft" Type="String" MaxLength="30" />
+          <Property Name="SellingStatusTimeLeft" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
           <Property Name="StoreInfoStoreName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="StoreInfoStoreURL" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <Property Name="SubTitle" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="StagingEbayBatchImport" Relationship="TMDModel.FK_StagingEbayItems_StagingEbayBatchImports" FromRole="StagingEbayItem" ToRole="StagingEbayBatchImport" />
           <Property Name="ViewItemUrl" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserCreatedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_CreatedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUserDeletedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUserModifiedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FK_StagingEbayItems_StagingEbayBatchImports">
           <End Type="TMDModel.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="1" />
@@ -476,6 +594,66 @@
           <Property Type="String" Name="Title" Nullable="true" MaxLength="1024" />
           <Property Type="String" Name="ViewItemUrl" Nullable="true" MaxLength="2048" />
         </ComplexType>
+        <Association Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
+          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMDModel.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayBatchImport">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayBatchImports_AspNetUsers_DeletedBy">
+          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMDModel.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayBatchImport">
+              <PropertyRef Name="DeletedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayItems_AspNetUsers_CreatedBy">
+          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMDModel.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayItem">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayItems_AspNetUsers_DeletedBy">
+          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMDModel.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayItem">
+              <PropertyRef Name="DeletedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayItems_AspNetUsers_ModifiedBy">
+          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMDModel.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StagingEbayItem">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -548,6 +726,10 @@
           <EntitySetMapping Name="StagingEbayBatchImports">
             <EntityTypeMapping TypeName="TMDModel.StagingEbayBatchImport">
               <MappingFragment StoreEntitySet="StagingEbayBatchImports">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="EbayVersion" ColumnName="EbayVersion" />
                 <ScalarProperty Name="EbayTimestamp" ColumnName="EbayTimestamp" />
                 <ScalarProperty Name="FixedPrice" ColumnName="FixedPrice" />
@@ -615,44 +797,6 @@
           <FunctionImportMapping FunctionImportName="spUpsertEbayLoadStartTimeFromConfiguration" FunctionName="TMDModel.Store.spUpsertEbayLoadStartTimeFromConfiguration" />
           <FunctionImportMapping FunctionImportName="spGetEbayLoadStartTimeFrom" FunctionName="TMDModel.Store.spGetEbayLoadStartTimeFrom" />
           <FunctionImportMapping FunctionImportName="spEbayItemExists" FunctionName="TMDModel.Store.spEbayItemExists" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TMDModel.spEbayItemExists_SProcResult">
-                <ScalarProperty Name="EbayItemtId" ColumnName="EbayItemtId" />
-                <ScalarProperty Name="EbayBatchImportId" ColumnName="EbayBatchImportId" />
-                <ScalarProperty Name="ToyGraderItemId" ColumnName="ToyGraderItemId" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="Condition" ColumnName="Condition" />
-                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
-                <ScalarProperty Name="GalleryURL" ColumnName="GalleryURL" />
-                <ScalarProperty Name="GlobalId" ColumnName="GlobalId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="ListingInfoBuyItNowAvailable" ColumnName="ListingInfoBuyItNowAvailable" />
-                <ScalarProperty Name="ListingInfoBuyItNowPrice" ColumnName="ListingInfoBuyItNowPrice" />
-                <ScalarProperty Name="ListingInfoEndTime" ColumnName="ListingInfoEndTime" />
-                <ScalarProperty Name="ListingInfoGift" ColumnName="ListingInfoGift" />
-                <ScalarProperty Name="ListingInfoListingType" ColumnName="ListingInfoListingType" />
-                <ScalarProperty Name="ListingInfoStartTime" ColumnName="ListingInfoStartTime" />
-                <ScalarProperty Name="PrimaryCategory" ColumnName="PrimaryCategory" />
-                <ScalarProperty Name="ProducitId" ColumnName="ProducitId" />
-                <ScalarProperty Name="SecondaryCategory" ColumnName="SecondaryCategory" />
-                <ScalarProperty Name="SellerInfoTopRatedSeller" ColumnName="SellerInfoTopRatedSeller" />
-                <ScalarProperty Name="SellingStatusBidCount" ColumnName="SellingStatusBidCount" />
-                <ScalarProperty Name="SellingStatusCurrentPrice" ColumnName="SellingStatusCurrentPrice" />
-                <ScalarProperty Name="SellingStatusSellingState" ColumnName="SellingStatusSellingState" />
-                <ScalarProperty Name="SellingStatusTimeLeft" ColumnName="SellingStatusTimeLeft" />
-                <ScalarProperty Name="StoreInfoStoreName" ColumnName="StoreInfoStoreName" />
-                <ScalarProperty Name="StoreInfoStoreURL" ColumnName="StoreInfoStoreURL" />
-                <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ViewItemUrl" ColumnName="ViewItemUrl" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
