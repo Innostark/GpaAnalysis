@@ -66,17 +66,36 @@
                     <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
                         <a href="~/Account/Users">
                             Accounts <span class="selected">
-                            </span>
+                                     </span>
                         </a>
 
                     </li>
+                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "'classic-menu-dropdown active'" : "'classic-menu-dropdown'") >
+                    </li>
+
                     <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active" : "")>
-                        <a href="~/Admin/BatchImportLV">
-                            Batch Import <span class="selected">
-                            </span>
+                        <a data-toggle="dropdown" href="javascript:;">
+                            Ebay Import <i class="fa fa-angle-down"></i>
                         </a>
-
-                    </li>
+                        <ul class="dropdown-menu pull-left">
+                            <li>
+                                <a href="~/Admin/BatchImportLV">
+                                    Batch <span class="selected">
+                                    </span>
+                                </a>
+                            </li>
+                        <li>
+                            <a href="~/Admin/EbayItemImportLV">
+                                Item  <span class="selected">
+                                </span>
+                            </a>
+                        </li>
+                            </ul>
+                            @*<a href="~/Admin/BatchImportLV">
+                                Batch Import <span class="selected">
+                                </span>
+                            </a>*@
+</li>
                     <li class="classic-menu-dropdown">
                         <a data-toggle="dropdown" href="javascript:;">
                             My Searches

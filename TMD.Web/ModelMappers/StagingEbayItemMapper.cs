@@ -49,9 +49,9 @@ namespace TMD.Web.ModelMappers
                 StoreInfoStoreURL = source.StoreInfoStoreURL,
                 SubTitle = source.SubTitle,
                 Title = source.Title,
-                ViewItemUrl = source.ViewItemUrl
+                ViewItemUrl = "<a href='"+source.ViewItemUrl+"' target='_blank'>View Item </a>"
             };
-            return new StagingEbayItemModel();
+            return oModel;
 
 
         }

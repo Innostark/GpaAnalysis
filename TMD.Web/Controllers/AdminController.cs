@@ -109,6 +109,7 @@ namespace TMD.Web.Controllers
         public ActionResult BatchImportLV()
         {
             BatchImportSearchRequest viewModel = Session["PageMetaData"] as BatchImportSearchRequest;
+
             Session["PageMetaData"] = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(new BatchImportViewModel
@@ -154,9 +155,9 @@ namespace TMD.Web.Controllers
             List<StagingEbayItemModel> oList = oResponse.EbayItemImports.Select(x => x.CreateFrom()).ToList();
             EbayItemViewModel oVModel = new EbayItemViewModel();
             oVModel.data = oList;
-
             oVModel.recordsTotal = oResponse.TotalCount;
             oVModel.recordsFiltered = oResponse.FilteredCount;
+            
 
 
             Session["PageMetaData"] = oRequest;

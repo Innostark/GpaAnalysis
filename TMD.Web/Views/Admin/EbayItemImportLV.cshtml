@@ -40,7 +40,8 @@
                                     <td class="col-md-5">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            <input type="text" name="Title" id="Title"/>
+                                            @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
+                                            @Html.TextBox("Title", "", new { @class = "searchInputs form-control", @id = "Title", @placeholder = "Search Title" })
 
                                         </div>
 
@@ -120,7 +121,8 @@
                     //}
                     params.IsAsc = params.order[0].dir === "asc";
 
-                    params.Title = $('#Title').text();
+                    params.Title = $('#Title').val();
+                    params.BatchId = getParameterByName('vpek');
                 }
              
             }
@@ -131,7 +133,7 @@
         });
 
         $('#btnResetFltr').on('click', function(e) {
-            $('#InProcess').val("0");
+            $('#Title').val("");
             oTable.fnFilter('');
         });
     });

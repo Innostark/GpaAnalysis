@@ -10,6 +10,7 @@ namespace TMD.Models.RequestModels
     public class StagingEbayItemRequest : GetPagedListRequest
     {
         public string Title { get; set; }
+        public string BatchId { get; set; }
         public StagingEbayItemRequestByColumn EbayItemOrderBy
         {
             get

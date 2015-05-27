@@ -100,7 +100,8 @@ namespace TMD.Repository.Repositories
             int toRow = searchRequest.PageSize;
             Expression<Func<StagingEbayItem, bool>> query =
                     s => (
-                            (searchRequest.Title == string.Empty || s.Title.Contains(searchRequest.Title))
+                            (string.IsNullOrEmpty(searchRequest.Title) || s.Title.Contains(searchRequest.Title)
+                            &&(string.IsNullOrEmpty(searchRequest.BatchId) || s.EbayBatchImportId.Equals(int.Parse(searchRequest.BatchId)) ))
 
 
                         );
