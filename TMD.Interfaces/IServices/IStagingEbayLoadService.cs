@@ -10,6 +10,7 @@ namespace TMD.Interfaces.IServices
         bool CanExecuteEbayLoad();
         void LoadEbayData();
         StagingEbayBatchImport CreateStagingEbayLoadBatch();
+        void UpdateStagingEbayLoadBatch(StagingEbayBatchImport batch, bool commit);
         void CreateStagingEbayItem(StagingEbayItem item, bool commit = false);
         bool EbayItemExists(string itemId, out StagingEbayItem item);
         string GetEbayLoadStartTimeFrom();

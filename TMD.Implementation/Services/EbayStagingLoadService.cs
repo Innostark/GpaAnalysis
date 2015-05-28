@@ -42,9 +42,18 @@ namespace TMD.Implementation.Services
 
         }
 
+        public void UpdateStagingEbayLoadBatch(StagingEbayBatchImport batch, bool commit = false)
+        {
+            istgEbayBatchImportsRepository.Update(batch);
+            if (commit)
+            {
+                istgEbayBatchImportsRepository.SaveChanges();
+            }
+        }
+
         public bool EbayItemExists(string itemId, out StagingEbayItem item)
         {
-            this.istgEbayItemRepository.EbayItemExists(itemId);
+            //this.istgEbayItemRepository.EbayItemExists(itemId);
 
             item = null;
             return false;
