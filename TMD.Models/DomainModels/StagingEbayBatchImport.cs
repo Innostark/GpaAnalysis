@@ -17,7 +17,7 @@ namespace TMD.Models.DomainModels
         public int? FixedPrice { get; set; }
         public DateTime? EbayTimestamp { get; set; }        
         public string EbayVersion { get; set; }
-        public bool Deleted { get; set; }
+        public bool ? Deleted { get; set; }
         public DateTime? DeletedOn { get; set; }
         public string DeletedBy { get; set; }
 

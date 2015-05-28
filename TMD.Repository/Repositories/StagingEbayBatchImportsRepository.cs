@@ -74,7 +74,7 @@ namespace TMD.Repository.Repositories
             IEnumerable<StagingEbayBatchImport> oList =
                 searchRequest.IsAsc
                     ? DbSet.Where(query)
-                        .OrderBy(batchClause[searchRequest.BatchImportOrderBy])
+                        .OrderBy(batchClause[searchRequest.BatchImportOrderBy] )
                         .Skip(fromRow)
                         .Take(toRow)
                         .ToList()

@@ -292,3 +292,20 @@
 .enableList {
     pointer-events: all;
 }
+
+
+.WhiteColor {
+    color: white !important;
+}
+.textAlignRight {
+    text-align: right;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 6px 6px !important;
+}
+
+.tableLeftAlignHeader {
+  padding: 8px 6px !important;
+  
+}

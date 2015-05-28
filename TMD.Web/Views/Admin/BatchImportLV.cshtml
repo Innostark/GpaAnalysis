@@ -9,7 +9,7 @@
 <header>
 
     <h3 class="page-title">
-        Batch Import <small>(Ebay Integration Summary)</small>
+        Ebay Import Batches <small>(Ebay Integration Summary)</small>
     </h3>
     @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
 </header>
@@ -57,17 +57,16 @@
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>In Process</th>
-                                <th>Created On</th>
-                                <th>Started On</th>
-                                <th>Completed On</th>
-                                <th>Imported</th>
-                                <th>Failed</th>
-                                <th>Auctions</th>
-                                <th>Fixed Price</th>
-                                <th>Ebay Time</th>
-                                <th>Ebay Version</th>
+                                <th class="textAlignRight">Id</th>
+                                <th class="tableLeftAlignHeader">In Process</th>
+                                <th class="tableLeftAlignHeader">Created On</th>
+                                <th class="tableLeftAlignHeader">Started On</th>
+                                <th class="tableLeftAlignHeader">Completed On</th>
+                                <th class="textAlignRight">Imported</th>
+                                <th class="textAlignRight">Failed</th>
+                                <th class="textAlignRight">Auctions</th>
+                                <th class="textAlignRight">Fixed Price</th>
+                                
                                 
                                 @*<th class="textAlignRight">Points</th>
                                 <th class="textAlignRight">Fb Points</th>
@@ -87,7 +86,7 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function($) {
-
+        debugger
         var siteURL =  $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
@@ -101,17 +100,16 @@
             "aaSorting": [sortBy],
 
             "columns": [
-                { "data": "EbayBatchImportId" },
-                { "data": "InProcess" },
+                { "data": "EbayBatchImportId", "class": "textAlignRight" },
+                { "data": "InProcess"},
                 { "data": "CreatedOn", },
                 { "data": "StartedOn" },
                 { "data": "CompletedOn" },
-                { "data": "Imported" },
-                { "data": "Failed" },
-                { "data": "Auctions" },
-                { "data": "FixedPrice" },
-                { "data": "EbayTimestamp" },
-                { "data": "EbayVersion" }
+                { "data": "Imported", "class": "textAlignRight" },
+                { "data": "Failed", "class": "textAlignRight" },
+                { "data": "Auctions", "class": "textAlignRight" },
+                { "data": "FixedPrice", "class": "textAlignRight" }
+
             ],
             "processing": true,
             "serverSide": true,

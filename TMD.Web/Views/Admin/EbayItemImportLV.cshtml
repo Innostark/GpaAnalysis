@@ -58,11 +58,11 @@
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Item Url</th>
-                                <th>Sub Title</th>
-                                <th>Batch Id</th>
-                                <th>Store Name</th>
+                                <th class="tableLeftAlignHeader">Title</th>
+                                <th class ="tableLeftAlignHeader">Item Url</th>
+                                <th class="tableLeftAlignHeader">Sub Title</th>
+                                <th class="textAlignRight">Batch Id</th>
+                                <th class="tableLeftAlignHeader">Store Name</th>
                                 @*<th>Details</th>*@
                                 
                                 @*<th class="textAlignRight">Points</th>
@@ -100,7 +100,7 @@
                 { "data": "Title" },
                 { "data": "ViewItemUrl" },
                 { "data": "SubTitle", },
-                { "data": "EbayBatchImportId" },
+                { "data": "EbayBatchImportId", "class": "textAlignRight" },
                 { "data": "StoreInfoStoreName" }
                 //,{ "data": "EbayItemDetails" }
             ],

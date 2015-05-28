@@ -9,7 +9,7 @@ namespace TMD.Web.Models
     public class StagingEbayBatchImportModel
     {
         public string EbayBatchImportId { get; set; }
-        public bool InProcess { get; set; }
+        public string InProcess { get; set; }
         public string CreatedOn { get; set; }
         public string StartedOn { get; set; }
         public string CompletedOn { get; set; }
@@ -19,6 +19,10 @@ namespace TMD.Web.Models
         public int? FixedPrice { get; set; }
         public string EbayTimestamp { get; set; }
         public string EbayVersion { get; set; }
+
+        public bool? Deleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
+        public string DeletedBy { get; set; }
 
     //    public virtual ICollection<StagingEbayItem> StagingEbayItems { get; set; }
     }

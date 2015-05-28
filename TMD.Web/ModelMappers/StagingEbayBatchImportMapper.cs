@@ -18,14 +18,17 @@ namespace TMD.Web.ModelMappers
                 Auctions = source.Auctions,
                 CompletedOn = source.CompletedOn!=null ? source.CompletedOn.Value.ToShortDateString() : "",
                 CreatedOn = source.CreatedOn != null ? source.CreatedOn.Value.ToShortDateString() : "",
-                EbayBatchImportId = @"<a href='"+hostURL+"Admin/EbayItemImportLV?vpek=" + source.EbayBatchImportId + "' target='_blank'> "+source.EbayBatchImportId+"</a>",
+                EbayBatchImportId = @"<a title='Click to open items imported for this batch' href='" + hostURL + "Admin/EbayItemImportLV?vpek=" + source.EbayBatchImportId + "' target='_blank'> " + source.EbayBatchImportId + "</a>",
                 EbayTimestamp = source.EbayTimestamp != null ? source.EbayTimestamp.Value.ToShortDateString() : "",
                 EbayVersion = source.EbayVersion,
                 Failed = source.Failed,
                 FixedPrice = source.FixedPrice,
                 Imported = source.Imported,
-                InProcess = source.InProcess,
+                InProcess = source.InProcess ?"Yes":"No",
                 StartedOn = source.StartedOn != null ? source.StartedOn.Value.ToShortDateString() : "",
+                Deleted = source.Deleted,
+                DeletedBy = source.DeletedBy,
+                DeletedOn = source.DeletedOn
             };
 
             return oModel;
