@@ -97,15 +97,17 @@ namespace TMD.Repository.BaseRepository
         {
             ObjectResult<int> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<int>("spIsEbayLoadRunning");
 
-            foreach(int?  result in results)
-            {
-                if(result == 0)
-                {
-                    return false;
-                }
-            }
+            return results.FirstOrDefault() != 0;
 
-            return true;
+            ////foreach(int?  result in results)
+            ////{
+            //    if(results.FirstOrDefault() == 0)
+            //    {
+            //        return false;
+            //    }
+            ////}
+
+            //return true;
         }
 
         /// <summary>
@@ -113,21 +115,13 @@ namespace TMD.Repository.BaseRepository
         /// Check if an ebay load is already running, return the count of IsProcessing records in the database
         /// </summary>
         /// <returns>true if load is running, otherwise false</returns>
-        public bool EbayItemExists(string itemId)
+        public bool EbayItemExists(string itemId, out StagingEbayItem item)
         {
-            //ObjectResult<Collection<StagingEbayItem>> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Collection<StagingEbayItem>>("spEbayItemExists", new ObjectParameter[] { new ObjectParameter("itemId", itemId) });
-            ObjectResult<Collection<StagingEbayItem>> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Collection<StagingEbayItem>>("spEbayItemExists", new ObjectParameter[] { new ObjectParameter("itemId", itemId) });
+            ObjectResult<StagingEbayItem> results = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<StagingEbayItem>("spEbayItemExists", new [] { new ObjectParameter("itemId", itemId) });
 
+            item = results.FirstOrDefault();
 
-            //foreach (int? result in results)
-            //{
-            //    if (result == 0)
-            //    {
-            //        return false;
-            //    }
-            //}
-
-            return true;
+            return item != null;
         }
 
         /// <summary>

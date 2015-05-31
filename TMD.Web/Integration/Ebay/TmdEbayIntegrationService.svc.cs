@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using eBay.Services.Finding;
+using Microsoft.Ajax.Utilities;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -15,6 +16,12 @@ namespace TMD.Web.Integration.Ebay
     // NOTE: In order to launch WCF Test Client for testing this service, please select TmdEbayIntegrationService.svc or TmdEbayIntegrationService.svc.cs at the Solution Explorer and start debugging.
     public class TmdEbayIntegrationService : ITmdEbayIntegrationService
     {
+        private const string EbayListingTypeAuctionInLower = "auction";
+        private const string EbayListingTypeAuctionWithBINInLower = "auctionwithbin";
+        private const string EbayListingTypeClassifiedInLower = "classified";
+        private const string EbayListingTypeFixedPriceInLower = "fixedprice";
+        private const string EbayListingTypeStoreInventory = "storeinventory";
+
         public void StartEbayLoad(string username, string password)
         {
             if (String.IsNullOrWhiteSpace(username))
@@ -38,19 +45,13 @@ namespace TMD.Web.Integration.Ebay
                     string ebayLoadStartTimeFromConfiguration = stagingEbayLoadService.GetEbayLoadStartTimeFrom();
                     StagingEbayBatchImport stagingEbayBatchImport = stagingEbayLoadService.CreateStagingEbayLoadBatch();
 
-                    int totalPages;
                     if (stagingEbayBatchImport == null)
                     {
                         //TODO: Raise error as batch was not created
                     }
                     else
                     {
-                        stagingEbayBatchImport.StartedOn = DateTime.Now;
-                        stagingEbayBatchImport.InProcess = true;
-                        stagingEbayBatchImport.Auctions = 0;
-                        stagingEbayBatchImport.Failed = 0;
-                        stagingEbayBatchImport.FixedPrice = 0;
-                        stagingEbayBatchImport.Imported = 0;
+                        SetBatchDefaults(stagingEbayBatchImport);
                         stagingEbayLoadService.UpdateStagingEbayLoadBatch(stagingEbayBatchImport, true);
 
                         var config = new ClientConfig()
@@ -64,7 +65,7 @@ namespace TMD.Web.Integration.Ebay
                         };
 
                         // Create a service client
-                        FindingServicePortTypeClient client = FindingServiceClientFactory.getServiceClient(config);
+                        FindingServicePortTypeClient findingServicePortTypeClient = FindingServiceClientFactory.getServiceClient(config);
 
                         // Create request object
                         var request = new FindItemsByKeywordsRequest
@@ -87,22 +88,21 @@ namespace TMD.Web.Integration.Ebay
                             {
                                 name = ItemFilterType.StartTimeFrom,
                                 value =
-                                    new string[]
+                                    new []
                                     {
-                                        (Convert.ToDateTime(ebayLoadStartTimeFromConfiguration)).ToString(
-                                            iso8601DatetimeFormat)
+                                        //(Convert.ToDateTime(ebayLoadStartTimeFromConfiguration)).ToString(iso8601DatetimeFormat)
+                                        DateTime.Now.AddDays(-1).ToString(iso8601DatetimeFormat)
                                     }
                             });
                         }
-
                         request.itemFilter = itemFilters.ToArray();
 
-                        FindItemsByKeywordsResponse check = client.findItemsByKeywords(request);
+                        FindItemsByKeywordsResponse check = findingServicePortTypeClient.findItemsByKeywords(request);
                         DateTime ebayCheckTime = DateTime.UtcNow;
-
-                        int totalKeywordMatchedEntriesInEbay = check.paginationOutput.totalEntries;
-                        int totalKeywordMatchedEntriesWithGlobalIdEbayUs = 0;
-                        totalPages = (int) Math.Ceiling((double) totalKeywordMatchedEntriesInEbay/100.00);
+                        int totalKeywordMatched = check.paginationOutput.totalEntries;
+                        var totalPages = (int) Math.Ceiling(totalKeywordMatched/100.00);
+                        stagingEbayBatchImport.TotalKeywordMatched = totalKeywordMatched;
+                        stagingEbayBatchImport.EbayVersion = findingServicePortTypeClient.getVersion(new GetVersionRequest()).version;
 
                         for (int curPage = 1; curPage <= totalPages; curPage++)
                         {
@@ -114,64 +114,30 @@ namespace TMD.Web.Integration.Ebay
                                 pageNumber = curPage,
                             };
 
-                            FindItemsByKeywordsResponse response = client.findItemsByKeywords(request);
-
+                            FindItemsByKeywordsResponse response = findingServicePortTypeClient.findItemsByKeywords(request);
                             if (response != null && (response.searchResult.item != null && response.searchResult.item.Length > 0))
                             {
-                                IEnumerable<SearchItem> searchItems = response.searchResult.item.Where(EBayGlobalIdUsStore);
-
+                                IEnumerable<SearchItem> searchItems = response.searchResult.item.Where(EBayGlobalIdUsStore).DistinctBy(i => i.itemId);
                                 foreach (SearchItem ebaySearchItem in searchItems)
                                 {
+                                    stagingEbayBatchImport.ToBeProcessed++;
                                     StagingEbayItem stagingEbayItem = null;
                                     if (stagingEbayLoadService.EbayItemExists(ebaySearchItem.itemId, out stagingEbayItem))
                                     {
+                                        stagingEbayBatchImport.Duplicates++;
                                         stagingEbayBatchImport.Failed++;
+                                        continue;
                                     }
-                                    else
+                                    else if ((ebaySearchItem.listingInfo != null &&
+                                              String.IsNullOrWhiteSpace(ebaySearchItem.listingInfo.listingType)))
                                     {
-                                        stagingEbayItem =
-                                            FindingServiceSearchItemMapper.SearchItemToStgEbayItem(ebaySearchItem);
-                                        stagingEbayItem.EbayBatchImportId = stagingEbayBatchImport.EbayBatchImportId;
-                                        //Set the created-on for staging ebay item record
-                                        stagingEbayItem.CreatedOn = ebayCheckTime;
-                                        stagingEbayItem.CreatedBy = userId;
-                                        //Need to set the datetime to null because the default values are the start of time
-                                        stagingEbayItem.DeletedOn = null;
-                                        stagingEbayItem.ModifiedOn = null;
-
-                                        //Call service create ebay item method
-                                        stagingEbayLoadService.CreateStagingEbayItem(stagingEbayItem, true);
+                                        stagingEbayBatchImport.NoListingType++;
+                                        stagingEbayBatchImport.Failed++;
+                                        continue;
                                     }
 
-                                    totalKeywordMatchedEntriesWithGlobalIdEbayUs++;
-                                    stagingEbayBatchImport.Imported++;
-
-                                    if (String.IsNullOrWhiteSpace(stagingEbayItem.ListingInfoListingType)) continue;
-                                    /***ebay Listing Type values
-                                         **AdFormat                                        
-                                         * Advertisement to solicit inquiries on listings such as real estate. Permits no bidding on that item, service, or property. To express interest, a buyer fills out a contact form that eBay forwards to the seller as a lead. This format does not enable buyers and sellers to transact online through eBay and eBay Feedback is not available for ad format listings.
-                                         **Auction
-                                         * Competitive-bid on-line auction format. Buyers engage in competitive bidding, although Buy It Now may be offered as long as no valid bids have been placed. Online auctions are listed on eBay.com; they can also be listed in a seller's eBay Store if the seller is a Store owner.
-                                         **AuctionWithBIN
-                                         * Same as Auction format, but Buy It Now is enabled. AuctionWithBIN changes to Auction if a valid bid has been placed on the item. Valid bids include bids that are equal to or above any specified reserve price.
-                                         **Classified
-                                         * Classified Ads connect buyers and sellers, who then complete the sale outside of eBay. This format does not enable buyers and sellers to transact online through eBay and eBay Feedback is not available for these listing types.
-                                         **FixedPrice
-                                         * A fixed-price listing. Auction-style bidding is not allowed. On some sites, this auction format is also known as "Buy It Now Only" (not to be confused with the Buy It Now option available with competitive- bidding auctions). Fixed-price listings appear on eBay.com; they can also be listed in a seller's eBay Store if the seller is a Store owner.
-                                        ***/
-                                    if (
-                                        stagingEbayItem.ListingInfoListingType.ToLower().Equals("Auction".ToLower()) ||
-                                        stagingEbayItem.ListingInfoListingType.ToLower()
-                                            .Equals("AuctionWithBIN".ToLower()))
-                                    {
-                                        stagingEbayBatchImport.Auctions++;
-                                    }
-                                    else if (
-                                        stagingEbayItem.ListingInfoListingType.ToLower()
-                                            .Equals("FixedPrice".ToLower()))
-                                    {
-                                        stagingEbayBatchImport.FixedPrice++;
-                                    }
+                                    stagingEbayItem = CreateStagingEbayItem(stagingEbayLoadService, ebaySearchItem, stagingEbayBatchImport.EbayBatchImportId, ebayCheckTime, userId);
+                                    UpdateCounts(stagingEbayItem, stagingEbayBatchImport);
                                 }
                             }
                         }
@@ -185,14 +151,81 @@ namespace TMD.Web.Integration.Ebay
             }
         }
 
+        private void SetBatchDefaults(StagingEbayBatchImport stagingEbayBatchImport)
+        {
+            stagingEbayBatchImport.StartedOn = DateTime.Now;
+            stagingEbayBatchImport.InProcess = true;
+            stagingEbayBatchImport.TotalKeywordMatched = 0;
+            stagingEbayBatchImport.ToBeProcessed = 0;
+            stagingEbayBatchImport.Auctions = 0;
+            stagingEbayBatchImport.AuctionsWithBIN = 0;
+            stagingEbayBatchImport.Classified = 0;
+            stagingEbayBatchImport.FixedPrice = 0;
+            stagingEbayBatchImport.StoreInventory = 0;
+            stagingEbayBatchImport.Failed = 0;
+            stagingEbayBatchImport.Imported = 0;
+            stagingEbayBatchImport.NoListingType = 0;
+            stagingEbayBatchImport.Duplicates = 0;
+        }
+
+        private StagingEbayItem CreateStagingEbayItem(IStagingEbayLoadService stagingEbayLoadService, SearchItem ebaySearchItem, int batchId, DateTime ebayCheckTime, string userId)
+        {
+            StagingEbayItem stagingEbayItem = FindingServiceSearchItemMapper.SearchItemToStgEbayItem(ebaySearchItem);
+            stagingEbayItem.EbayBatchImportId = batchId;
+            //Set the created-on for staging ebay item record
+            stagingEbayItem.CreatedOn = ebayCheckTime;
+            stagingEbayItem.CreatedBy = userId;
+            //Need to set the datetime to null because the default values are the start of time
+            stagingEbayItem.DeletedOn = null;
+            stagingEbayItem.ModifiedOn = null;
+
+            //Call service create ebay item method
+            stagingEbayLoadService.CreateStagingEbayItem(stagingEbayItem, true);
+            return stagingEbayItem;
+        }
+
+        private void UpdateCounts(StagingEbayItem stagingEbayItem, StagingEbayBatchImport stagingEbayBatchImport)
+        {
+            /***ebay Listing Type values
+                **AdFormat                                        
+                    * Advertisement to solicit inquiries on listings such as real estate. Permits no bidding on that item, service, or property. To express interest, a buyer fills out a contact form that eBay forwards to the seller as a lead. This format does not enable buyers and sellers to transact online through eBay and eBay Feedback is not available for ad format listings.
+                **Auction
+                    * Competitive-bid on-line auction format. Buyers engage in competitive bidding, although Buy It Now may be offered as long as no valid bids have been placed. Online auctions are listed on eBay.com; they can also be listed in a seller's eBay Store if the seller is a Store owner.
+                **AuctionsWithBIN
+                    * Same as Auction format, but Buy It Now is enabled. AuctionsWithBIN changes to Auction if a valid bid has been placed on the item. Valid bids include bids that are equal to or above any specified reserve price.
+                **Classified
+                    * Classified Ads connect buyers and sellers, who then complete the sale outside of eBay. This format does not enable buyers and sellers to transact online through eBay and eBay Feedback is not available for these listing types.
+                **FixedPrice
+                * A fixed-price listing. Auction-style bidding is not allowed. On some sites, this auction format is also known as "Buy It Now Only" (not to be confused with the Buy It Now option available with competitive- bidding auctions). Fixed-price listings appear on eBay.com; they can also be listed in a seller's eBay Store if the seller is a Store owner.
+            ***/
+            switch (stagingEbayItem.ListingInfoListingType.ToLower())
+            {
+                case EbayListingTypeAuctionInLower:
+                    stagingEbayBatchImport.Auctions++;
+                    break;
+                case EbayListingTypeAuctionWithBINInLower:
+                    stagingEbayBatchImport.AuctionsWithBIN++;
+                    break;
+                case EbayListingTypeClassifiedInLower:
+                    stagingEbayBatchImport.Classified++;
+                    break;
+                case EbayListingTypeFixedPriceInLower:
+                    stagingEbayBatchImport.FixedPrice++;
+                    break;
+                case EbayListingTypeStoreInventory:
+                    stagingEbayBatchImport.StoreInventory++;
+                    break;
+                default:
+                    var a = 1;
+                    break;
+            }
+
+            stagingEbayBatchImport.Imported++;
+        }
+
         private bool EBayGlobalIdUsStore(SearchItem item)
         {
             return !String.IsNullOrWhiteSpace(item.globalId) && item.globalId.ToUpper().Equals(ConfigurationManager.AppSettings["EbayGlobalIdUS"].ToUpper());
         }
-
-        //TODO: Authenticate the passed details
-
-        //Check if there is a load already running.
-
     }
 }

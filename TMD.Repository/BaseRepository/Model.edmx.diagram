@@ -5,22 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="149d63c950554997821631b5961128b4" Name="Diagram1" ZoomLevel="108">
-        <EntityTypeShape EntityType="TMDModel.AspNetRole" Width="1.5" PointX="0.5" PointY="6.375" />
-        <EntityTypeShape EntityType="TMDModel.AspNetUserClaim" Width="1.5" PointX="7.25" PointY="5" />
-        <EntityTypeShape EntityType="TMDModel.AspNetUserLogin" Width="1.5" PointX="7.25" PointY="7.75" />
-        <EntityTypeShape EntityType="TMDModel.AspNetUser" Width="3.875" PointX="2.625" PointY="5.375" />
-        <AssociationConnector Association="TMDModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="TMDModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="TMDModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="TMDModel.StagingEbayBatchImport" Width="2.625" PointX="9.375" PointY="3.375" />
-        <EntityTypeShape EntityType="TMDModel.StagingEbayItem" Width="3.75" PointX="13.25" PointY="1.125" />
-        <AssociationConnector Association="TMDModel.FK_StagingEbayItems_StagingEbayBatchImports" />
-        <EntityTypeShape EntityType="TMDModel.Configuration" Width="1.5" PointX="0.75" PointY="0.75" />
-        <AssociationConnector Association="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" />
-        <AssociationConnector Association="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" />
-        <AssociationConnector Association="TMDModel.FK_StagingEbayItems_AspNetUsers_CreatedBy" />
-        <AssociationConnector Association="TMDModel.FK_StagingEbayItems_AspNetUsers_DeletedBy" />
-        <AssociationConnector Association="TMDModel.FK_StagingEbayItems_AspNetUsers_ModifiedBy" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.5" PointY="6.375" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserClaim" Width="1.5" PointX="7.25" PointY="5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserLogin" Width="1.5" PointX="7.25" PointY="7.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="3.875" PointX="2.625" PointY="5.375" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="TMD.Models.DomainModels.AspNetUserRoles" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingEbayBatchImport" Width="2.625" PointX="9.375" PointY="3.375" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingEbayItem" Width="3.75" PointX="13.25" PointY="1.125" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_StagingEbayBatchImports" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Configuration" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingToyGraderBatchImport" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

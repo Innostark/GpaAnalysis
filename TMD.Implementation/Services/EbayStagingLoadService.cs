@@ -53,11 +53,7 @@ namespace TMD.Implementation.Services
 
         public bool EbayItemExists(string itemId, out StagingEbayItem item)
         {
-            //this.istgEbayItemRepository.EbayItemExists(itemId);
-
-            item = null;
-            return false;
-
+            return istgEbayItemRepository.EbayItemExists(itemId, out item);
         }
 
         public void CreateStagingEbayItem(StagingEbayItem item, bool commit = false)

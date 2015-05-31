@@ -84,10 +84,17 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="StartedOn" Type="datetime" />
           <Property Name="CompletedOn" Type="datetime" />
+          <Property Name="TotalKeywordMatched" Type="int" />
+          <Property Name="ToBeProcessed" Type="int" />
           <Property Name="Imported" Type="int" />
           <Property Name="Failed" Type="int" />
+          <Property Name="Duplicates" Type="int" />
+          <Property Name="NoListingType" Type="int" />
           <Property Name="Auctions" Type="int" />
+          <Property Name="AuctionsWithBIN" Type="int" />
+          <Property Name="Classified" Type="int" />
           <Property Name="FixedPrice" Type="int" />
+          <Property Name="StoreInventory" Type="int" />
           <Property Name="EbayTimestamp" Type="datetime" />
           <Property Name="EbayVersion" Type="nvarchar" MaxLength="25" />
           <Property Name="Deleted" Type="bit" />
@@ -132,6 +139,18 @@
           <Property Name="SubTitle" Type="nvarchar" MaxLength="1024" />
           <Property Name="Title" Type="nvarchar" MaxLength="1024" />
           <Property Name="ViewItemUrl" Type="nvarchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="StagingToyGraderBatchImports">
+          <Key>
+            <PropertyRef Name="ToyGraderBatchImporttId" />
+          </Key>
+          <Property Name="ToyGraderBatchImporttId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InProcess" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="StartedOn" Type="datetime" />
+          <Property Name="CompletedOn" Type="nchar" MaxLength="10" />
+          <Property Name="Imported" Type="int" />
+          <Property Name="Failed" Type="int" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -278,6 +297,7 @@
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayBatchImports" EntityType="Self.StagingEbayBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayItems" EntityType="Self.StagingEbayItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StagingToyGraderBatchImports" EntityType="Self.StagingToyGraderBatchImports" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -322,59 +342,60 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TMDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TMD.Models.DomainModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <FunctionImport Name="spIsEbayLoadRunning" ReturnType="Collection(Int32)" />
-          <EntitySet Name="AspNetRoles" EntityType="TMDModel.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="TMDModel.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="TMDModel.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="TMDModel.AspNetUser" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="TMDModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <EntitySet Name="AspNetRoles" EntityType="TMD.Models.DomainModels.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="TMD.Models.DomainModels.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="TMD.Models.DomainModels.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="TMD.Models.DomainModels.AspNetUser" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="TMDModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="TMDModel.AspNetUserRoles">
+          <AssociationSet Name="AspNetUserRoles" Association="TMD.Models.DomainModels.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="StagingEbayBatchImports" EntityType="TMDModel.StagingEbayBatchImport" />
-          <EntitySet Name="StagingEbayItems" EntityType="TMDModel.StagingEbayItem" />
-          <AssociationSet Name="FK_StagingEbayItems_StagingEbayBatchImports" Association="TMDModel.FK_StagingEbayItems_StagingEbayBatchImports">
+          <EntitySet Name="StagingEbayBatchImports" EntityType="TMD.Models.DomainModels.StagingEbayBatchImport" />
+          <EntitySet Name="StagingEbayItems" EntityType="TMD.Models.DomainModels.StagingEbayItem" />
+          <AssociationSet Name="FK_StagingEbayItems_StagingEbayBatchImports" Association="TMD.Models.DomainModels.FK_StagingEbayItems_StagingEbayBatchImports">
             <End Role="StagingEbayBatchImport" EntitySet="StagingEbayBatchImports" />
             <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
           </AssociationSet>
-          <EntitySet Name="Configurations" EntityType="TMDModel.Configuration" />
+          <EntitySet Name="Configurations" EntityType="TMD.Models.DomainModels.Configuration" />
           <FunctionImport Name="spUpsertEbayLoadStartTimeFromConfiguration" ReturnType="Collection(Int32)">
           <Parameter Name="EbayLoadStartTimeFrom" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="spGetEbayLoadStartTimeFrom" ReturnType="Collection(String)" />
-          <FunctionImport Name="spEbayItemExists" EntitySet="StagingEbayItems" ReturnType="Collection(TMDModel.StagingEbayItem)">
+          <FunctionImport Name="spEbayItemExists" EntitySet="StagingEbayItems" ReturnType="Collection(TMD.Models.DomainModels.StagingEbayItem)">
           <Parameter Name="itemId" Mode="In" Type="String" />
           </FunctionImport>
-          <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" Association="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
+          <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" Association="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="StagingEbayBatchImport" EntitySet="StagingEbayBatchImports" />
           </AssociationSet>
-          <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" Association="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy">
+          <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" Association="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="StagingEbayBatchImport" EntitySet="StagingEbayBatchImports" />
           </AssociationSet>
-          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_CreatedBy" Association="TMDModel.FK_StagingEbayItems_AspNetUsers_CreatedBy">
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_CreatedBy" Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_CreatedBy">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_DeletedBy" Association="TMDModel.FK_StagingEbayItems_AspNetUsers_DeletedBy">
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_DeletedBy" Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_ModifiedBy" Association="TMDModel.FK_StagingEbayItems_AspNetUsers_ModifiedBy">
+          <AssociationSet Name="FK_StagingEbayItems_AspNetUsers_ModifiedBy" Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
           </AssociationSet>
+          <EntitySet Name="StagingToyGraderBatchImports" EntityType="TMD.Models.DomainModels.StagingToyGraderBatchImport" />
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -382,7 +403,7 @@
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="TMDModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUsers" Relationship="TMD.Models.DomainModels.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -392,7 +413,7 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="TMDModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -403,7 +424,7 @@
           <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="TMDModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
@@ -421,9 +442,9 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ImageName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="TMDModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="TMDModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="AspNetRoles" Relationship="TMDModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="AspNetRoles" Relationship="TMD.Models.DomainModels.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
           <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Telephone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -433,17 +454,17 @@
           <Property Name="PayPalAmount" Type="Double" />
           <Property Name="PayPalAmountAfterDeduct" Type="Double" />
           <Property Name="PayPalMisc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="StagingEbayBatchesImportCreatedBy" Relationship="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" FromRole="AspNetUser" ToRole="StagingEbayBatchImport" />
-          <NavigationProperty Name="StagingEbayBatchesImportDeletedBy" Relationship="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayBatchImport" />
-          <NavigationProperty Name="StagingEbayItemsCreatedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_CreatedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
-          <NavigationProperty Name="StagingEbayItemsDeletedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
-          <NavigationProperty Name="StagingEbayItemsModifiedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
+          <NavigationProperty Name="StagingEbayBatchesImportCreatedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" FromRole="AspNetUser" ToRole="StagingEbayBatchImport" />
+          <NavigationProperty Name="StagingEbayBatchesImportDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayBatchImport" />
+          <NavigationProperty Name="StagingEbayItemsCreatedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_CreatedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
+          <NavigationProperty Name="StagingEbayItemsDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
+          <NavigationProperty Name="StagingEbayItemsModifiedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="TMDModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -454,10 +475,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="TMDModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -468,8 +489,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="AspNetUserRoles">
-          <End Type="TMDModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
         <EntityType Name="StagingEbayBatchImport">
           <Key>
@@ -486,13 +507,20 @@
           <Property Name="FixedPrice" Type="Int32" />
           <Property Name="EbayTimestamp" Type="DateTime" Precision="3" />
           <Property Name="EbayVersion" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="StagingEbayItems" Relationship="TMDModel.FK_StagingEbayItems_StagingEbayBatchImports" FromRole="StagingEbayBatchImport" ToRole="StagingEbayItem" />
+          <NavigationProperty Name="StagingEbayItems" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_StagingEbayBatchImports" FromRole="StagingEbayBatchImport" ToRole="StagingEbayItem" />
           <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Deleted" Type="Boolean" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUserCreatedBy" Relationship="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" FromRole="StagingEbayBatchImport" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUserDeletedBy" Relationship="TMDModel.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" FromRole="StagingEbayBatchImport" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUserCreatedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" FromRole="StagingEbayBatchImport" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUserDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" FromRole="StagingEbayBatchImport" ToRole="AspNetUser" />
+          <Property Name="Classified" Type="Int32" />
+          <Property Name="TotalKeywordMatched" Type="Int32" />
+          <Property Name="ToBeProcessed" Type="Int32" />
+          <Property Name="AuctionsWithBIN" Type="Int32" />
+          <Property Name="StoreInventory" Type="Int32" />
+          <Property Name="Duplicates" Type="Int32" />
+          <Property Name="NoListingType" Type="Int32" />
         </EntityType>
         <EntityType Name="StagingEbayItem">
           <Key>
@@ -531,15 +559,15 @@
           <Property Name="StoreInfoStoreURL" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <Property Name="SubTitle" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="StagingEbayBatchImport" Relationship="TMDModel.FK_StagingEbayItems_StagingEbayBatchImports" FromRole="StagingEbayItem" ToRole="StagingEbayBatchImport" />
+          <NavigationProperty Name="StagingEbayBatchImport" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_StagingEbayBatchImports" FromRole="StagingEbayItem" ToRole="StagingEbayBatchImport" />
           <Property Name="ViewItemUrl" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUserCreatedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_CreatedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUserDeletedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUserModifiedBy" Relationship="TMDModel.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUserCreatedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_CreatedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUserDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUserModifiedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FK_StagingEbayItems_StagingEbayBatchImports">
-          <End Type="TMDModel.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="1" />
-          <End Type="TMDModel.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StagingEbayBatchImport">
               <PropertyRef Name="EbayBatchImportId" />
@@ -595,8 +623,8 @@
           <Property Type="String" Name="ViewItemUrl" Nullable="true" MaxLength="2048" />
         </ComplexType>
         <Association Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
-          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="TMDModel.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -607,8 +635,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StagingEbayBatchImports_AspNetUsers_DeletedBy">
-          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="TMDModel.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -619,8 +647,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StagingEbayItems_AspNetUsers_CreatedBy">
-          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="TMDModel.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -631,8 +659,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StagingEbayItems_AspNetUsers_DeletedBy">
-          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="TMDModel.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -643,8 +671,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StagingEbayItems_AspNetUsers_ModifiedBy">
-          <End Type="TMDModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="TMDModel.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="Id" />
@@ -654,6 +682,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StagingToyGraderBatchImport">
+          <Key>
+            <PropertyRef Name="ToyGraderBatchImporttId" />
+          </Key>
+          <Property Name="ToyGraderBatchImporttId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InProcess" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartedOn" Type="DateTime" Precision="3" />
+          <Property Name="CompletedOn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Imported" Type="Int32" />
+          <Property Name="Failed" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -662,7 +702,7 @@
         <EntityContainerMapping StorageEntityContainer="TMDModelStoreContainer" CdmEntityContainer="Entities">
           <FunctionImportMapping FunctionImportName="spIsEbayLoadRunning" FunctionName="TMDModel.Store.spIsEbayLoadRunning" />
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="TMDModel.AspNetRole">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -670,7 +710,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="TMDModel.AspNetUserClaim">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
                 <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
@@ -680,7 +720,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="TMDModel.AspNetUserLogin">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -689,7 +729,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="TMDModel.AspNetUser">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="PayPalMisc" ColumnName="PayPalMisc" />
                 <ScalarProperty Name="PayPalAmountAfterDeduct" ColumnName="PayPalAmountAfterDeduct" />
@@ -715,7 +755,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="TMDModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="TMD.Models.DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetUser">
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
@@ -724,8 +764,15 @@
             </EndProperty>
           </AssociationSetMapping>
           <EntitySetMapping Name="StagingEbayBatchImports">
-            <EntityTypeMapping TypeName="TMDModel.StagingEbayBatchImport">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.StagingEbayBatchImport">
               <MappingFragment StoreEntitySet="StagingEbayBatchImports">
+                <ScalarProperty Name="NoListingType" ColumnName="NoListingType" />
+                <ScalarProperty Name="Duplicates" ColumnName="Duplicates" />
+                <ScalarProperty Name="StoreInventory" ColumnName="StoreInventory" />
+                <ScalarProperty Name="AuctionsWithBIN" ColumnName="AuctionsWithBIN" />
+                <ScalarProperty Name="ToBeProcessed" ColumnName="ToBeProcessed" />
+                <ScalarProperty Name="TotalKeywordMatched" ColumnName="TotalKeywordMatched" />
+                <ScalarProperty Name="Classified" ColumnName="Classified" />
                 <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
                 <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
@@ -745,7 +792,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StagingEbayItems">
-            <EntityTypeMapping TypeName="TMDModel.StagingEbayItem">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.StagingEbayItem">
               <MappingFragment StoreEntitySet="StagingEbayItems">
                 <ScalarProperty Name="ViewItemUrl" ColumnName="ViewItemUrl" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -785,7 +832,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Configurations">
-            <EntityTypeMapping TypeName="TMDModel.Configuration">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Configuration">
               <MappingFragment StoreEntitySet="Configurations">
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -798,6 +845,19 @@
           <FunctionImportMapping FunctionImportName="spGetEbayLoadStartTimeFrom" FunctionName="TMDModel.Store.spGetEbayLoadStartTimeFrom" />
           <FunctionImportMapping FunctionImportName="spEbayItemExists" FunctionName="TMDModel.Store.spEbayItemExists" >
           </FunctionImportMapping>
+          <EntitySetMapping Name="StagingToyGraderBatchImports">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.StagingToyGraderBatchImport">
+              <MappingFragment StoreEntitySet="StagingToyGraderBatchImports">
+                <ScalarProperty Name="Failed" ColumnName="Failed" />
+                <ScalarProperty Name="Imported" ColumnName="Imported" />
+                <ScalarProperty Name="CompletedOn" ColumnName="CompletedOn" />
+                <ScalarProperty Name="StartedOn" ColumnName="StartedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="InProcess" ColumnName="InProcess" />
+                <ScalarProperty Name="ToyGraderBatchImporttId" ColumnName="ToyGraderBatchImporttId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

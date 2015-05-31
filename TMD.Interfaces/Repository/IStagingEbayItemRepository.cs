@@ -8,7 +8,7 @@ namespace TMD.Interfaces.Repository
     public interface IStagingEbayItemRepository : IBaseRepository<StagingEbayItem, int>
     {
         IEnumerable<StagingEbayItem> GetAllEbayItems();
-        bool EbayItemExists(string itemId);
+        bool EbayItemExists(string itemId, out StagingEbayItem item);
         void LoadStagingEbayItemToRepositoryObjectForCreate(StagingEbayItem item, ref  StagingEbayItem repositoryItem);
         EbayItemSearchResponse GetImports(StagingEbayItemRequest oReq);
         StagingEbayItem GetEbayImportById(string Id);

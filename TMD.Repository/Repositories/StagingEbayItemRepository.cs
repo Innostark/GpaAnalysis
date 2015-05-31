@@ -37,10 +37,9 @@ namespace TMD.Repository.Repositories
             return DbSet;
         }
 
-        public bool EbayItemExists(string itemId)
+        public bool EbayItemExists(string itemId, out StagingEbayItem item)
         {
-            return this.db.EbayItemExists(itemId);
-            
+            return db.EbayItemExists(itemId, out item);
         }
 
         public void LoadStagingEbayItemToRepositoryObjectForCreate(StagingEbayItem item, ref StagingEbayItem repositoryItem)
