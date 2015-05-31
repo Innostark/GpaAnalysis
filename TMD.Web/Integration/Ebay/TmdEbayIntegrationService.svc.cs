@@ -17,7 +17,7 @@ namespace TMD.Web.Integration.Ebay
     public class TmdEbayIntegrationService : ITmdEbayIntegrationService
     {
         private const string EbayListingTypeAuctionInLower = "auction";
-        private const string EbayListingTypeAuctionWithBINInLower = "auctionwithbin";
+        private const string EbayListingTypeAuctionWithBinInLower = "auctionwithbin";
         private const string EbayListingTypeClassifiedInLower = "classified";
         private const string EbayListingTypeFixedPriceInLower = "fixedprice";
         private const string EbayListingTypeStoreInventory = "storeinventory";
@@ -54,7 +54,7 @@ namespace TMD.Web.Integration.Ebay
                         SetBatchDefaults(stagingEbayBatchImport);
                         stagingEbayLoadService.UpdateStagingEbayLoadBatch(stagingEbayBatchImport, true);
 
-                        var config = new ClientConfig()
+                        var config = new ClientConfig
                         {
                             // Finding API service end-point configuration
                             EndPointAddress = ConfigurationManager.AppSettings["EbayFindingAPIEndPointAddress"],
@@ -73,18 +73,16 @@ namespace TMD.Web.Integration.Ebay
                             keywords = ConfigurationManager.AppSettings["EbayFindingApiKeywords"]
                         };
 
-                        var itemFilters = new List<ItemFilter>
+                        var itemFilters = new List<ItemFilter>();
+                        itemFilters.Add(new ItemFilter
                         {
-                            new ItemFilter()
-                            {
-                                name = ItemFilterType.AvailableTo,
-                                value = new string[] {ConfigurationManager.AppSettings["EbayAvailableToItemFilter"]}
-                            }
-                        };
+                            name = ItemFilterType.AvailableTo,
+                            value = new[] {ConfigurationManager.AppSettings["EbayAvailableToItemFilter"]}
+                        });
 
                         if (!String.IsNullOrWhiteSpace(ebayLoadStartTimeFromConfiguration))
                         {
-                            itemFilters.Add(new ItemFilter()
+                            itemFilters.Add(new ItemFilter
                             {
                                 name = ItemFilterType.StartTimeFrom,
                                 value =
@@ -106,7 +104,7 @@ namespace TMD.Web.Integration.Ebay
 
                         for (int curPage = 1; curPage <= totalPages; curPage++)
                         {
-                            request.paginationInput = new PaginationInput()
+                            request.paginationInput = new PaginationInput
                             {
                                 entriesPerPageSpecified = true,
                                 entriesPerPage = 100,
@@ -121,15 +119,15 @@ namespace TMD.Web.Integration.Ebay
                                 foreach (SearchItem ebaySearchItem in searchItems)
                                 {
                                     stagingEbayBatchImport.ToBeProcessed++;
-                                    StagingEbayItem stagingEbayItem = null;
+                                    StagingEbayItem stagingEbayItem;
                                     if (stagingEbayLoadService.EbayItemExists(ebaySearchItem.itemId, out stagingEbayItem))
                                     {
                                         stagingEbayBatchImport.Duplicates++;
                                         stagingEbayBatchImport.Failed++;
                                         continue;
                                     }
-                                    else if ((ebaySearchItem.listingInfo != null &&
-                                              String.IsNullOrWhiteSpace(ebaySearchItem.listingInfo.listingType)))
+                                    if ((ebaySearchItem.listingInfo == null ||
+                                         String.IsNullOrWhiteSpace(ebaySearchItem.listingInfo.listingType)))
                                     {
                                         stagingEbayBatchImport.NoListingType++;
                                         stagingEbayBatchImport.Failed++;
@@ -153,19 +151,22 @@ namespace TMD.Web.Integration.Ebay
 
         private void SetBatchDefaults(StagingEbayBatchImport stagingEbayBatchImport)
         {
-            stagingEbayBatchImport.StartedOn = DateTime.Now;
-            stagingEbayBatchImport.InProcess = true;
-            stagingEbayBatchImport.TotalKeywordMatched = 0;
-            stagingEbayBatchImport.ToBeProcessed = 0;
-            stagingEbayBatchImport.Auctions = 0;
-            stagingEbayBatchImport.AuctionsWithBIN = 0;
-            stagingEbayBatchImport.Classified = 0;
-            stagingEbayBatchImport.FixedPrice = 0;
-            stagingEbayBatchImport.StoreInventory = 0;
-            stagingEbayBatchImport.Failed = 0;
-            stagingEbayBatchImport.Imported = 0;
-            stagingEbayBatchImport.NoListingType = 0;
-            stagingEbayBatchImport.Duplicates = 0;
+            if (stagingEbayBatchImport != null)
+            {
+                stagingEbayBatchImport.StartedOn = DateTime.Now;
+                stagingEbayBatchImport.InProcess = true;
+                stagingEbayBatchImport.TotalKeywordMatched = 0;
+                stagingEbayBatchImport.ToBeProcessed = 0;
+                stagingEbayBatchImport.Auctions = 0;
+                stagingEbayBatchImport.AuctionsWithBIN = 0;
+                stagingEbayBatchImport.Classified = 0;
+                stagingEbayBatchImport.FixedPrice = 0;
+                stagingEbayBatchImport.StoreInventory = 0;
+                stagingEbayBatchImport.Failed = 0;
+                stagingEbayBatchImport.Imported = 0;
+                stagingEbayBatchImport.NoListingType = 0;
+                stagingEbayBatchImport.Duplicates = 0;
+            }
         }
 
         private StagingEbayItem CreateStagingEbayItem(IStagingEbayLoadService stagingEbayLoadService, SearchItem ebaySearchItem, int batchId, DateTime ebayCheckTime, string userId)
@@ -203,7 +204,7 @@ namespace TMD.Web.Integration.Ebay
                 case EbayListingTypeAuctionInLower:
                     stagingEbayBatchImport.Auctions++;
                     break;
-                case EbayListingTypeAuctionWithBINInLower:
+                case EbayListingTypeAuctionWithBinInLower:
                     stagingEbayBatchImport.AuctionsWithBIN++;
                     break;
                 case EbayListingTypeClassifiedInLower:
