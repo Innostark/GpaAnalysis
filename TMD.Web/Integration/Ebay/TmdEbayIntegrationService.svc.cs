@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using eBay.Services.Finding;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Practices.Unity;
+using TMD.Implementation.Identity;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
 using TMD.Web.ModelMappers;
-using TMD.WebBase.UnityConfiguration;
 using eBay.Services;
 using System.Configuration;
+using UnityConfig = TMD.WebBase.UnityConfiguration.UnityConfig;
 
 namespace TMD.Web.Integration.Ebay
 {
@@ -21,6 +25,13 @@ namespace TMD.Web.Integration.Ebay
         private const string EbayListingTypeClassifiedInLower = "classified";
         private const string EbayListingTypeFixedPriceInLower = "fixedprice";
         private const string EbayListingTypeStoreInventory = "storeinventory";
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get { return _userManager ?? System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
+        }
 
         public void StartEbayLoad(string username, string password)
         {
@@ -33,6 +44,42 @@ namespace TMD.Web.Integration.Ebay
             {
                 //TODO: Raise error
             }
+
+            //TOdo: Syed Jobs to add authentication
+            //DB AUTHENTICATION OF USERNAME AND PASSWORD
+
+            #region Authentication
+
+            var user = UserManager.Find(username, password);
+            if (user != null)
+            {
+                if (!UserManager.IsEmailConfirmed(user.Id))
+                {
+                    //TODO: Return error as user is not confirm
+                }
+                else if (user.LockoutEnabled)
+                {
+                    
+                        //TODO: Return error as user is locked
+                }
+
+                var role = user.AspNetRoles.FirstOrDefault();
+                if (role.Id != Utility.AdminRoleId)
+                {
+                    //TODO: RETURN Error user is of other role
+                }
+
+                
+                //HERE WE SHOULD HAVE THE LOGIC
+                //todo: bilal right positive logic here, AND IN ABOVE ALL CONDITION RETURN ERROR
+            }
+            else
+            {
+                //TODO: Return error as user is not found
+            }
+
+            #endregion
+
 
             using (
                 IStagingEbayLoadService stagingEbayLoadService =
@@ -77,7 +124,7 @@ namespace TMD.Web.Integration.Ebay
                         itemFilters.Add(new ItemFilter
                         {
                             name = ItemFilterType.AvailableTo,
-                            value = new[] {ConfigurationManager.AppSettings["EbayAvailableToItemFilter"]}
+                            value = new[] { ConfigurationManager.AppSettings["EbayAvailableToItemFilter"] }
                         });
 
                         if (!String.IsNullOrWhiteSpace(ebayLoadStartTimeFromConfiguration))
@@ -86,7 +133,7 @@ namespace TMD.Web.Integration.Ebay
                             {
                                 name = ItemFilterType.StartTimeFrom,
                                 value =
-                                    new []
+                                    new[]
                                     {
                                         //(Convert.ToDateTime(ebayLoadStartTimeFromConfiguration)).ToString(iso8601DatetimeFormat)
                                         DateTime.Now.AddDays(-1).ToString(iso8601DatetimeFormat)
@@ -98,7 +145,7 @@ namespace TMD.Web.Integration.Ebay
                         FindItemsByKeywordsResponse check = findingServicePortTypeClient.findItemsByKeywords(request);
                         DateTime ebayCheckTime = DateTime.UtcNow;
                         int totalKeywordMatched = check.paginationOutput.totalEntries;
-                        var totalPages = (int) Math.Ceiling(totalKeywordMatched/100.00);
+                        var totalPages = (int)Math.Ceiling(totalKeywordMatched / 100.00);
                         stagingEbayBatchImport.TotalKeywordMatched = totalKeywordMatched;
                         stagingEbayBatchImport.EbayVersion = findingServicePortTypeClient.getVersion(new GetVersionRequest()).version;
 

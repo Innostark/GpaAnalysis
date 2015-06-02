@@ -119,6 +119,7 @@ namespace TMD.Web.Controllers
             oReturnModel.SearchRequest.IsAsc = false;
             return View(oReturnModel);
          }
+        [HttpHeaderAttribute("Access-Control-Allow-Origin", "*")]
         [HttpPost]
         public ActionResult BatchImportLV(BatchImportSearchRequest oRequest)
         {
@@ -149,7 +150,8 @@ namespace TMD.Web.Controllers
             });
         }
 
-
+         [HttpHeaderAttribute("Access-Control-Allow-Origin", "*")]
+       
         [HttpPost]
         public ActionResult EbayItemImportLV(StagingEbayItemRequest oRequest)
         {
@@ -174,5 +176,21 @@ namespace TMD.Web.Controllers
         }
         #endregion
 
+    }
+}
+public class HttpHeaderAttribute : ActionFilterAttribute
+{
+    public string Name { get; set; }
+    public string Value { get; set; }
+    public HttpHeaderAttribute(string name, string value)
+    {
+        Name = name;
+        Value = value;
+    }
+
+    public override void OnResultExecuted(ResultExecutedContext filterContext)
+    {
+        filterContext.HttpContext.Response.AppendHeader(Name, Value);
+        base.OnResultExecuted(filterContext);
     }
 }
