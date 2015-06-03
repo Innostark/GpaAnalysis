@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using eBay.Services.Finding;
@@ -13,6 +14,7 @@ using TMD.Models.DomainModels;
 using TMD.Web.ModelMappers;
 using eBay.Services;
 using System.Configuration;
+using TMD.WebBase.Mvc;
 using UnityConfig = TMD.WebBase.UnityConfiguration.UnityConfig;
 
 namespace TMD.Web.Integration.Ebay
@@ -79,7 +81,11 @@ namespace TMD.Web.Integration.Ebay
             }
 
             #endregion
-
+            
+                ILogger logger =
+                    UnityConfig.GetConfiguredContainer().Resolve<ILogger>();
+                logger.Write("This is a custom Message",
+                        LoggerCategories.Error, 0, 0, TraceEventType.Error, "This is from Service", new Dictionary<string, object>());
 
             using (
                 IStagingEbayLoadService stagingEbayLoadService =

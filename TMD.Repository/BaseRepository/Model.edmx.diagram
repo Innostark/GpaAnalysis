@@ -22,6 +22,11 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingToyGraderBatchImport" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Category" Width="1.5" PointX="7.375" PointY="11.125" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.CategoryLog" Width="1.5" PointX="9.625" PointY="10.875" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Log" Width="1.5" PointX="7.375" PointY="14" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_CategoryLog_Category" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_CategoryLog_Log" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

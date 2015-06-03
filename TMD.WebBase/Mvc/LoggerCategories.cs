@@ -19,8 +19,8 @@ namespace TMD.WebBase.Mvc
         public const string Warning = "Warning";
 
         /// <summary>
-        /// Info Log Category
+        /// Information Log Category
         /// </summary>
-        public const string Info = "Info";
+        public const string Information = "Information";
     }
 }
