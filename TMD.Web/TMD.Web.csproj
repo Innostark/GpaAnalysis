@@ -300,6 +300,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Integration\Ebay\Faults\AuthenticationFault.cs" />
+    <Compile Include="Integration\Ebay\Faults\AuthorisationFault.cs" />
+    <Compile Include="Integration\Ebay\Faults\BaseCustomFault.cs" />
+    <Compile Include="Integration\Ebay\Faults\EbayLoadProcessingFault.cs" />
+    <Compile Include="Integration\Ebay\Faults\InputParameterFault.cs" />
     <Compile Include="Integration\Ebay\ITmdEbayIntegrationService.cs" />
     <Compile Include="Integration\Ebay\TmdEbayIntegrationService.svc.cs">
       <DependentUpon>TmdEbayIntegrationService.svc</DependentUpon>
