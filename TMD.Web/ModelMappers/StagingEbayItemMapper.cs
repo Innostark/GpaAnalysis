@@ -20,6 +20,7 @@ namespace TMD.Web.ModelMappers
             {
                 EbayItemtId = source.EbayItemtId,
                 EbayBatchImportId = "<a  title='Click to see the batch detail'  target='_blank' href='" + hostURL + "Admin/BatchImportLV?vpek=" + source.EbayBatchImportId + "'>" + source.EbayBatchImportId + "</a>",
+                EbayBatchImportIdValue = source.EbayBatchImportId,
                 ToyGraderItemId = source.ToyGraderItemId,
                 CreatedBy = string.IsNullOrEmpty(source.CreatedBy) ? "" : source.AspNetUserCreatedBy.FirstName + " " + source.AspNetUserCreatedBy.LastName,
                 CreatedOn = source.CreatedOn.ToShortDateString(),

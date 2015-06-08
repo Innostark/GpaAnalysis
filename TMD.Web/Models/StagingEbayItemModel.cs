@@ -9,6 +9,7 @@ namespace TMD.Web.Models
     {
         public int EbayItemtId { get; set; }
         public string EbayBatchImportId { get; set; }
+        public int EbayBatchImportIdValue { get; set; }
         public int? ToyGraderItemId { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedOn { get; set; }
