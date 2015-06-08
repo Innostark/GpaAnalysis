@@ -34,10 +34,10 @@
                         <div>
                             <table class="responsive">
                                 <tr>
-                                    <td >
+                                    <td class="col-md-1">
                                         <label class="control-label"> Title </label>
                                     </td>
-                                    <td class="col-md-5">
+                                    <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
@@ -46,9 +46,57 @@
                                         </div>
 
                                     </td>
-                                    <td class="col-md-5">
-                                        </td>
-</tr>
+                                    
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Toy Grader ID </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
+                                            @Html.TextBox("ToyGraderID", "", new { @class = "searchInputs form-control", @id = "ToyGraderID", @placeholder = "Search Toy Grader" })
+                                          
+                                        </div>
+
+                                    </td>
+                                    <td class="col-md-1">
+                                        <label class="control-label"> AFA Serial </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
+                                            @Html.TextBox("AFASerial", "", new { @class = "searchInputs form-control", @id = "AFASerial", @placeholder = "Search AFA Serial" })
+                                          
+                                        </div>
+
+                                    </td>
+                                </tr>
+                           <tr style="padding-top: 10px !important; "></tr>
+                                  <tr>
+                                      <td class="col-md-1">
+                                          <label class="control-label"> Created On </label>
+                                      </td>
+                                      <td class="col-md-2">
+                                          <div class="input-icon">
+                                              <i class="fa fa-search"></i>
+                                              @Html.TextBox("CreatedOn", "", new { @class = "searchInputs form-control", @id = "CreatedOn", @placeholder = "Created On" })
+                                          </div>
+                                      </td>
+
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Batch Number </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
+                                            @Html.TextBox("BatchNumber", "", new { @class = "searchInputs form-control", @id = "BatchNumber", @placeholder = "Search Batch" })
+                                                   </div>
+
+                                    </td>
+                                   
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -83,6 +131,15 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function($) {
+
+
+       
+            $("#CreatedOn").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                maxDate: new Date()
+            });
+
 
         $('#QS').val(getParameterByName('vpek'));
         var siteURL =  $('#siteURL').val();

@@ -605,6 +605,12 @@
     <Content Include="Content\Admin\pages\scripts\ui-notific8.js" />
     <Content Include="Content\Admin\pages\scripts\ui-toastr.js" />
     <Content Include="Content\Admin\pages\scripts\ui-tree.js" />
+    <Content Include="Content\Content\images\arrow-down.png" />
+    <Content Include="Content\Content\images\arrow-up.png" />
+    <Content Include="Content\Content\images\arrow.png" />
+    <Content Include="Content\Content\images\darkdenim3.png" />
+    <Content Include="Content\Content\images\dark_leather.png" />
+    <Content Include="Content\css\datepicker.css" />
     <Content Include="Content\css\ie9.css" />
     <Content Include="Content\css\images\banner.jpg" />
     <Content Include="Content\css\images\bg1.png" />
