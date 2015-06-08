@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Odbc;
 using System.Linq;
 using TMD.Interfaces.Repository;
 using TMD.Models.Common;
@@ -97,15 +99,27 @@ namespace TMD.Repository.Repositories
             int batchId = 0;
             if (!string.IsNullOrEmpty(searchRequest.BatchId))
             {
-                batchId = int.Parse(searchRequest.BatchId);
+                if (!int.TryParse(searchRequest.BatchId, out batchId))
+                {
+                    batchId = -1;
+                }
             }
+
+            
             int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
             int toRow = searchRequest.PageSize;
             Expression<Func<StagingEbayItem, bool>> query =
                     s => (
                             (
                             (string.IsNullOrEmpty(searchRequest.Title) || s.Title.Contains(searchRequest.Title))
-                            && (batchId ==0 || s.EbayBatchImportId.Equals(batchId)))
+                            && (batchId ==0 || s.EbayBatchImportId.Equals(batchId))
+                            && (string.IsNullOrEmpty(searchRequest.AFASerial) || s.AFASerial.Contains(searchRequest.AFASerial))
+                            && (string.IsNullOrEmpty(searchRequest.ToyGraderID) || s.ToyGraderItemId.Value.ToString().Contains(searchRequest.AFASerial))
+                            && (searchRequest.CreatedOn == null ||  EntityFunctions.TruncateTime(s.CreatedOn) == searchRequest.CreatedOn.Value)
+                            
+
+                            
+                            )
 
 
                         );

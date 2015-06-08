@@ -29,13 +29,14 @@ namespace TMD.Web.Controllers
         #region Batch Import
         public ActionResult BatchImportLV()
         {
-            //BatchImportSearchRequest viewModel = Session["PageMetaData"] as BatchImportSearchRequest;
-
-            //Session["PageMetaData"] = null;
-            //ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            BatchImportSearchRequest viewModel = Session["PageMetaData"] as BatchImportSearchRequest;
+              Session["PageMetaData"] = null;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            
             var oReturnModel = new BatchImportViewModel
             {
-                SearchRequest = new BatchImportSearchRequest()
+
+                 SearchRequest = viewModel==null ? new BatchImportSearchRequest() : viewModel
             };
             oReturnModel.SearchRequest.IsAsc = false;
             return View(oReturnModel);

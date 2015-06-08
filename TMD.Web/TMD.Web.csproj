@@ -1213,6 +1213,7 @@
     <Content Include="Content\global\plugins\uniform\jquery.uniform.min.js" />
     <Content Include="Content\global\scripts\datatable.js" />
     <Content Include="Content\global\scripts\metronic.js" />
+    <Content Include="Content\Images\Download-Settings-48.png" />
     <Content Include="Content\Images\gpa20_red_home.gif" />
     <Content Include="Content\Images\pic1.jpg" />
     <Content Include="Content\Images\pic2.jpg" />
