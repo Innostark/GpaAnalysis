@@ -42,7 +42,7 @@
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
                                             @Html.TextBox("Title", "", new { @class = "searchInputs form-control", @id = "Title", @placeholder = "Search Title" })
-                                            <input name="QS" id="QS" type="hidden" />
+                                           
                                         </div>
 
                                     </td>
@@ -91,9 +91,10 @@
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
-                                            @Html.TextBox("BatchNumber", "", new { @class = "searchInputs form-control", @id = "BatchNumber", @placeholder = "Search Batch" })
-                                                   </div>
-
+                                            @Html.TextBox("BatchNumber", "", new { @class = "searchInputs form-control", @type = "Number", @id = "BatchNumber", @placeholder = "Search Batch" })
+                                            <input name="QS" id="QS" type="hidden" />
+                                        </div>
+                                      
                                     </td>
                                    
                                 </tr>
@@ -139,7 +140,10 @@
                 changeYear: true,
                 maxDate: new Date()
             });
-
+            $("#BatchNumber").change(function () {
+                alert($('#BatchNumber').val());
+                $('#QS').val($('#BatchNumber').text());
+            });
 
         $('#QS').val(getParameterByName('vpek'));
         var siteURL =  $('#siteURL').val();
@@ -181,6 +185,11 @@
 
                     params.Title = $('#Title').val();
                     params.BatchId = $('#QS').val();
+                    params.CreatedOn = $('#CreatedOn').val();
+                    params.ToyGraderID = $('#ToyGraderID').val();
+                    params.AFASerial = $('#AFASerial').val();
+
+                   
                 }
              
             }

@@ -39,6 +39,8 @@ namespace TMD.Models.DomainModels
         public string Title  {get; set;} 
         public string ViewItemUrl  {get; set;}
 
+        public string AFASerial { get; set; }
+
         public virtual StagingEbayBatchImport StagingEbayBatchImport { get; set; }
         public virtual AspNetUser AspNetUserCreatedBy { get; set; }
         public virtual AspNetUser AspNetUserDeletedBy { get; set; }

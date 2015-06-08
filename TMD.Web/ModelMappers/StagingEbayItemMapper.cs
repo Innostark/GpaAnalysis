@@ -50,6 +50,7 @@ namespace TMD.Web.ModelMappers
                 SellingStatusTimeLeft = source.SellingStatusTimeLeft,
                 StoreInfoStoreName = source.StoreInfoStoreName,
                 StoreInfoStoreURL = source.StoreInfoStoreURL,
+                AFASerial =  source.AFASerial,
                 SubTitle = source.SubTitle,
                 Title = "<a href='" + hostURL + "Admin/EbayItemImportDetail?vpek=" + source.EbayItemtId + "'>"+source.Title+"</a>",
                 ViewItemUrl = "<a href='"+source.ViewItemUrl+"' target='_blank'>View Item </a>",

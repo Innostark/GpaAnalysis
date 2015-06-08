@@ -13,7 +13,7 @@ namespace TMD.Models.RequestModels
         public string BatchId { get; set; }
         public string ToyGraderID { get; set; }
         public string AFASerial { get; set; }
-        public string CreatedOn { get; set; }
+        public DateTime ? CreatedOn { get; set; }
 
         
         public StagingEbayItemRequestByColumn EbayItemOrderBy

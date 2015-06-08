@@ -173,6 +173,7 @@
           <Property Name="SubTitle" Type="nvarchar" MaxLength="1024" />
           <Property Name="Title" Type="nvarchar" MaxLength="1024" />
           <Property Name="ViewItemUrl" Type="nvarchar" MaxLength="2048" />
+          <Property Name="AFASerial" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="StagingToyGraderBatchImports">
           <Key>
@@ -662,6 +663,7 @@
           <NavigationProperty Name="AspNetUserCreatedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_CreatedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
           <NavigationProperty Name="AspNetUserDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
           <NavigationProperty Name="AspNetUserModifiedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="StagingEbayItem" ToRole="AspNetUser" />
+          <Property Name="AFASerial" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_StagingEbayItems_StagingEbayBatchImports">
           <End Type="TMD.Models.DomainModels.StagingEbayBatchImport" Role="StagingEbayBatchImport" Multiplicity="1" />
@@ -954,6 +956,7 @@
           <EntitySetMapping Name="StagingEbayItems">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.StagingEbayItem">
               <MappingFragment StoreEntitySet="StagingEbayItems">
+                <ScalarProperty Name="AFASerial" ColumnName="AFASerial" />
                 <ScalarProperty Name="ViewItemUrl" ColumnName="ViewItemUrl" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="SubTitle" ColumnName="SubTitle" />
