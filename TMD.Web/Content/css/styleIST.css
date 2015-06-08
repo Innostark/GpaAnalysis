@@ -12,7 +12,9 @@
     color: #e02222;
     text-align: left !important;
 }
-
+legend {
+      font-size: large;
+}
 .displayCK {
     display: inline-block;
     vertical-align: middle;
