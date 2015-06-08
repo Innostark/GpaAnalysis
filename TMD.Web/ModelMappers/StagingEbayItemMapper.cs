@@ -19,7 +19,7 @@ namespace TMD.Web.ModelMappers
             var oModel = new StagingEbayItemModel
             {
                 EbayItemtId = source.EbayItemtId,
-                EbayBatchImportId = source.EbayBatchImportId,
+                EbayBatchImportId = "<a  title='Click to see the batch detail'  target='_blank' href='" + hostURL + "Admin/BatchImportLV?vpek=" + source.EbayBatchImportId + "'>" + source.EbayBatchImportId + "</a>",
                 ToyGraderItemId = source.ToyGraderItemId,
                 CreatedBy = source.CreatedBy,
                 CreatedOn = source.CreatedOn.ToShortDateString(),

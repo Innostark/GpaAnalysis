@@ -8,7 +8,7 @@ namespace TMD.Web.Models
     public class StagingEbayItemModel
     {
         public int EbayItemtId { get; set; }
-        public int EbayBatchImportId { get; set; }
+        public string EbayBatchImportId { get; set; }
         public int? ToyGraderItemId { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedOn { get; set; }

@@ -24,8 +24,9 @@
                     </div>*@
                     <div class="tools">
                         <input type="button" class="btn green" id="btnFltr" value="Filter" />
-                        <input type="button" class="btn green titleButton" id="btnResetFltr" value="Reset">
-                        <a href="javascript:;" class="collapse">
+                        <input type="button" class="btn blue titleButton" id="btnResetFltr" value="Reset">
+                        <a href="~/Admin/BatchImportLV">
+                            <button id="backBatch" class="btn btn-success" style="float: right; display: none" type="button"><i class="fa fa-arrow-left fa-fw"></i> Back to Batch    </button>
                         </a>
                     </div>
                 </div>
@@ -72,7 +73,7 @@
 
                                     </td>
                                 </tr>
-                           <tr style="padding-top: 10px !important; "></tr>
+                           <tr style="height: 10px !important; "></tr>
                                   <tr>
                                       <td class="col-md-1">
                                           <label class="control-label"> Created On </label>
@@ -85,16 +86,19 @@
                                       </td>
 
                                     <td class="col-md-1">
-                                        <label class="control-label"> Batch Number </label>
+                                        <label class="control-label" id="BatchNumberLbl"> Batch Number </label>
                                     </td>
-                                    <td class="col-md-2">
-                                        <div class="input-icon">
+                                    <td class="col-md-2" >
+                                        <div class="input-icon" id="BatchNumberDiv">
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
                                             @Html.TextBox("BatchNumber", "", new { @class = "searchInputs form-control", @type = "Number", @id = "BatchNumber", @placeholder = "Search Batch" })
                                             <input name="QS" id="QS" type="hidden" />
                                         </div>
-                                      
+                                        <div class="input-icon" style="display: none" id="BatchNumberDisplayDiv">
+                                            <input type="text" id="BatchNumberDisplayLabel" class="searchInputs form-control" readonly="readonly"/>
+                                        </div>
+
                                     </td>
                                    
                                 </tr>
@@ -107,11 +111,13 @@
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th class="textAlignRight">Batch</th>
                                 <th class="tableLeftAlignHeader">Title</th>
-                                <th class ="tableLeftAlignHeader">Item Url</th>
-                                <th class="tableLeftAlignHeader">Sub Title</th>
-                                <th class="textAlignRight">Batch Id</th>
-                                <th class="tableLeftAlignHeader">Store Name</th>
+                                <th class ="tableLeftAlignHeader">Created On</th>
+                                <th class="tableLeftAlignHeader">Toy Grader</th>
+                              
+                                <th class="tableLeftAlignHeader">AFA Serial</th>
+                                <th class="tableLeftAlignHeader">Ebay</th>
                                 @*<th>Details</th>*@
                                 
                                 @*<th class="textAlignRight">Points</th>
@@ -123,6 +129,8 @@
                         </thead>
                         
                     </table>
+                    
+                 
                 </div>
             </div>
         </div>
@@ -141,11 +149,27 @@
                 maxDate: new Date()
             });
             $("#BatchNumber").change(function () {
-                alert($('#BatchNumber').val());
+                //alert($('#BatchNumber').val());
                 $('#QS').val($('#BatchNumber').text());
             });
+        var Param = getParameterByName('vpek');
+        if (Param != null && Param.length > 0) {
+            $('#QS').val(Param);
+            $('#BatchNumberDisplayLabel').val(Param);
+            $('#backBatch').hide();
+            $('#BatchNumberDiv').hide();
+            $('#BatchNumberDisplayDiv').show();
+    
+            //$('#BatchNumberLbl').hide();
+        } else {
+            $('#backBatch').hide();
+            $('#BatchNumberDiv').show();
+            $('#BatchNumberDisplayDiv').hide();
 
-        $('#QS').val(getParameterByName('vpek'));
+            //$('#BatchNumberLbl').show();
+        }
+        
+
         var siteURL =  $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
@@ -158,11 +182,13 @@
             "bLengthChange": false,
             "aaSorting": [sortBy],
             "columns": [
+                 { "data": "EbayBatchImportId", "class": "textAlignRight" },
                 { "data": "Title" },
-                { "data": "ViewItemUrl" },
-                { "data": "SubTitle", },
-                { "data": "EbayBatchImportId", "class": "textAlignRight" },
-                { "data": "StoreInfoStoreName" }
+                { "data": "CreatedOn" },
+                { "data": "ToyGraderItemId", },
+               
+                { "data": "AFASerial" },
+                  { "data": "ViewItemUrl" }
                 //,{ "data": "EbayItemDetails" }
             ],
             "processing": true,
@@ -201,7 +227,11 @@
 
         $('#btnResetFltr').on('click', function(e) {
             $('#Title').val("");
-            $('#QS').val("");
+            $('#CreatedOn').val("");
+            $('#ToyGraderID').val("");
+            $('#AFASerial').val("");
+            $('#BatchNumber').val("");
+           // $('#QS').val("");
             oTable.fnFilter('');
         });
     });
