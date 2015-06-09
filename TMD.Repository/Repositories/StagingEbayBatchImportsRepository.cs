@@ -63,11 +63,18 @@ namespace TMD.Repository.Repositories
             bool flag = false;
             if (searchRequest.InProcess == 1)
                 flag = true;
+            int success = 0;
+            int batchNumber = 0;
+            if (!int.TryParse(string.IsNullOrEmpty(searchRequest.BatchNumber)? "0" : searchRequest.BatchNumber , out success))
+            {
+                success = -1;
+            }
+            
             int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
             int toRow = searchRequest.PageSize;
             Expression<Func<StagingEbayBatchImport, bool>> query =
                     s => (
-                            (searchRequest.InProcess == 0 || s.InProcess.Equals(flag))
+                            (searchRequest.InProcess == 0 || s.InProcess.Equals(flag)) && (success ==0  || s.EbayBatchImportId == success)
                             
                             
                         );

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TMD.Implementation.Services;
 using TMD.Interfaces.IServices;
 using TMD.Models.RequestModels;
@@ -25,96 +26,17 @@ namespace TMD.Web.Controllers
             STGEbayBatchImportsService = iSTGEbayBatchImportsService;
             StagingEbayLoadService = iStagingEbayLoadService;
         }
-
-        // GET: Admin
-        public ActionResult Home()
-        {
-            return View();
-        }
-
-        // GET: Admin/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Admin/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
         #region Batch Import
         public ActionResult BatchImportLV()
         {
-            //BatchImportSearchRequest viewModel = Session["PageMetaData"] as BatchImportSearchRequest;
-
-            //Session["PageMetaData"] = null;
-            //ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            BatchImportSearchRequest viewModel = Session["PageMetaData"] as BatchImportSearchRequest;
+              Session["PageMetaData"] = null;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            
             var oReturnModel = new BatchImportViewModel
             {
-                SearchRequest = new BatchImportSearchRequest()
+
+                 SearchRequest = viewModel==null ? new BatchImportSearchRequest() : viewModel
             };
             oReturnModel.SearchRequest.IsAsc = false;
             return View(oReturnModel);
@@ -173,6 +95,29 @@ namespace TMD.Web.Controllers
         {
          var Item=   StagingEbayLoadService.GetEbayImportById(vpek).CreateFrom();
             return View(Item);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult EbayItemImportDetail(StagingEbayItemModel item)
+        {
+            try
+            {
+                if (StagingEbayLoadService.UpdateEbayItemImportDetail(item.EbayItemtId, item.AFASerial, User.Identity.GetUserId()))
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        IsUpdated = true,
+                        Message = "Item has been updated."
+                    };
+                    return RedirectToAction("EbayItemImportLV");
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            return View(item);
         }
         #endregion
 

@@ -13,6 +13,7 @@ namespace TMD.Interfaces.IServices
         void UpdateStagingEbayLoadBatch(StagingEbayBatchImport batch, bool commit);
         void CreateStagingEbayItem(StagingEbayItem item, bool commit = false);
         bool EbayItemExists(string itemId, out StagingEbayItem item);
+        bool UpdateEbayItemImportDetail(int itemId,string afaSerial, string updatedBy);
         string GetEbayLoadStartTimeFrom();
         int UpsertEbayLoadStartTimeFromConfiguration(DateTime ebayLoadStartTimeFrom);
 

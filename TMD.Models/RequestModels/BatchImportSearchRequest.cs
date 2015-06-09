@@ -10,6 +10,8 @@ namespace TMD.Models.RequestModels
     public class BatchImportSearchRequest : GetPagedListRequest
     {
         public int InProcess { get; set; }
+
+        public string BatchNumber { get; set; }
         
         public BatchImportSearchRequestByColumn BatchImportOrderBy
         {

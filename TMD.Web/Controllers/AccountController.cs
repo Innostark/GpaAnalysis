@@ -802,14 +802,16 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [Authorize]
         [ValidateInput(false)]
-        public ActionResult Profile(ProfileViewModel profileViewModel)
+        public ActionResult Profile(AspNetUserModel profileViewModel)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
 
             //Updating Data
             try
             {
-                result.Email = profileViewModel.Email;
+                result.FirstName = profileViewModel.FirstName;
+                result.LastName = profileViewModel.LastName;
+                result.Telephone = profileViewModel.Telephone;
                 result.Address = profileViewModel.Address;
                 var updationResult = UserManager.Update(result);
                 updateSessionValues(result);

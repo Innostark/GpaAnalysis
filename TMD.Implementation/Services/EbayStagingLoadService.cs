@@ -23,7 +23,7 @@ namespace TMD.Implementation.Services
 
         public bool CanExecuteEbayLoad()
         {
-            return !this.istgEbayBatchImportsRepository.IsEbayLoadRunning();
+            return !istgEbayBatchImportsRepository.IsEbayLoadRunning();
         }
 
         public void LoadEbayData()
@@ -56,6 +56,23 @@ namespace TMD.Implementation.Services
         public bool EbayItemExists(string itemId, out StagingEbayItem item)
         {
             return istgEbayItemRepository.EbayItemExists(itemId, out item);
+        }
+
+        public bool UpdateEbayItemImportDetail(int itemId,string afaSerial, string updatedBy)
+        {
+            var itemDb = istgEbayItemRepository.Find(itemId);
+            if (itemDb != null)
+            {
+                itemDb.AFASerial = afaSerial;
+                itemDb.ModifiedBy = updatedBy;
+                itemDb.ModifiedOn = DateTime.Now;
+
+                istgEbayItemRepository.Update(itemDb);
+                istgEbayItemRepository.SaveChanges();
+
+                return true;
+            }
+            return false;
         }
 
         public void CreateStagingEbayItem(StagingEbayItem item, bool commit = false)

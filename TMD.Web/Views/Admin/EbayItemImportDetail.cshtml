@@ -6,252 +6,233 @@
     Session["MenuKey"] = 4;
 }
 
-<div class="portlet box blue-hoki">
-    <div class="portlet-title">
 
-        <div class="tools">
-            @*<a href="javascript:;" class="collapse">
-                </a>*@
+        <form action="EbayItemImportDetail" method="POST" class="horizontal-form">
+            
+            <div class="portlet box blue-hoki">
+                <div class="portlet-title">
 
-
-        </div>
-        <div class="caption">
-            <i class="fa fa-male"></i>Ebay Item Details
-        </div>
-        <div class="tools">
-            <a href="~/Admin/EbayItemImportLV" style="color:white">
-                Cancel
-            </a>
+                    <div class="tools">
+                        @*<a href="javascript:;" class="collapse">
+                    </a>*@
 
 
-        </div>
-    </div>
-
-    
-
-        <div class="portlet-body">
-            <div class="container-fluid">
-                @Html.AntiForgeryToken()
-                
-              
-                <div class="row margin-top-20">
-                    <label class="col-md-2 control-label">Item Id</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.EbayItemtId, new { @class = "form-control input-circle", @readonly = "readonly" })
                     </div>
-
-                    <label class="col-md-2 control-label">Batch Import Id</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.EbayBatchImportId, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+                    <div class="caption">
+                        <i class="fa fa-bitbucket-square"></i>Ebay Item Details
                     </div>
+                    <div class="tools">
+                        <a href="~/Admin/EbayItemImportLV" style="color:white">
+                            Cancel
+                        </a>
 
 
-                    <label class="col-md-2 control-label">Toy Grader Id</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ToyGraderItemId, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="container-fluid">
+                        @Html.AntiForgeryToken()
+
+                        <fieldset>
+                            <legend>Details</legend>
+                            <div class="row margin-top-20">
+                                <label class="col-md-2 control-label textAlignRight textAlignRight">Id</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.EbayItemtId, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-2 control-label textAlignRight">Batch Id</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.EbayBatchImportIdValue, new { @class = "form-control mandatory", @readonly = "readonly" })
+                                </div>
+                            </div>
+
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Created On</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.CreatedOn, new { @class = "form-control mandatory", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-2 control-label textAlignRight">Created By</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.CreatedBy, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+
+                            <div class="row margin-top-20">
+                                <label class="col-md-2 control-label textAlignRight">Modified On</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.ModifiedOn, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-2 control-label textAlignRight">Modified By</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.ModifiedBy, new { @class = "form-control mandatory", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Toygrader</legend>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Id</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.ToyGraderItemId, new { @class = "form-control mandatory", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">AFA Serial</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.AFASerial, new { @class = "form-control mandatory" })
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>ebay Data</legend>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Item Id</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.ItemId, new { @class = "form-control mandatory", @readonly = "readonly" })
+                                </div>
+                                <label class="col-md-1 control-label textAlignRight">Condition</label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(m => m.Condition, new { @class = "form-control mandatory", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-1 control-label textAlignRight">Listing Type</label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(m => m.ListingInfoListingType, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Title</label>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.TitleDescription, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">SubTitle</label>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.SubTitle, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">ebay URL</label>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.ViewItemUrl, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-1">
+                                    @Html.Raw(Model.ViewItemUrlTag)
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Category</legend>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Primary</label>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.PrimaryCategory, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Secondary</label>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.SecondaryCategory, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Listing</legend>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Buy It Now Available</label>
+                                <div class="col-md-1">
+                                    @Html.CheckBoxFor(m => m.ListingInfoBuyItNowAvailable, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <label class="col-md-2 control-label textAlignRight">Buy It Now Price</label>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(m => m.ListingInfoBuyItNowPrice, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-2 control-label textAlignRight">Gift</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(m => m.ListingInfoGift, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Start</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.ListingInfoStartTime, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-2 control-label textAlignRight">End</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.ListingInfoEndTime, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Selling</legend>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Store Name</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.StoreInfoStoreName, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-2 control-label textAlignRight">Top Rated Seller</label>
+                                <div class="col-md-4">
+                                    @Html.CheckBoxFor(m => m.SellerInfoTopRatedSeller, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">State</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.SellingStatusSellingState, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-2 control-label textAlignRight">Time Left</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.SellingStatusTimeLeft, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Bid Count</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.SellingStatusBidCount, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+
+                                <label class="col-md-2 control-label textAlignRight">Current Price</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.SellingStatusCurrentPrice, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row margin-top-10">
+                                <label class="col-md-2 control-label textAlignRight">Store URL</label>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.StoreInfoStoreURL, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-1">
+                                    @Html.Raw(Model.StoreInfoStoreURLTag)
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="form-actions right">
+                        <button type="button" class="btn default">Back</button>
+                        <button type="submit" class="btn blue"><i class="fa fa-check"></i> Save</button>
                     </div>
                 </div>
 
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">Created By</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.CreatedBy, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">Created On</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.CreatedOn, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
 
 
-                    <label class="col-md-2 control-label">Modified By</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ModifiedBy, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">Modified On</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ModifiedOn, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">Deleted</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.Deleted, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">Deleted On</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.DeletedOn, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">Deleted By</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.DeletedBy, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">Condition</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.Condition, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">Country Code</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.CountryCode, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">Global Id</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.GlobalId, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">Item Id</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ItemId, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">Listing Info Buy It Now Available</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ListingInfoBuyItNowAvailable, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-                
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">ListingInfo BuyItNowPrice</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ListingInfoBuyItNowPrice, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">ListingInfo EndTime</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ListingInfoEndTime, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">ListingInfo Gift</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ListingInfoGift, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">ListingInfo ListingType</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ListingInfoListingType, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">ListingInfo StartTime</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ListingInfoStartTime, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">Primary Category</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.PrimaryCategory, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">Producit Id</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ProducitId, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">Secondary Category</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.SecondaryCategory, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">Top Rated Seller </label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.SellerInfoTopRatedSeller, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-                
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">Selling Bid Count</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.SellingStatusBidCount, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">Selling Current Price</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.SellingStatusCurrentPrice, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">Selling State </label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.SellingStatusSellingState, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-                
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">Status Time Left</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.SellingStatusTimeLeft, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">Store Name</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.StoreInfoStoreName, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">Store URL</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.StoreInfoStoreURL, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-
-                
-                <div class="row margin-top-10">
-                    <label class="col-md-2 control-label">Sub Title</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.SubTitle, new { @class = "form-control input-circle", @readonly = "readonly" })
-                    </div>
-
-                    <label class="col-md-2 control-label">Title</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-
-
-                    <label class="col-md-2 control-label">View Item Url</label>
-                    <div class="col-md-2">
-                        @Html.TextBoxFor(m => m.ViewItemUrl, new { @class = "form-control input-circle mandatory", @readonly = "readonly" })
-                    </div>
-                </div>
-
-                
-                
-                
-                
-
-                
-
-
-
-                
 
             </div>
-        </div>
-
-
+        </form>
     
-</div>
+
 

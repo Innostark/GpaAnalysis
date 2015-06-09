@@ -605,6 +605,12 @@
     <Content Include="Content\Admin\pages\scripts\ui-notific8.js" />
     <Content Include="Content\Admin\pages\scripts\ui-toastr.js" />
     <Content Include="Content\Admin\pages\scripts\ui-tree.js" />
+    <Content Include="Content\Content\images\arrow-down.png" />
+    <Content Include="Content\Content\images\arrow-up.png" />
+    <Content Include="Content\Content\images\arrow.png" />
+    <Content Include="Content\Content\images\darkdenim3.png" />
+    <Content Include="Content\Content\images\dark_leather.png" />
+    <Content Include="Content\css\datepicker.css" />
     <Content Include="Content\css\ie9.css" />
     <Content Include="Content\css\images\banner.jpg" />
     <Content Include="Content\css\images\bg1.png" />
@@ -1207,6 +1213,7 @@
     <Content Include="Content\global\plugins\uniform\jquery.uniform.min.js" />
     <Content Include="Content\global\scripts\datatable.js" />
     <Content Include="Content\global\scripts\metronic.js" />
+    <Content Include="Content\Images\Download-Settings-48.png" />
     <Content Include="Content\Images\gpa20_red_home.gif" />
     <Content Include="Content\Images\pic1.jpg" />
     <Content Include="Content\Images\pic2.jpg" />

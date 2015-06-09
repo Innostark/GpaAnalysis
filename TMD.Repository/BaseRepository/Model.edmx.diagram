@@ -27,6 +27,19 @@
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Log" Width="1.5" PointX="7.375" PointY="14" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_CategoryLog_Category" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_CategoryLog_Log" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseDimComapany" Width="1.5" PointX="0.75" PointY="18.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseDimDate" Width="1.5" PointX="0.75" PointY="16.625" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseDimProduct" Width="1.5" PointX="0.75" PointY="11.5" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseDimProductType" Width="1.5" PointX="0.75" PointY="13.625" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseFactSale" Width="1.5" PointX="3" PointY="13" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingToyGraderItem" Width="1.5" PointX="6" PointY="19.625" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimComapany" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimDate" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProduct" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProductType" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_StagingToyGraderItems" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingToyGraderItems_StagingToyGraderBatchImports" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
