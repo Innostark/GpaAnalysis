@@ -74,6 +74,7 @@ namespace TMD.Web.Integration.Ebay
             //We perform DB authentication & authorisation of user name and password
             userManager = userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             AspNetUser user = userManager.Find(username, password);
+            
             if (user == null)
             {
                 //Log the error
@@ -87,57 +88,57 @@ namespace TMD.Web.Integration.Ebay
                     new AuthenticationFault { ErrorDetails = AuthenticationFault.FaultCodeCredentialsCouldNotBeValidated, ErrorMessage = AuthenticationFault.FaultMessageCredentialsCouldNotBeValidated, Result = false },
                     new FaultReason(new FaultReasonText(AuthenticationFault.FaultMessageCredentialsCouldNotBeValidated)), new FaultCode(AuthenticationFault.FaultCodeCredentialsCouldNotBeValidated));
             }
-            else
+
+            if (!userManager.IsEmailConfirmed(user.Id))
             {
-                if (!userManager.IsEmailConfirmed(user.Id))
-                {
-                    //Log the error
-                    logger.Write(String.Format("User's email is not confirmed, user name = '{0}' and password = '{1}'.", username, password),
-                        LoggerCategories.Error, 0, 0,
-                        TraceEventType.Stop,
-                        serivceLogMessage,
-                        new Dictionary<string, object>());
-                    //User is not confirm 
-                    throw new FaultException<AuthenticationFault>(
-                        new AuthenticationFault { ErrorDetails = AuthenticationFault.FaultCodeEmailNotConfirmed, ErrorMessage = AuthenticationFault.FaultMessageEmailNotConfirmed, Result = false },
-                        new FaultReason(new FaultReasonText(AuthenticationFault.FaultMessageEmailNotConfirmed)), new FaultCode(AuthenticationFault.FaultCodeEmailNotConfirmed));
-                }
-                if (user.LockoutEnabled)
-                {
-                    //Log the error
-                    logger.Write(String.Format("User is locked, user name = '{0}' and password = '{1}'.", username, password),
-                        LoggerCategories.Error, 0, 0,
-                        TraceEventType.Stop,
-                        serivceLogMessage,
-                        new Dictionary<string, object>());
-                    //User is locked
-                    throw new FaultException<AuthenticationFault>(
-                        new AuthenticationFault { ErrorDetails = AuthenticationFault.FaultCodeUserIsLocked, ErrorMessage = AuthenticationFault.FaultMessageUserIsLocked, Result = false },
-                        new FaultReason(new FaultReasonText(AuthenticationFault.FaultMessageUserIsLocked)), new FaultCode(AuthenticationFault.FaultCodeUserIsLocked));
-                }
-
-                AspNetRole role = user.AspNetRoles.FirstOrDefault();
-                if (role != null && role.Id != Utility.AdminRoleId)
-                {
-                    //Log the error
-                    logger.Write(String.Format("User is not authorised for this operation, user name = '{0}' and password = '{1}' (should have Administrator role).", username, password),
-                        LoggerCategories.Error, 0, 0,
-                        TraceEventType.Stop,
-                        serivceLogMessage,
-                        new Dictionary<string, object>());
-                    //User does not have an administrator role
-                    throw new FaultException<AuthorisationFault>(
-                        new AuthorisationFault { ErrorDetails = AuthorisationFault.FaultCodeUserIsNotAdmin, ErrorMessage = AuthorisationFault.FaultMessageUserIsNotAdmin, Result = false },
-                        new FaultReason(new FaultReasonText(AuthorisationFault.FaultMessageUserIsNotAdmin)), new FaultCode(AuthorisationFault.FaultCodeUserIsNotAdmin));
-                }
-
-                #region 'Processing'
-
-                //User authenticated and authorised, start ebay load processing
-                ProcessEbayLoad(logger, user.Id);
-
-                #endregion 'Processing'
+                //Log the error
+                logger.Write(String.Format("User's email is not confirmed, user name = '{0}' and password = '{1}'.", username, password),
+                    LoggerCategories.Error, 0, 0,
+                    TraceEventType.Stop,
+                    serivceLogMessage,
+                    new Dictionary<string, object>());
+                //User is not confirm 
+                throw new FaultException<AuthenticationFault>(
+                    new AuthenticationFault { ErrorDetails = AuthenticationFault.FaultCodeEmailNotConfirmed, ErrorMessage = AuthenticationFault.FaultMessageEmailNotConfirmed, Result = false },
+                    new FaultReason(new FaultReasonText(AuthenticationFault.FaultMessageEmailNotConfirmed)), new FaultCode(AuthenticationFault.FaultCodeEmailNotConfirmed));
             }
+            
+            if (user.LockoutEnabled)
+            {
+                //Log the error
+                logger.Write(String.Format("User is locked, user name = '{0}' and password = '{1}'.", username, password),
+                    LoggerCategories.Error, 0, 0,
+                    TraceEventType.Stop,
+                    serivceLogMessage,
+                    new Dictionary<string, object>());
+                //User is locked
+                throw new FaultException<AuthenticationFault>(
+                    new AuthenticationFault { ErrorDetails = AuthenticationFault.FaultCodeUserIsLocked, ErrorMessage = AuthenticationFault.FaultMessageUserIsLocked, Result = false },
+                    new FaultReason(new FaultReasonText(AuthenticationFault.FaultMessageUserIsLocked)), new FaultCode(AuthenticationFault.FaultCodeUserIsLocked));
+            }
+
+            AspNetRole role = user.AspNetRoles.FirstOrDefault();
+            if (role != null && role.Id != Utility.AdminRoleId)
+            {
+                //Log the error
+                logger.Write(String.Format("User is not authorised for this operation, user name = '{0}' and password = '{1}' (should have Administrator role).", username, password),
+                    LoggerCategories.Error, 0, 0,
+                    TraceEventType.Stop,
+                    serivceLogMessage,
+                    new Dictionary<string, object>());
+                //User does not have an administrator role
+                throw new FaultException<AuthorisationFault>(
+                    new AuthorisationFault { ErrorDetails = AuthorisationFault.FaultCodeUserIsNotAdmin, ErrorMessage = AuthorisationFault.FaultMessageUserIsNotAdmin, Result = false },
+                    new FaultReason(new FaultReasonText(AuthorisationFault.FaultMessageUserIsNotAdmin)), new FaultCode(AuthorisationFault.FaultCodeUserIsNotAdmin));
+            }
+
+            #region 'Processing'
+
+            //User authenticated and authorised, start ebay load processing
+            ProcessEbayLoad(logger, user.Id);
+
+            #endregion 'Processing'
+
             #endregion 'Authentication & Processing'
         }
 
@@ -180,7 +181,7 @@ namespace TMD.Web.Integration.Ebay
                 #endregion 'Check if an ebay load can run'
 
                 //Create a new ebay load batch record
-                StagingEbayBatchImport stagingEbayBatchImport = stagingEbayLoadService.CreateStagingEbayLoadBatch();
+                StagingEbayBatchImport stagingEbayBatchImport = stagingEbayLoadService.CreateStagingEbayLoadBatch(userId);
                 //Check if a ebay load batch has been created
                 if (stagingEbayBatchImport == null)
                 {
@@ -194,152 +195,191 @@ namespace TMD.Web.Integration.Ebay
                         new EbayLoadProcessingFault { ErrorDetails = EbayLoadProcessingFault.FaultCodeBatchWasNotCreated, ErrorMessage = EbayLoadProcessingFault.FaultMessageBatchWasNotCreated, Result = false },
                         new FaultReason(new FaultReasonText(EbayLoadProcessingFault.FaultMessageBatchWasNotCreated)), new FaultCode(EbayLoadProcessingFault.FaultCodeBatchWasNotCreated));
                 }
-                else
+                //Set ebay batch load records default values
+                SetBatchDefaults(stagingEbayBatchImport);
+                //Update the ebay batch load record with respective data
+                stagingEbayLoadService.UpdateStagingEbayLoadBatch(stagingEbayBatchImport, true);
+
+                //ebay Finding API client configuration
+                var config = new ClientConfig
                 {
-                    //Set ebay batch load records default values
-                    SetBatchDefaults(stagingEbayBatchImport);
-                    //Update the ebay batch load record with respective data
-                    stagingEbayLoadService.UpdateStagingEbayLoadBatch(stagingEbayBatchImport, true);
+                    // Finding API service end-point configuration
+                    EndPointAddress = ConfigurationManager.AppSettings["EbayFindingAPIEndPointAddress"],
+                    // eBay developer account AppID
+                    ApplicationId = ConfigurationManager.AppSettings["EbayFindindAPIApplicationId"],
+                    // timeout value for this call
+                    HttpTimeout = 1500000 //25 minutes
+                };
 
-                    //ebay Finding API client configuration
-                    var config = new ClientConfig
-                    {
-                        // Finding API service end-point configuration
-                        EndPointAddress = ConfigurationManager.AppSettings["EbayFindingAPIEndPointAddress"],
-                        // eBay developer account AppID
-                        ApplicationId = ConfigurationManager.AppSettings["EbayFindindAPIApplicationId"],
-                        // timeout value for this call
-                        HttpTimeout = 1500000 //25 minutes
-                    };
+                //ebay Finding API client service
+                FindingServicePortTypeClient findingServicePortTypeClient = FindingServiceClientFactory.getServiceClient(config);
 
-                    //ebay Finding API client service
-                    FindingServicePortTypeClient findingServicePortTypeClient = FindingServiceClientFactory.getServiceClient(config);
+                //ebay finding API request
+                var request = new FindItemsByKeywordsRequest
+                {
+                    keywords = ConfigurationManager.AppSettings["EbayFindingApiKeywords"]
+                };
 
-                    //ebay finding API request
-                    var request = new FindItemsByKeywordsRequest
-                    {
-                        keywords = ConfigurationManager.AppSettings["EbayFindingApiKeywords"]
-                    };
-
-                    #region 'ebay Finding API Request Filters'
+                #region 'ebay Finding API Request Filters'
                     
-                    var itemFilters = new List<ItemFilter>
+                var itemFilters = new List<ItemFilter>
+                {
+                    new ItemFilter
                     {
-                        new ItemFilter
-                        {
-                            name = ItemFilterType.AvailableTo,
-                            value = new[] {ConfigurationManager.AppSettings["EbayAvailableToItemFilter"]}
-                        }
+                        name = ItemFilterType.AvailableTo,
+                        value = new[] {ConfigurationManager.AppSettings["EbayAvailableToItemFilter"]}
+                    }
+                };
+
+                //Get the ebay ISO8601 datetime format from web.config settings
+                string iso8601DatetimeFormat = ConfigurationManager.AppSettings["EbayISO8601DateTimeFormat"];
+
+                //Get the start time filter from database for when this ebay batch load was run last
+                string ebayLoadStartTimeFromConfiguration = stagingEbayLoadService.GetEbayLoadStartTimeFrom();
+                if (!String.IsNullOrWhiteSpace(ebayLoadStartTimeFromConfiguration))
+                {
+                    itemFilters.Add(new ItemFilter
+                    {
+                        name = ItemFilterType.StartTimeFrom,
+                        value =
+                            new[]
+                            {
+                                //TODO: have to remove this filter below
+                                (Convert.ToDateTime(ebayLoadStartTimeFromConfiguration)).AddMinutes(-20).ToString(iso8601DatetimeFormat)
+                                //DateTime.Now.AddDays(-1).AddMinutes(-20).ToString(iso8601DatetimeFormat)
+                            }
+                    });
+                }
+                request.itemFilter = itemFilters.ToArray();
+
+                #endregion 'ebay Finding API Request Filters'
+
+                //Call the Finding service's Find Items By Keyword method
+                FindItemsByKeywordsResponse check = findingServicePortTypeClient.findItemsByKeywords(request);
+                DateTime ebayCheckTime = DateTime.UtcNow;
+
+                if (check == null)
+                {
+                    logger.Write(EbayLoadProcessingFault.FaultMessageFindItemBykeywordResposeIsNull,
+                        LoggerCategories.Error, 1, 0,
+                        TraceEventType.Critical,
+                        serivceLogMessage,
+                        new Dictionary<string, object>());
+                    //Find item response is ready
+                    throw new FaultException<EbayLoadProcessingFault>(
+                        new EbayLoadProcessingFault { ErrorDetails = EbayLoadProcessingFault.FaultCodeFindItemBykeywordResposeIsNull, ErrorMessage = EbayLoadProcessingFault.FaultMessageFindItemBykeywordResposeIsNull, Result = false },
+                        new FaultReason(new FaultReasonText(EbayLoadProcessingFault.FaultMessageFindItemBykeywordResposeIsNull)), new FaultCode(EbayLoadProcessingFault.FaultCodeFindItemBykeywordResposeIsNull));
+                }
+
+                if (check.ack == AckValue.Failure || check.ack == AckValue.PartialFailure)
+                {
+                    logger.Write(EbayLoadProcessingFault.FaultMessageFindItemBykeywordReturnedFailure + "Failure details: " + check.errorMessage,
+                        LoggerCategories.Error, 1, 0,
+                        TraceEventType.Critical,
+                        serivceLogMessage,
+                        new Dictionary<string, object>());
+
+                    //Find item response has a failure
+                    throw new FaultException<EbayLoadProcessingFault>(
+                        new EbayLoadProcessingFault { ErrorDetails = EbayLoadProcessingFault.FaultCodeFindItemBykeywordReturnedFailure, ErrorMessage = EbayLoadProcessingFault.FaultMessageFindItemBykeywordReturnedFailure, Result = false },
+                        new FaultReason(new FaultReasonText(EbayLoadProcessingFault.FaultMessageFindItemBykeywordReturnedFailure)), new FaultCode(EbayLoadProcessingFault.FaultCodeFindItemBykeywordReturnedFailure));
+                }
+
+                int totalKeywordMatchedItems = check.paginationOutput.totalEntries;
+                var totalPages = (int) Math.Ceiling(totalKeywordMatchedItems/100.00);
+                stagingEbayBatchImport.TotalKeywordMatched = totalKeywordMatchedItems;
+                stagingEbayBatchImport.EbayVersion = findingServicePortTypeClient.getVersion(new GetVersionRequest()).version;
+
+                logger.Write(
+                    String.Format(
+                        "ebay Finding Service - findItemsByKeywords call (user id = {0}, batch id = {1}) for selected filters has Total={2} items,  Total Pages (ebay default 100 items each)={3}",
+                        userId, stagingEbayBatchImport.EbayBatchImportId, totalKeywordMatchedItems, totalPages),
+                    LoggerCategories.Information, 0, 0,
+                    TraceEventType.Information,
+                    serivceLogMessage,
+                    new Dictionary<string, object>());
+
+                for (int curPage = 1; curPage <= totalPages; curPage++)
+                {
+                    request.paginationInput = new PaginationInput
+                    {
+                        entriesPerPageSpecified = true,
+                        entriesPerPage = 100,
+                        pageNumberSpecified = true,
+                        pageNumber = curPage,
                     };
 
-                    //Get the ebay ISO8601 datetime format from web.config settings
-                    string iso8601DatetimeFormat = ConfigurationManager.AppSettings["EbayISO8601DateTimeFormat"];
-
-                    //Get the start time filter from database for when this ebay batch load was run last
-                    string ebayLoadStartTimeFromConfiguration = stagingEbayLoadService.GetEbayLoadStartTimeFrom();
-                    if (!String.IsNullOrWhiteSpace(ebayLoadStartTimeFromConfiguration))
+                    FindItemsByKeywordsResponse response =
+                        findingServicePortTypeClient.findItemsByKeywords(request);
+                    if (response != null &&
+                        (response.searchResult.item != null && response.searchResult.item.Length > 0))
                     {
-                        itemFilters.Add(new ItemFilter
+                        IEnumerable<SearchItem> searchItems =
+                            response.searchResult.item.Where(EBayGlobalIdUsStore).DistinctBy(i => i.itemId);
+                        foreach (SearchItem ebaySearchItem in searchItems)
                         {
-                            name = ItemFilterType.StartTimeFrom,
-                            value =
-                                new[]
-                                {
-                                    //TODO: have to remove this filter below
-                                    //(Convert.ToDateTime(ebayLoadStartTimeFromConfiguration)).ToString(iso8601DatetimeFormat)
-                                    DateTime.Now.AddDays(-1).AddMinutes(-20).ToString(iso8601DatetimeFormat)
-                                }
-                        });
+                            stagingEbayBatchImport.ToBeProcessed++;
+                            StagingEbayItem stagingEbayItem;
+                            if (stagingEbayLoadService.EbayItemExists(ebaySearchItem.itemId, out stagingEbayItem))
+                            {
+                                stagingEbayBatchImport.Duplicates++;
+                                stagingEbayBatchImport.Failed++;
+
+                                logger.Write(
+                                    String.Format(
+                                        "ebay Finding Service - item (ebay item id = {2}) already exists (user id = {0}, batch id = {1})",
+                                        userId, stagingEbayBatchImport.EbayBatchImportId, ebaySearchItem.itemId),
+                                    LoggerCategories.Warning, 0, 0,
+                                    TraceEventType.Warning,
+                                    serivceLogMessage,
+                                    new Dictionary<string, object>());
+                                continue;
+                            }
+                            if ((ebaySearchItem.listingInfo == null ||
+                                 String.IsNullOrWhiteSpace(ebaySearchItem.listingInfo.listingType)))
+                            {
+                                stagingEbayBatchImport.NoListingType++;
+                                stagingEbayBatchImport.Failed++;
+
+                                logger.Write(
+                                    String.Format(
+                                        "ebay Finding Service - item (ebay item id = {2}) has no listing type (user id = {0}, batch id = {1})",
+                                        userId, stagingEbayBatchImport.EbayBatchImportId, ebaySearchItem.itemId),
+                                    LoggerCategories.Error, 0, 0,
+                                    TraceEventType.Error,
+                                    serivceLogMessage,
+                                    new Dictionary<string, object>());
+                                continue;
+                            }
+
+                            stagingEbayItem = CreateStagingEbayItem(stagingEbayLoadService, ebaySearchItem,
+                                stagingEbayBatchImport.EbayBatchImportId, ebayCheckTime, userId);
+                            UpdateCounts(stagingEbayItem, stagingEbayBatchImport);
+                        }
                     }
-                    request.itemFilter = itemFilters.ToArray();
-
-                    #endregion 'ebay Finding API Request Filters'
-
-                    //Call the Finding service's Find Items By Keyword method
-                    FindItemsByKeywordsResponse check = findingServicePortTypeClient.findItemsByKeywords(request);
-                    DateTime ebayCheckTime = DateTime.UtcNow;
-
-                    int totalKeywordMatchedItems = check.paginationOutput.totalEntries;
-                    var totalPages = (int)Math.Ceiling(totalKeywordMatchedItems / 100.00);
-                    stagingEbayBatchImport.TotalKeywordMatched = totalKeywordMatchedItems;
-                    stagingEbayBatchImport.EbayVersion = findingServicePortTypeClient.getVersion(new GetVersionRequest()).version;
-
-                    logger.Write(String.Format("ebay Finding Service - findItemsByKeywords call (user id = {0}, batch id = {1}) for selected filters has Total={2} items,  Total Pages (ebay default 100 items each)={3}", userId, stagingEbayBatchImport.EbayBatchImportId, totalKeywordMatchedItems, totalPages),
+                    //Page processed log entry
+                    logger.Write(
+                        String.Format("Items page {2} completed (user id = {0}, batch id = {1})", userId,
+                            stagingEbayBatchImport.EbayBatchImportId, curPage),
                         LoggerCategories.Information, 0, 0,
                         TraceEventType.Information,
                         serivceLogMessage,
                         new Dictionary<string, object>());
-                    
-                    for (int curPage = 1; curPage <= totalPages; curPage++)
-                    {
-                        request.paginationInput = new PaginationInput
-                        {
-                            entriesPerPageSpecified = true,
-                            entriesPerPage = 100,
-                            pageNumberSpecified = true,
-                            pageNumber = curPage,
-                        };
-
-                        FindItemsByKeywordsResponse response = findingServicePortTypeClient.findItemsByKeywords(request);
-                        if (response != null && (response.searchResult.item != null && response.searchResult.item.Length > 0))
-                        {
-                            IEnumerable<SearchItem> searchItems = response.searchResult.item.Where(EBayGlobalIdUsStore).DistinctBy(i => i.itemId);
-                            foreach (SearchItem ebaySearchItem in searchItems)
-                            {
-                                stagingEbayBatchImport.ToBeProcessed++;
-                                StagingEbayItem stagingEbayItem;
-                                if (stagingEbayLoadService.EbayItemExists(ebaySearchItem.itemId, out stagingEbayItem))
-                                {
-                                    stagingEbayBatchImport.Duplicates++;
-                                    stagingEbayBatchImport.Failed++;
-
-                                    logger.Write(String.Format("ebay Finding Service - item (ebay item id = {2}) already exists (user id = {0}, batch id = {1})", userId, stagingEbayBatchImport.EbayBatchImportId, ebaySearchItem.itemId),
-                                        LoggerCategories.Warning, 0, 0,
-                                        TraceEventType.Warning,
-                                        serivceLogMessage,
-                                        new Dictionary<string, object>());
-                                    continue;
-                                }
-                                if ((ebaySearchItem.listingInfo == null ||
-                                     String.IsNullOrWhiteSpace(ebaySearchItem.listingInfo.listingType)))
-                                {
-                                    stagingEbayBatchImport.NoListingType++;
-                                    stagingEbayBatchImport.Failed++;
-                                    
-                                    logger.Write(String.Format("ebay Finding Service - item (ebay item id = {2}) has no listing type (user id = {0}, batch id = {1})", userId, stagingEbayBatchImport.EbayBatchImportId, ebaySearchItem.itemId),
-                                        LoggerCategories.Error, 0, 0,
-                                        TraceEventType.Error,
-                                        serivceLogMessage,
-                                        new Dictionary<string, object>());
-                                    continue;
-                                }
-
-                                stagingEbayItem = CreateStagingEbayItem(stagingEbayLoadService, ebaySearchItem, stagingEbayBatchImport.EbayBatchImportId, ebayCheckTime, userId);
-                                UpdateCounts(stagingEbayItem, stagingEbayBatchImport);
-                            }
-                        }
-                        //Page processed log entry
-                        logger.Write(String.Format("Items page {2} completed (user id = {0}, batch id = {1})", userId, stagingEbayBatchImport.EbayBatchImportId, curPage),
-                            LoggerCategories.Information, 0, 0,
-                            TraceEventType.Information,
-                            serivceLogMessage,
-                            new Dictionary<string, object>());
-                    }
-
-                    stagingEbayLoadService.UpsertEbayLoadStartTimeFromConfiguration(ebayCheckTime);
                 }
-                
+
+                stagingEbayLoadService.UpsertEbayLoadStartTimeFromConfiguration(ebayCheckTime);
+
                 //Set ebay batch completion data 
                 stagingEbayBatchImport.CompletedOn = DateTime.Now;
                 stagingEbayBatchImport.InProcess = false;
                 stagingEbayLoadService.UpdateStagingEbayLoadBatch(stagingEbayBatchImport, true);
 
                 //Page processed log entry
-                logger.Write(String.Format("ebay batch load completed (user id = {0}, batch id = {1}), Summary: TotalKeywordMatched={2}, ToBeProcessed={3}, Failed={4}, Imported={5}, " +
+                logger.Write(String.Format("ebay batch load completed (user id = {0}, batch id = {1}), Summary: TotalKeywordMatched={2}, ToBeProcessed={3}, Failed={4}, Duplicated={11}, Imported={5}, " +
                                            "Auctions={6}, AuctionsWithBIN={7}, Classified={8}, FixedPrice={9}, StoreInventory={10}",
                                            userId, stagingEbayBatchImport.EbayBatchImportId, stagingEbayBatchImport.TotalKeywordMatched, stagingEbayBatchImport.ToBeProcessed,
                                            stagingEbayBatchImport.Failed, stagingEbayBatchImport.Imported, stagingEbayBatchImport.Auctions, stagingEbayBatchImport.AuctionsWithBIN,
-                                           stagingEbayBatchImport.Classified, stagingEbayBatchImport.FixedPrice, stagingEbayBatchImport.StoreInventory),
+                                           stagingEbayBatchImport.Classified, stagingEbayBatchImport.FixedPrice, stagingEbayBatchImport.StoreInventory, stagingEbayBatchImport.Duplicates),
                     LoggerCategories.Information, 0, 0,
                     TraceEventType.Information,
                     serivceLogMessage,
@@ -361,9 +401,9 @@ namespace TMD.Web.Integration.Ebay
                 stagingEbayBatchImport.FixedPrice = 0;
                 stagingEbayBatchImport.StoreInventory = 0;
                 stagingEbayBatchImport.Failed = 0;
+                stagingEbayBatchImport.Duplicates = 0;
                 stagingEbayBatchImport.Imported = 0;
                 stagingEbayBatchImport.NoListingType = 0;
-                stagingEbayBatchImport.Duplicates = 0;
             }
         }
 

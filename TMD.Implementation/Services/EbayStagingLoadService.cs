@@ -31,15 +31,17 @@ namespace TMD.Implementation.Services
             throw new System.NotImplementedException();
         }
 
-        public StagingEbayBatchImport CreateStagingEbayLoadBatch()
+        public StagingEbayBatchImport CreateStagingEbayLoadBatch(string createdByUserId)
         {
             var newBatch = istgEbayBatchImportsRepository.Create();
 
             newBatch.CreatedOn =  DateTime.Now;
+
+            if (!String.IsNullOrWhiteSpace(createdByUserId)) newBatch.CreatedBy = createdByUserId;
+
             istgEbayBatchImportsRepository.Add(newBatch);
 
             return newBatch;
-
         }
 
         public void UpdateStagingEbayLoadBatch(StagingEbayBatchImport batch, bool commit = false)
