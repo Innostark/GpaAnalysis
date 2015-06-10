@@ -15,8 +15,9 @@
     <AssemblyName>TMD.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
-    <IISExpressSSLPort>44304</IISExpressSSLPort>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -351,6 +352,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\LocalEbayIntegrationWS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
@@ -1612,6 +1618,12 @@
     <Content Include="Scripts\js\jquery.min.js" />
     <Content Include="Scripts\js\skel-layers.min.js" />
     <Content Include="Scripts\js\skel.min.js" />
+    <None Include="Service References\LocalEbayIntegrationWS\configuration91.svcinfo" />
+    <None Include="Service References\LocalEbayIntegrationWS\configuration.svcinfo" />
+    <None Include="Service References\LocalEbayIntegrationWS\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Views\Home\OneColumn.cshtml" />
     <Content Include="Views\Home\TwoColumnOne.cshtml" />
     <Content Include="Views\Home\TwoColumnTwo.cshtml" />
@@ -1623,6 +1635,7 @@
     <Content Include="Views\Admin\BatchImportLV.cshtml" />
     <Content Include="Views\Admin\EbayItemImportLV.cshtml" />
     <Content Include="Views\Admin\EbayItemImportDetail.cshtml" />
+    <None Include="Service References\LocalEbayIntegrationWS\TmdEbayIntegrationService.wsdl" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2773,6 +2786,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\LocalEbayIntegrationWS\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -2787,7 +2806,16 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:4513/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

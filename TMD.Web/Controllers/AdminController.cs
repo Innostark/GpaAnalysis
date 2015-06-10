@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -8,6 +9,7 @@ using TMD.Implementation.Services;
 using TMD.Interfaces.IServices;
 using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
+using TMD.Web.LocalEbayIntegrationWS;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.ViewModels;
@@ -66,6 +68,26 @@ namespace TMD.Web.Controllers
            var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
             return toReturn;
         }
+
+        //public ActionResult StarEbayBatchLoad()
+        //{
+        //    try
+        //    {
+        //        var wsClient = new TmdEbayIntegrationServiceClient();
+        //        wsClient.StartEbayLoadAsync("usman@innostark.com", "123456");
+        //    }
+        //    catch (FaultException fex)
+        //    {
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+                
+        //    }
+
+        //    var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
+        //    return toReturn; ;
+        //}
         #endregion
 
         #region Ebay Item Import
