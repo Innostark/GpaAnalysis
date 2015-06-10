@@ -58,6 +58,7 @@ namespace TMD.Web.ModelMappers
                 TitleDescription = source.Title,
                 ViewItemUrlTag = string.IsNullOrEmpty(source.ViewItemUrl) ? "" : "<a href='" + source.ViewItemUrl + "' target='_blank'><i class='fa fa-external-link'></i></a>",
                 ViewItemUrl = source.ViewItemUrl,
+                ViewItemUrlLV = string.IsNullOrEmpty(source.ViewItemUrl) ? "" : "<a href='" + source.ViewItemUrl + "' target='_blank'>Open</a>",
                 EbayItemDetails = "<a href='" + hostURL + "Admin/EbayItemImportDetail?vpek=" + source.EbayItemtId+ "'>Details</a>"
             };
             return oModel;

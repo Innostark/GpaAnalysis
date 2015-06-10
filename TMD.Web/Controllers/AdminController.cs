@@ -21,11 +21,19 @@ namespace TMD.Web.Controllers
         private readonly IStagingEbayBatchImportsService STGEbayBatchImportsService;
         private readonly IStagingEbayLoadService StagingEbayLoadService;
 
+        [AllowAnonymous]
+        public ActionResult Home()
+        {
+            return View();
+        }
+
         public AdminController(IStagingEbayBatchImportsService iSTGEbayBatchImportsService, IStagingEbayLoadService iStagingEbayLoadService)
         {
             STGEbayBatchImportsService = iSTGEbayBatchImportsService;
             StagingEbayLoadService = iStagingEbayLoadService;
         }
+
+
         #region Batch Import
         public ActionResult BatchImportLV()
         {
