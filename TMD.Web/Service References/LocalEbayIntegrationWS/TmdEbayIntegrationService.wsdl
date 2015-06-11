@@ -15,6 +15,18 @@
           <xs:sequence />
         </xs:complexType>
       </xs:element>
+      <xs:element name="StartEbayLoadByToken">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="StartEbayLoadByTokenResponse">
+        <xs:complexType>
+          <xs:sequence />
+        </xs:complexType>
+      </xs:element>
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="anyType" nillable="true" type="xs:anyType" />
@@ -64,10 +76,20 @@
   <wsdl:message name="ITmdEbayIntegrationService_StartEbayLoad_OutputMessage">
     <wsdl:part name="parameters" element="tns:StartEbayLoadResponse" />
   </wsdl:message>
+  <wsdl:message name="ITmdEbayIntegrationService_StartEbayLoadByToken_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartEbayLoadByToken" />
+  </wsdl:message>
+  <wsdl:message name="ITmdEbayIntegrationService_StartEbayLoadByToken_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartEbayLoadByTokenResponse" />
+  </wsdl:message>
   <wsdl:portType name="ITmdEbayIntegrationService">
     <wsdl:operation name="StartEbayLoad">
       <wsdl:input wsaw:Action="http://toymarketdata.com/integrations/ebay/v1/ITmdEbayIntegrationService/StartEbayLoad" message="tns:ITmdEbayIntegrationService_StartEbayLoad_InputMessage" />
       <wsdl:output wsaw:Action="http://toymarketdata.com/integrations/ebay/v1/ITmdEbayIntegrationService/StartEbayLoadResponse" message="tns:ITmdEbayIntegrationService_StartEbayLoad_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartEbayLoadByToken">
+      <wsdl:input wsaw:Action="http://toymarketdata.com/integrations/ebay/v1/ITmdEbayIntegrationService/StartEbayLoadByToken" message="tns:ITmdEbayIntegrationService_StartEbayLoadByToken_InputMessage" />
+      <wsdl:output wsaw:Action="http://toymarketdata.com/integrations/ebay/v1/ITmdEbayIntegrationService/StartEbayLoadByTokenResponse" message="tns:ITmdEbayIntegrationService_StartEbayLoadByToken_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ITmdEbayIntegrationService" type="tns:ITmdEbayIntegrationService">
@@ -81,10 +103,19 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="StartEbayLoadByToken">
+      <soap:operation soapAction="http://toymarketdata.com/integrations/ebay/v1/ITmdEbayIntegrationService/StartEbayLoadByToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="TmdEbayIntegrationService">
     <wsdl:port name="BasicHttpBinding_ITmdEbayIntegrationService" binding="tns:BasicHttpBinding_ITmdEbayIntegrationService">
-      <soap:address location="http://localhost:49378/integration/ebay/TmdEbayIntegrationService.svc" />
+      <soap:address location="http://localhost:4513/integration/ebay/TmdEbayIntegrationService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

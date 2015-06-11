@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Web;
+using System.Web.Services;
 using eBay.Services.Finding;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
@@ -18,6 +19,7 @@ using eBay.Services;
 using System.Configuration;
 using TMD.WebBase.Mvc;
 using UnityConfig = TMD.WebBase.UnityConfiguration.UnityConfig;
+
 
 namespace TMD.Web.Integration.Ebay
 {
@@ -35,11 +37,12 @@ namespace TMD.Web.Integration.Ebay
         private readonly string serivceLogMessage = String.Format("{0} service method call - {1}", TmdEbayIntegrationServiceServiceName, StartEbayLoadServiceMethodName);
         private ApplicationUserManager userManager;
         #endregion 'Private Properties'
-
+        
         public void StartEbayLoad(string username, string password)
         {
+            var abc = HttpContext.Current.User.Identity.IsAuthenticated;
             var logger = UnityConfig.GetConfiguredContainer().Resolve<ILogger>();
-
+            
             #region 'Parameter validation'
             if (String.IsNullOrWhiteSpace(username))
             {
@@ -132,6 +135,8 @@ namespace TMD.Web.Integration.Ebay
                     new FaultReason(new FaultReasonText(AuthorisationFault.FaultMessageUserIsNotAdmin)), new FaultCode(AuthorisationFault.FaultCodeUserIsNotAdmin));
             }
 
+
+
             #region 'Processing'
 
             //User authenticated and authorised, start ebay load processing
@@ -140,6 +145,45 @@ namespace TMD.Web.Integration.Ebay
             #endregion 'Processing'
 
             #endregion 'Authentication & Processing'
+        }
+
+        public void StartEbayLoadByToken(string token)
+        {
+            //The token is actually userId : 0 if it is not valid
+            var logger = UnityConfig.GetConfiguredContainer().Resolve<ILogger>();
+
+            var decodedUserId = StringCipher.Decrypt(token);
+            try
+            {
+
+
+                if (decodedUserId != "0")
+                {
+                    ProcessEbayLoad(logger, decodedUserId);
+                }
+                else
+                {
+                    throw new Exception("Bad token");
+                }
+            }
+            catch (Exception e)
+            {
+
+
+                logger.Write(String.Format("User could not be authenticated"),
+                LoggerCategories.Error, 0, 0,
+                TraceEventType.Critical,
+                serivceLogMessage,
+                new Dictionary<string, object>());
+                //User not authenticated
+                //AuthenticationFault.FaultCodeCredentialsCouldNotBeValidated //BILAL TO CHECK
+                throw new FaultException<AuthenticationFault>(
+                    new AuthenticationFault { ErrorDetails = e.Message, ErrorMessage = AuthenticationFault.FaultMessageCredentialsCouldNotBeValidated, Result = false },
+                    new FaultReason(new FaultReasonText(e.Message)), new FaultCode(AuthenticationFault.FaultCodeCredentialsCouldNotBeValidated));
+
+            }
+        
+            
         }
 
         #region 'Private methods'

@@ -7,5 +7,9 @@ namespace TMD.Web.Integration.Ebay
     {
         [OperationContract]
         void StartEbayLoad(string username, string password);
+
+
+        [OperationContract]
+        void StartEbayLoadByToken(string token);
     }
 }

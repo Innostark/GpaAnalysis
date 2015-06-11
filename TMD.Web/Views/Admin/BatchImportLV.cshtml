@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 4;
     
-    }
+}
+<script src="~/Scripts/jquery.blockUI.js"></script>
 
 <header>
 
@@ -26,7 +27,7 @@
                         <input type="button" class="btn green" id="btnFltr" value="Filter" />
                         <input type="button" class="btn green titleButton" id="btnResetFltr" value="Reset">
                    
-                        <a href="#" style="float: right; padding: 6px !important"  class="btn btn-lg blue">
+                        <a href="#" onclick="PerformOperation()" style="float: right; padding: 6px !important"  class="btn btn-lg blue">
                             Start eBay Batch Load <i class="fa fa-gears"></i>
                         </a>
 
@@ -108,6 +109,22 @@
 </div>
 
 <script type="text/javascript">
+
+    $(document).ajaxStop($.unblockUI);
+    function PerformOperation() {
+        var siteURL = $('#siteURL').val();
+        $.blockUI({ message: '<h1><img src="busy.gif" /> Just a moment...</h1>' });
+        $.ajax({
+
+            url: siteURL+"Admin/PerformEbayService"
+            
+        }).done(function (e, r) {
+            alert("Service Succesfully Completed");
+
+        }).error(function (e, r,v) {
+            alert("ERROR: "+v);
+        });
+    }
 
     jQuery(document).ready(function($) {
    

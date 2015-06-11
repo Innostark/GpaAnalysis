@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.ServiceModel;
+using System.util;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -9,7 +11,7 @@ using TMD.Implementation.Services;
 using TMD.Interfaces.IServices;
 using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
-using TMD.Web.LocalEbayIntegrationWS;
+//using TMD.Web.LocalEbayIntegrationWS;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.ViewModels;
@@ -93,6 +95,8 @@ namespace TMD.Web.Controllers
         #region Ebay Item Import
         public ActionResult EbayItemImportLV()
         {
+        
+            
             StagingEbayItemRequest viewModel = Session["PageMetaData"] as StagingEbayItemRequest;
             Session["PageMetaData"] = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
@@ -150,6 +154,35 @@ namespace TMD.Web.Controllers
             return View(item);
         }
         #endregion
+
+          [AllowAnonymous]
+        public ActionResult PerformEbayService()
+        {
+              try
+              {
+
+              if (this.User.Identity.IsAuthenticated)
+              {
+                  var user = UserManager.FindByEmail(User.Identity.Name);
+
+                  if (Utility.AdminRoleId == user.AspNetRoles.FirstOrDefault().Id)
+                  {
+
+                      TMD.Web.LocalEbayIntegrationWS.TmdEbayIntegrationServiceClient oClient = new TMD.Web.LocalEbayIntegrationWS.TmdEbayIntegrationServiceClient();
+                      oClient.StartEbayLoadByToken(StringCipher.Encrypt(user.Id));
+                      return new HttpStatusCodeResult(HttpStatusCode.OK);
+                  }
+                  throw new Exception("User Role is not Admin");
+              }
+              throw new Exception("User is not Authenticated");
+              }
+              catch (Exception e)
+              {
+
+                  return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed,e.Message.ToString());
+              }
+
+        }
 
     }
 }

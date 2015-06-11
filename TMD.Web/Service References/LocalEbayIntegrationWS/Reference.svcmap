@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:49378/integration/ebay/TmdEbayIntegrationService.svc?singleWsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:4513/integration/ebay/TmdEbayIntegrationService.svc?singleWsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="TmdEbayIntegrationService.wsdl" MetadataType="Wsdl" ID="69a1baf0-403d-4901-b824-70173082dc58" SourceId="1" SourceUrl="http://localhost:49378/integration/ebay/TmdEbayIntegrationService.svc?singleWsdl" />
+    <MetadataFile FileName="TmdEbayIntegrationService.wsdl" MetadataType="Wsdl" ID="69a1baf0-403d-4901-b824-70173082dc58" SourceId="1" SourceUrl="http://localhost:4513/integration/ebay/TmdEbayIntegrationService.svc?singleWsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

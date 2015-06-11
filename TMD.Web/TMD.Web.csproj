@@ -359,6 +359,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="StringCipher.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\AspNetUsersViewModel.cs" />
@@ -1613,6 +1614,7 @@
     <Content Include="Scripts\App\toastr.js" />
     <Content Include="Scripts\App\toastr.min.js" />
     <Content Include="Scripts\App\ValidateFields.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\js\html5shiv.js" />
     <Content Include="Scripts\js\init.js" />
     <Content Include="Scripts\js\jquery.min.js" />
