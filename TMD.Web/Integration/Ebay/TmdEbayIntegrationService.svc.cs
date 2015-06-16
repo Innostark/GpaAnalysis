@@ -151,8 +151,10 @@ namespace TMD.Web.Integration.Ebay
         {
             //The token is actually userId : 0 if it is not valid
             var logger = UnityConfig.GetConfiguredContainer().Resolve<ILogger>();
+            
+            if(logger == null) throw new Exception("Logger is null");
 
-            var decodedUserId = StringCipher.Decrypt(token);
+            var decodedUserId = token;
             try
             {
 

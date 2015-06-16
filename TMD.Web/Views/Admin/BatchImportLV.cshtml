@@ -106,6 +106,7 @@
             </div>
         </div>
     </form>
+    
 </div>
 
 <script type="text/javascript">
@@ -113,7 +114,7 @@
     $(document).ajaxStop($.unblockUI);
     function PerformOperation() {
         var siteURL = $('#siteURL').val();
-        $.blockUI({ message: '<h1><img src="busy.gif" /> Just a moment...</h1>' });
+        $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Ebay Service Started...</h2>' });
         $.ajax({
 
             url: siteURL+"Admin/PerformEbayService"

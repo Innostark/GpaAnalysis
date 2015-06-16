@@ -168,8 +168,10 @@ namespace TMD.Web.Controllers
                   if (Utility.AdminRoleId == user.AspNetRoles.FirstOrDefault().Id)
                   {
 
-                      TMD.Web.LocalEbayIntegrationWS.TmdEbayIntegrationServiceClient oClient = new TMD.Web.LocalEbayIntegrationWS.TmdEbayIntegrationServiceClient();
-                      oClient.StartEbayLoadByToken(StringCipher.Encrypt(user.Id));
+                      TMD.Web.LocalEbayIntegrationWS.TmdEbayIntegrationServiceClient oClient =
+                          new TMD.Web.LocalEbayIntegrationWS.TmdEbayIntegrationServiceClient();
+                     // oClient.StartEbayLoadByToken(user.Id);
+                      oClient.StartEbayLoad("usman@innostark.com","123456");
                       return new HttpStatusCodeResult(HttpStatusCode.OK);
                   }
                   throw new Exception("User Role is not Admin");

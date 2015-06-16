@@ -1515,6 +1515,7 @@
     <Content Include="Content\global\plugins\slider-revolution-slider\video-boxed.html" />
     <Content Include="Content\global\plugins\slider-revolution-slider\video-fullscreen.html" />
     <Content Include="Content\global\plugins\slider-revolution-slider\video-fullwidth.html" />
+    <Content Include="Images\loading.gif" />
     <Content Include="Images\photon\entypo.eot" />
     <Content Include="Images\photon\entypo.ttf" />
     <Content Include="Images\photon\entypo.woff" />
@@ -1620,11 +1621,13 @@
     <Content Include="Scripts\js\jquery.min.js" />
     <Content Include="Scripts\js\skel-layers.min.js" />
     <Content Include="Scripts\js\skel.min.js" />
+    <None Include="Properties\PublishProfiles\TOYMARKET.pubxml" />
     <None Include="Service References\LocalEbayIntegrationWS\configuration91.svcinfo" />
     <None Include="Service References\LocalEbayIntegrationWS\configuration.svcinfo" />
     <None Include="Service References\LocalEbayIntegrationWS\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Home\OneColumn.cshtml" />
     <Content Include="Views\Home\TwoColumnOne.cshtml" />
@@ -1637,7 +1640,7 @@
     <Content Include="Views\Admin\BatchImportLV.cshtml" />
     <Content Include="Views\Admin\EbayItemImportLV.cshtml" />
     <Content Include="Views\Admin\EbayItemImportDetail.cshtml" />
-    <None Include="Service References\LocalEbayIntegrationWS\TmdEbayIntegrationService.wsdl" />
+    <None Include="Service References\LocalEbayIntegrationWS\TmdEbayIntegrationService1.wsdl" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2555,7 +2558,6 @@
     <Content Include="Images\jQueryUI\Thumbs.db" />
     <Content Include="Images\preloader\Thumbs.db" />
     <Content Include="Images\sprites\Thumbs.db" />
-    <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <Content Include="RichTextEditor\CHANGES.md" />
     <Content Include="RichTextEditor\LICENSE.md" />
@@ -2810,9 +2812,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>23866</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:4513/</IISUrl>
+          <IISUrl>http://localhost:23866/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

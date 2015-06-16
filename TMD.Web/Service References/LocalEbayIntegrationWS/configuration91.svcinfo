@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="Q1G9Jx6p0VCmSnAMeUmqMDv/J4Q=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="9AmQjQ2Q6OSo2RsaI0E7HX2Q1w8=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_ITmdEbayIntegrationService1">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_ITmdEbayIntegrationService1" contract="LocalEbayIntegrationWS.ITmdEbayIntegrationService" bindingType="basicHttpBinding" address="http://localhost:4513/integration/ebay/TmdEbayIntegrationService.svc" bindingConfiguration="BasicHttpBinding_ITmdEbayIntegrationService1">
+    <endpoint name="BasicHttpBinding_ITmdEbayIntegrationService" contract="LocalEbayIntegrationWS.ITmdEbayIntegrationService" bindingType="basicHttpBinding" address="http://localhost:23866/Integration/Ebay/TmdEbayIntegrationService.svc" bindingConfiguration="BasicHttpBinding_ITmdEbayIntegrationService1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:4513/integration/ebay/TmdEbayIntegrationService.svc</serializedValue>
+          <serializedValue>http://localhost:23866/Integration/Ebay/TmdEbayIntegrationService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -187,7 +187,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_ITmdEbayIntegrationService1</serializedValue>
+          <serializedValue>BasicHttpBinding_ITmdEbayIntegrationService</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
