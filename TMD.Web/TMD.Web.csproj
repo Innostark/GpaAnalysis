@@ -306,6 +306,7 @@
     <Compile Include="Integration\Ebay\Faults\BaseCustomFault.cs" />
     <Compile Include="Integration\Ebay\Faults\EbayLoadProcessingFault.cs" />
     <Compile Include="Integration\Ebay\Faults\InputParameterFault.cs" />
+    <Compile Include="Integration\Ebay\Faults\LoggerFault.cs" />
     <Compile Include="Integration\Ebay\ITmdEbayIntegrationService.cs" />
     <Compile Include="Integration\Ebay\TmdEbayIntegrationService.svc.cs">
       <DependentUpon>TmdEbayIntegrationService.svc</DependentUpon>
@@ -2558,7 +2559,6 @@
     <Content Include="Images\jQueryUI\Thumbs.db" />
     <Content Include="Images\preloader\Thumbs.db" />
     <Content Include="Images\sprites\Thumbs.db" />
-    <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <Content Include="RichTextEditor\CHANGES.md" />
     <Content Include="RichTextEditor\LICENSE.md" />
     <Content Include="RichTextEditor\plugins\scayt\LICENSE.md" />

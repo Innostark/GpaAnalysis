@@ -1,8 +1,9 @@
-﻿using System.Runtime.Serialization;
-
-namespace TMD.Web.Integration.Ebay.Faults
+﻿namespace TMD.Web.Integration.Ebay.Faults
 {
-    [DataContract(Namespace = "http://toymarketdata.com/integrations/ebay/v1/")]
+    /// <summary>
+    /// Custom class for input parameter faults
+    /// All faults start from code 1000
+    /// </summary>
     public class InputParameterFault: BaseCustomFault
     {
         public const string FaultCodeInvalidParameter = "1000";
@@ -13,6 +14,5 @@ namespace TMD.Web.Integration.Ebay.Faults
 
         public const string FaultCodePasswordWasNullOrEmpty = "1051";
         public const string FaultMessagePasswordWasNullOrEmpty = "The parameter password is required.";
-        
     }
 }
