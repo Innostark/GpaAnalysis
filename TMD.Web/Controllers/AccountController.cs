@@ -932,22 +932,39 @@ namespace IdentitySample.Controllers
 
             return View();
             
+        
         }
+
+        //[AllowAnonymous]
+        //public ActionResult SignUp()
+        //{
+        //    return RedirectToAction("Pricing");
+        //}
+
         [AllowAnonymous]
-        public ActionResult SignUp(int PackageId,string vkpy)
+        public ActionResult SignUp(int ? PackageId,string  vkpy)
         {
-            if (!string.IsNullOrEmpty(vkpy))
+            try
             {
 
-               //means we need to go direct to payment
-                AspNetUser oModel = UserManager.FindByEmail(vkpy);
-                if(oModel!=null)
-                return PreparePayPalPayment(oModel);
 
+                if (!string.IsNullOrEmpty(vkpy))
+                {
+
+                    //means we need to go direct to payment
+                    AspNetUser oModel = UserManager.FindByEmail(vkpy);
+                    if (oModel != null)
+                        return PreparePayPalPayment(oModel);
+
+                }
+
+                return View();
             }
+            catch (Exception)
+            {
 
-            return View();
-
+                return RedirectToAction("Pricing");
+            }
         }
         [HttpPost]
         [AllowAnonymous]

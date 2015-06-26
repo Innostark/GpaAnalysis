@@ -95,9 +95,13 @@ namespace TMD.Web.Controllers
         #region Ebay Item Import
         public ActionResult EbayItemImportLV()
         {
-        
+            if (Request.UrlReferrer == null || Request.UrlReferrer.AbsolutePath == "/Admin/EbayItemImportLV")
+            {
+                Session["PageMetaData"] = null;
+            }
             
             StagingEbayItemRequest viewModel = Session["PageMetaData"] as StagingEbayItemRequest;
+         
             Session["PageMetaData"] = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(new EbayItemViewModel

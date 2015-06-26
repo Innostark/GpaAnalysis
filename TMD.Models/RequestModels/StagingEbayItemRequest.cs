@@ -9,7 +9,7 @@ namespace TMD.Models.RequestModels
 {
     public class StagingEbayItemRequest : GetPagedListRequest
     {
-        public string Title { get; set; }
+        public string StagingEbayTitle { get; set; }
         public string BatchId { get; set; }
         public string ToyGraderID { get; set; }
         public string AFASerial { get; set; }

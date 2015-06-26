@@ -111,7 +111,7 @@ namespace TMD.Repository.Repositories
             Expression<Func<StagingEbayItem, bool>> query =
                     s => (
                             (
-                            (string.IsNullOrEmpty(searchRequest.Title) || s.Title.Contains(searchRequest.Title))
+                            (string.IsNullOrEmpty(searchRequest.StagingEbayTitle) || s.Title.Contains(searchRequest.StagingEbayTitle))
                             && (batchId ==0 || s.EbayBatchImportId.Equals(batchId))
                             && (string.IsNullOrEmpty(searchRequest.AFASerial) || s.AFASerial.Contains(searchRequest.AFASerial))
                             && (string.IsNullOrEmpty(searchRequest.ToyGraderID) || s.ToyGraderItemId.Value.ToString().Contains(searchRequest.AFASerial))

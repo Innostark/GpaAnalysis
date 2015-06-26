@@ -19,11 +19,11 @@
 
                     </div>
                     <div class="caption">
-                        <i class="fa fa-bitbucket-square"></i>Ebay Item Details
+                        <i class="fa fa-bitbucket-square"></i>eBay Item Details
                     </div>
                     <div class="tools">
                         <a href="~/Admin/EbayItemImportLV" style="color:white">
-                            Cancel
+                            Back
                         </a>
 
 
@@ -120,7 +120,7 @@
                             </div>
 
                             <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">ebay URL</label>
+                                <label class="col-md-2 control-label textAlignRight">eBay URL</label>
                                 <div class="col-md-9">
                                     @Html.TextBoxFor(m => m.ViewItemUrl, new { @class = "form-control", @readonly = "readonly" })
                                 </div>
@@ -223,7 +223,8 @@
                         </fieldset>
                     </div>
                     <div class="form-actions right">
-                        <button type="button" class="btn default">Back</button>
+                        <a href="~/Admin/EbayItemImportLV" class="btn default">Back</a>
+                        @*<button type="button" class="btn default" value="Back"></button>*@
                         <button type="submit" class="btn blue"><i class="fa fa-check"></i> Save</button>
                     </div>
                 </div>

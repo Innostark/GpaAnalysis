@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>InnoSTARK | Home </title>
+        <title>@ViewBag.Title - InnoSTARK Technologies</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="description" />
@@ -79,18 +79,18 @@
 
                     <li  class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active" : "")>
                         <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
-                            Ebay <i class="fa fa-angle-down"></i>
+                            eBay <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu pull-left">
                             <li>
                                 <a class="WhiteColor" href="~/Admin/BatchImportLV">
-                                    Import Batches <span class="selected">
+                                    Batches <span class="selected">
                                     </span>
                                 </a>
                             </li>
                             <li>
                                 <a class="WhiteColor" href="~/Admin/EbayItemImportLV" >
-                                    Import Items  <span class="selected">
+                                    Items  <span class="selected">
                                     </span>
                                 </a>
                             </li>
@@ -217,7 +217,12 @@
                         <i class="fa fa-angle-up"></i>
                     </span>
                 </div>
-                <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["HostURL"].ToString())" />
+
+                @*<input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["HostURL"].ToString())" />*@
+
+                <input type="hidden" id="siteURL" value="@( "http://"+Request.Url.Host.ToLower()+"/")" />
+                
+                @*<input type="hidden" id="siteURL" value="http://localhost:23866/" />*@
             </div>
 
 

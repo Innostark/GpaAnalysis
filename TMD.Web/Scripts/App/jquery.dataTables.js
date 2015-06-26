@@ -11116,7 +11116,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sProcessing": "Processing...",
+			"sProcessing": "<img src='../Content/Admin/layout/img/loading-spinner-blue.gif'> Please wait...",
 	
 	
 			/**

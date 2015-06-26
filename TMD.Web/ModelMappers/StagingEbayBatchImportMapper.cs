@@ -12,7 +12,7 @@ namespace TMD.Web.ModelMappers
     {
         public static StagingEbayBatchImportModel CreateFrom(this StagingEbayBatchImport source)
         {
-            var hostURL = ConfigurationManager.AppSettings["HostURL"];
+            var hostURL = "http://" + HttpContext.Current.Request.Url.Host.ToLower() + "/";//ConfigurationManager.AppSettings["HostURL"];
             var oModel = new StagingEbayBatchImportModel
             {
                 Auctions = source.Auctions,

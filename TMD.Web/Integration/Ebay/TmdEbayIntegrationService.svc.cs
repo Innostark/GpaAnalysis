@@ -40,9 +40,20 @@ namespace TMD.Web.Integration.Ebay
         
         public void StartEbayLoad(string username, string password)
         {
-            var abc = HttpContext.Current.User.Identity.IsAuthenticated;
-            var logger = UnityConfig.GetConfiguredContainer().Resolve<ILogger>();
+            //var abc = HttpContext.Current.User.Identity.IsAuthenticated;
+           
             
+            var logger = UnityConfig.GetConfiguredContainer().Resolve<ILogger>();
+            if (logger == null) throw new Exception("Logger is null");
+
+            logger.Write("LOGGING START",
+                  LoggerCategories.Warning, 0, 0,
+                  TraceEventType.Warning,
+                  
+                  "HELLO WORLD",
+                  new Dictionary<string, object>());
+
+
             #region 'Parameter validation'
             if (String.IsNullOrWhiteSpace(username))
             {

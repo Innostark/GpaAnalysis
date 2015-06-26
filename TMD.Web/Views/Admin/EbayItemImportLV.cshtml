@@ -1,6 +1,6 @@
 ﻿@model TMD.Web.ViewModels.EbayItemViewModel
 @{
-    ViewBag.Title = "Ebay Item Import";
+    ViewBag.Title = "eBay Item Import";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 4;
     
@@ -9,7 +9,7 @@
 <header>
 
     <h3 class="page-title">
-        Item Import <small>(Ebay Integration Summary)</small>
+        eBay Items <small>(Imported)</small>
     </h3>
     @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
 </header>
@@ -42,7 +42,7 @@
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
-                                            @Html.TextBox("Title", "", new { @class = "searchInputs form-control", @id = "Title", @placeholder = "Search Title" })
+                                            @Html.TextBox("StagingEbayTitle", @Model.SearchRequest.StagingEbayTitle, new { @class = "searchInputs form-control", @id = "StagingEbayTitle", @placeholder = "Search Title" })
                                            
                                         </div>
 
@@ -55,7 +55,7 @@
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
-                                            @Html.TextBox("ToyGraderID", "", new { @class = "searchInputs form-control", @id = "ToyGraderID", @placeholder = "Search Toy Grader" })
+                                            @Html.TextBox("ToyGraderID", @Model.SearchRequest.ToyGraderID, new { @class = "searchInputs form-control", @id = "ToyGraderID", @placeholder = "Search Toy Grader" })
                                           
                                         </div>
 
@@ -67,7 +67,7 @@
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
-                                            @Html.TextBox("AFASerial", "", new { @class = "searchInputs form-control", @id = "AFASerial", @placeholder = "Search AFA Serial" })
+                                            @Html.TextBox("AFASerial", @Model.SearchRequest.AFASerial, new { @class = "searchInputs form-control", @id = "AFASerial", @placeholder = "Search AFA Serial" })
                                           
                                         </div>
 
@@ -81,7 +81,7 @@
                                       <td class="col-md-2">
                                           <div class="input-icon">
                                               <i class="fa fa-search"></i>
-                                              @Html.TextBox("CreatedOn", "", new { @class = "searchInputs form-control", @id = "CreatedOn", @placeholder = "Created On" })
+                                              @Html.TextBox("CreatedOn", @Model.SearchRequest.CreatedOn, new { @class = "searchInputs form-control", @id = "CreatedOn", @placeholder = "Created On" })
                                           </div>
                                       </td>
 
@@ -92,7 +92,7 @@
                                         <div class="input-icon" id="BatchNumberDiv">
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
-                                            @Html.TextBox("BatchNumber", "", new { @class = "searchInputs form-control", @type = "Number", @id = "BatchNumber", @placeholder = "Search Batch" })
+                                            @Html.TextBox("BatchNumber", @Model.SearchRequest.BatchId, new { @class = "searchInputs form-control", @type = "Number", @id = "BatchId", @placeholder = "Search Batch" })
                                             <input name="QS" id="QS" type="hidden" />
                                         </div>
                                         <div class="input-icon" style="display: none" id="BatchNumberDisplayDiv">
@@ -209,8 +209,8 @@
                     //}
                     params.IsAsc = params.order[0].dir === "asc";
 
-                    params.Title = $('#Title').val();
-                    params.BatchId = $('#QS').val();
+                    params.StagingEbayTitle = $('#StagingEbayTitle').val();
+                    params.BatchId = $('#BatchId').val();
                     params.CreatedOn = $('#CreatedOn').val();
                     params.ToyGraderID = $('#ToyGraderID').val();
                     params.AFASerial = $('#AFASerial').val();
@@ -226,11 +226,11 @@
         });
 
         $('#btnResetFltr').on('click', function(e) {
-            $('#Title').val("");
+            $('#StagingEbayTitle').val("");
             $('#CreatedOn').val("");
             $('#ToyGraderID').val("");
             $('#AFASerial').val("");
-            $('#BatchNumber').val("");
+            $('#BatchId').val("");
            // $('#QS').val("");
             oTable.fnFilter('');
         });

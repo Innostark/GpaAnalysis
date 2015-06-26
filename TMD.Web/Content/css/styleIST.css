@@ -311,3 +311,8 @@ table.dataTable tbody th, table.dataTable tbody td {
   padding: 8px 6px !important;
   
 }
+
+body {
+    background-color: white !important;
+    background: none !important;
+}
