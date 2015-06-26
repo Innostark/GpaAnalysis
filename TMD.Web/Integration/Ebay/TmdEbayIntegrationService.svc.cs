@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Web;
-using System.Web.Services;
 using eBay.Services.Finding;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
@@ -33,11 +32,15 @@ namespace TMD.Web.Integration.Ebay
         private const string EbayListingTypeFixedPriceInLower = "fixedprice";
         private const string EbayListingTypeStoreInventory = "storeinventory";
         private const string StartEbayLoadServiceMethodName = "StartEbayLoad";
+        private const string StartEbayLoadByTokenServiceMethodName = "StartEbayLoadByToken";
         private const string TmdEbayIntegrationServiceServiceName = "TmdEbayIntegrationService";
-        private readonly string serivceLogMessage = String.Format("{0} service method call - {1}", TmdEbayIntegrationServiceServiceName, StartEbayLoadServiceMethodName);
+        private readonly string startEbayLoadMessage = String.Format("{0} service method call - {1}", TmdEbayIntegrationServiceServiceName, StartEbayLoadServiceMethodName);
+        private readonly string startEbayLoadByTokenMessage = String.Format("{0} service method call - {1}", TmdEbayIntegrationServiceServiceName, StartEbayLoadByTokenServiceMethodName);
         private ApplicationUserManager userManager;
         #endregion 'Private Properties'
-        
+
+        #region "Service Methods"
+
         public void StartEbayLoad(string username, string password)
         {
             //var abc = HttpContext.Current.User.Identity.IsAuthenticated;
@@ -61,21 +64,21 @@ namespace TMD.Web.Integration.Ebay
                 logger.Write(String.Format("{0} call missing the user name, parameter missing a valid value (mandatory).", StartEbayLoadServiceMethodName),
                     LoggerCategories.Error, 0, 0,
                     TraceEventType.Stop,
-                    serivceLogMessage,
+                    startEbayLoadMessage,
                     new Dictionary<string, object>());
                 //Raise the fault
                 throw new FaultException<InputParameterFault>(
                     new InputParameterFault { ErrorDetails = InputParameterFault.FaultCodeUserNameWasNullOrEmpty, ErrorMessage = InputParameterFault.FaultMessageUserNameWasNullOrEmpty, Result = false },
                     new FaultReason(new FaultReasonText(InputParameterFault.FaultMessageInvalidParameter)), new FaultCode(InputParameterFault.FaultCodeInvalidParameter));
             }
-            
+
             if (String.IsNullOrWhiteSpace(password))
             {
                 //Log the error
                 logger.Write(String.Format("{0} call missing the password, parameter missing a valid value (mandatory).", StartEbayLoadServiceMethodName),
                     LoggerCategories.Error, 0, 0,
                     TraceEventType.Stop,
-                    serivceLogMessage,
+                    startEbayLoadMessage,
                     new Dictionary<string, object>());
                 throw new FaultException<InputParameterFault>(
                     new InputParameterFault { ErrorDetails = InputParameterFault.FaultCodePasswordWasNullOrEmpty, ErrorMessage = InputParameterFault.FaultMessagePasswordWasNullOrEmpty, Result = false },
@@ -84,18 +87,18 @@ namespace TMD.Web.Integration.Ebay
 
             #endregion 'Parameter validation'
 
-            #region 'Authentication & Processing'
+            #region "Authentication & Authorisation"
             //We perform DB authentication & authorisation of user name and password
             userManager = userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             AspNetUser user = userManager.Find(username, password);
-            
+
             if (user == null)
             {
                 //Log the error
                 logger.Write(String.Format("User could not be authenticated with user name = '{0}' and password = '{1}'.", username, password),
                     LoggerCategories.Error, 0, 0,
                     TraceEventType.Critical,
-                    serivceLogMessage,
+                    startEbayLoadMessage,
                     new Dictionary<string, object>());
                 //User not authenticated
                 throw new FaultException<AuthenticationFault>(
@@ -109,21 +112,21 @@ namespace TMD.Web.Integration.Ebay
                 logger.Write(String.Format("User's email is not confirmed, user name = '{0}' and password = '{1}'.", username, password),
                     LoggerCategories.Error, 0, 0,
                     TraceEventType.Stop,
-                    serivceLogMessage,
+                    startEbayLoadMessage,
                     new Dictionary<string, object>());
                 //User is not confirm 
                 throw new FaultException<AuthenticationFault>(
                     new AuthenticationFault { ErrorDetails = AuthenticationFault.FaultCodeEmailNotConfirmed, ErrorMessage = AuthenticationFault.FaultMessageEmailNotConfirmed, Result = false },
                     new FaultReason(new FaultReasonText(AuthenticationFault.FaultMessageEmailNotConfirmed)), new FaultCode(AuthenticationFault.FaultCodeEmailNotConfirmed));
             }
-            
+
             if (user.LockoutEnabled)
             {
                 //Log the error
                 logger.Write(String.Format("User is locked, user name = '{0}' and password = '{1}'.", username, password),
                     LoggerCategories.Error, 0, 0,
                     TraceEventType.Stop,
-                    serivceLogMessage,
+                    startEbayLoadMessage,
                     new Dictionary<string, object>());
                 //User is locked
                 throw new FaultException<AuthenticationFault>(
@@ -138,15 +141,14 @@ namespace TMD.Web.Integration.Ebay
                 logger.Write(String.Format("User is not authorised for this operation, user name = '{0}' and password = '{1}' (should have Administrator role).", username, password),
                     LoggerCategories.Error, 0, 0,
                     TraceEventType.Stop,
-                    serivceLogMessage,
+                    startEbayLoadMessage,
                     new Dictionary<string, object>());
                 //User does not have an administrator role
                 throw new FaultException<AuthorisationFault>(
                     new AuthorisationFault { ErrorDetails = AuthorisationFault.FaultCodeUserIsNotAdmin, ErrorMessage = AuthorisationFault.FaultMessageUserIsNotAdmin, Result = false },
                     new FaultReason(new FaultReasonText(AuthorisationFault.FaultMessageUserIsNotAdmin)), new FaultCode(AuthorisationFault.FaultCodeUserIsNotAdmin));
             }
-
-
+            #endregion "Authentication & Authorisation"
 
             #region 'Processing'
 
@@ -154,59 +156,65 @@ namespace TMD.Web.Integration.Ebay
             ProcessEbayLoad(logger, user.Id);
 
             #endregion 'Processing'
-
-            #endregion 'Authentication & Processing'
         }
 
         public void StartEbayLoadByToken(string token)
         {
             //The token is actually userId : 0 if it is not valid
             var logger = UnityConfig.GetConfiguredContainer().Resolve<ILogger>();
-            
-            if(logger == null) throw new Exception("Logger is null");
+
+            if (logger == null)
+            {
+                throw new FaultException<AuthenticationFault>(
+                    new AuthenticationFault { ErrorDetails = LoggerFault.FaultCodeLoggerCanotBeLoaded, ErrorMessage = LoggerFault.FaultMessageLoggerCanotBeLoaded, Result = false },
+                    new FaultReason(new FaultReasonText(LoggerFault.FaultMessageLoggerCanotBeLoaded)), new FaultCode(LoggerFault.FaultCodeLoggerCanotBeLoaded));
+            }
 
             var decodedUserId = token;
-            try
+            if (decodedUserId != "0")
             {
-
-
-                if (decodedUserId != "0")
+                try
                 {
                     ProcessEbayLoad(logger, decodedUserId);
                 }
-                else
+                catch(Exception ex)
                 {
-                    throw new Exception("Bad token");
+                    logger.Write(String.Format("Unhanded error, exception details : {0}", ex.Message),
+                    LoggerCategories.Error, 0, 0,
+                    TraceEventType.Critical,
+                    startEbayLoadByTokenMessage,
+                    new Dictionary<string, object>());
+                    //Unhanded exception
+                    throw new FaultException<AuthenticationFault>(
+                        new AuthenticationFault { ErrorDetails = ex.Message, ErrorMessage = EbayLoadProcessingFault.FaultMessageUnhandledError, Result = false },
+                        new FaultReason(new FaultReasonText(ex.Message)), new FaultCode(EbayLoadProcessingFault.FaultCodeUnhandledError));
                 }
             }
-            catch (Exception e)
+            else
             {
-
-
-                logger.Write(String.Format("User could not be authenticated"),
-                LoggerCategories.Error, 0, 0,
-                TraceEventType.Critical,
-                serivceLogMessage,
-                new Dictionary<string, object>());
-                //User not authenticated
-                //AuthenticationFault.FaultCodeCredentialsCouldNotBeValidated //BILAL TO CHECK
+                //Log the error
+                logger.Write("Invalid user token.",
+                    LoggerCategories.Error, 0, 0,
+                    TraceEventType.Critical,
+                    startEbayLoadByTokenMessage,
+                    new Dictionary<string, object>());
+                //Invalid token
                 throw new FaultException<AuthenticationFault>(
-                    new AuthenticationFault { ErrorDetails = e.Message, ErrorMessage = AuthenticationFault.FaultMessageCredentialsCouldNotBeValidated, Result = false },
-                    new FaultReason(new FaultReasonText(e.Message)), new FaultCode(AuthenticationFault.FaultCodeCredentialsCouldNotBeValidated));
-
+                    new AuthenticationFault { ErrorDetails = AuthenticationFault.FaultCodeInvalidUserToken, ErrorMessage = AuthenticationFault.FaultMessageInvalidUserToken, Result = false },
+                    new FaultReason(new FaultReasonText(AuthenticationFault.FaultMessageInvalidUserToken)), new FaultCode(AuthenticationFault.FaultCodeInvalidUserToken));
             }
-        
-            
         }
 
+        #endregion "Service Methods"
+
         #region 'Private methods'
-        
+
         private void ProcessEbayLoad(ILogger logger, string userId)
         {
             logger.Write(String.Format("Starting the ebay load for user Id = {0}", userId),
                         LoggerCategories.Information, 0, 0,
                         TraceEventType.Information,
-                        serivceLogMessage,
+                        startEbayLoadMessage,
                         new Dictionary<string, object>());
 
             using (
@@ -216,7 +224,7 @@ namespace TMD.Web.Integration.Ebay
                 logger.Write(String.Format("ebay load service instantiated for user Id = {0}", userId),
                         LoggerCategories.Information, 0, 0,
                         TraceEventType.Information,
-                        serivceLogMessage,
+                        startEbayLoadMessage,
                         new Dictionary<string, object>());
 
                 #region 'Check if an ebay load can run'
@@ -228,7 +236,7 @@ namespace TMD.Web.Integration.Ebay
                     logger.Write(EbayLoadProcessingFault.FaultMessageBatchAlreadyRunning,
                         LoggerCategories.Error, 0, 0,
                         TraceEventType.Error,
-                        serivceLogMessage,
+                        startEbayLoadMessage,
                         new Dictionary<string, object>());
                     //User does not have an administrator role
                     throw new FaultException<EbayLoadProcessingFault>(
@@ -245,7 +253,7 @@ namespace TMD.Web.Integration.Ebay
                     logger.Write(EbayLoadProcessingFault.FaultMessageBatchWasNotCreated,
                         LoggerCategories.Error, 0, 0,
                         TraceEventType.Critical,
-                        serivceLogMessage,
+                        startEbayLoadMessage,
                         new Dictionary<string, object>());
                     //User does not have an administrator role
                     throw new FaultException<EbayLoadProcessingFault>(
@@ -278,7 +286,7 @@ namespace TMD.Web.Integration.Ebay
                 };
 
                 #region 'ebay Finding API Request Filters'
-                    
+
                 var itemFilters = new List<ItemFilter>
                 {
                     new ItemFilter
@@ -320,7 +328,7 @@ namespace TMD.Web.Integration.Ebay
                     logger.Write(EbayLoadProcessingFault.FaultMessageFindItemBykeywordResposeIsNull,
                         LoggerCategories.Error, 1, 0,
                         TraceEventType.Critical,
-                        serivceLogMessage,
+                        startEbayLoadMessage,
                         new Dictionary<string, object>());
                     //Find item response is ready
                     throw new FaultException<EbayLoadProcessingFault>(
@@ -333,7 +341,7 @@ namespace TMD.Web.Integration.Ebay
                     logger.Write(EbayLoadProcessingFault.FaultMessageFindItemBykeywordReturnedFailure + "Failure details: " + check.errorMessage,
                         LoggerCategories.Error, 1, 0,
                         TraceEventType.Critical,
-                        serivceLogMessage,
+                        startEbayLoadMessage,
                         new Dictionary<string, object>());
 
                     //Find item response has a failure
@@ -343,7 +351,7 @@ namespace TMD.Web.Integration.Ebay
                 }
 
                 int totalKeywordMatchedItems = check.paginationOutput.totalEntries;
-                var totalPages = (int) Math.Ceiling(totalKeywordMatchedItems/100.00);
+                var totalPages = (int)Math.Ceiling(totalKeywordMatchedItems / 100.00);
                 stagingEbayBatchImport.TotalKeywordMatched = totalKeywordMatchedItems;
                 stagingEbayBatchImport.EbayVersion = findingServicePortTypeClient.getVersion(new GetVersionRequest()).version;
 
@@ -353,7 +361,7 @@ namespace TMD.Web.Integration.Ebay
                         userId, stagingEbayBatchImport.EbayBatchImportId, totalKeywordMatchedItems, totalPages),
                     LoggerCategories.Information, 0, 0,
                     TraceEventType.Information,
-                    serivceLogMessage,
+                    startEbayLoadMessage,
                     new Dictionary<string, object>());
 
                 for (int curPage = 1; curPage <= totalPages; curPage++)
@@ -388,7 +396,7 @@ namespace TMD.Web.Integration.Ebay
                                         userId, stagingEbayBatchImport.EbayBatchImportId, ebaySearchItem.itemId),
                                     LoggerCategories.Warning, 0, 0,
                                     TraceEventType.Warning,
-                                    serivceLogMessage,
+                                    startEbayLoadMessage,
                                     new Dictionary<string, object>());
                                 continue;
                             }
@@ -404,7 +412,7 @@ namespace TMD.Web.Integration.Ebay
                                         userId, stagingEbayBatchImport.EbayBatchImportId, ebaySearchItem.itemId),
                                     LoggerCategories.Error, 0, 0,
                                     TraceEventType.Error,
-                                    serivceLogMessage,
+                                    startEbayLoadMessage,
                                     new Dictionary<string, object>());
                                 continue;
                             }
@@ -420,7 +428,7 @@ namespace TMD.Web.Integration.Ebay
                             stagingEbayBatchImport.EbayBatchImportId, curPage),
                         LoggerCategories.Information, 0, 0,
                         TraceEventType.Information,
-                        serivceLogMessage,
+                        startEbayLoadMessage,
                         new Dictionary<string, object>());
                 }
 
@@ -439,7 +447,7 @@ namespace TMD.Web.Integration.Ebay
                                            stagingEbayBatchImport.Classified, stagingEbayBatchImport.FixedPrice, stagingEbayBatchImport.StoreInventory, stagingEbayBatchImport.Duplicates),
                     LoggerCategories.Information, 0, 0,
                     TraceEventType.Information,
-                    serivceLogMessage,
+                    startEbayLoadMessage,
                     new Dictionary<string, object>());
             }
         }
@@ -511,7 +519,7 @@ namespace TMD.Web.Integration.Ebay
                 case EbayListingTypeStoreInventory:
                     stagingEbayBatchImport.StoreInventory++;
                     break;
-                }
+            }
 
             stagingEbayBatchImport.Imported++;
         }
@@ -519,7 +527,7 @@ namespace TMD.Web.Integration.Ebay
         private bool EBayGlobalIdUsStore(SearchItem item)
         {
             return !String.IsNullOrWhiteSpace(item.globalId) && item.globalId.ToUpper().Equals(ConfigurationManager.AppSettings["EbayGlobalIdUS"].ToUpper());
-        } 
+        }
 
         #endregion 'Private methods'
     }
