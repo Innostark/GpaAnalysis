@@ -9,219 +9,361 @@
 
         <form action="EbayItemImportDetail" method="POST" class="horizontal-form">
             
-            <div class="portlet box blue-hoki">
-                <div class="portlet-title">
+           
+                 <div class="portlet-body form">
+                <div class="container-fluid">
+                    @Html.AntiForgeryToken()
+              
+                     
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet yellow-crusta box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>Order Details
+                                    </div>
+                                   
+                                </div>
+                                   
+                                <div class="portlet-body">
+                                 
+                                        <div class="row static-info">
+                                            <div class="col-md-2 name">
+                                                Id
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.EbayItemtId
+                                            </div>
+                                            
+                                            <div class="col-md-2 name">
+                                                Created By
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.CreatedBy
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-2 name">
+                                                Batch Id
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.EbayBatchImportIdValue
+                                            </div>
+                                            
+                                            <div class="col-md-2 name">
+                                                Modified On
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.ModifiedOn
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-2 name">
+                                                Created On
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.CreatedOn
+                                            </div>
+                                            
+                                            <div class="col-md-2 name">
+                                                Modified By
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.ModifiedBy
+                                            </div>
 
-                    <div class="tools">
-                        @*<a href="javascript:;" class="collapse">
-                    </a>*@
+                                        </div>
+                                      
+                                
+                                </div>
 
+                            </div>
+                        </div>
+                    </div>
+                    @*TOYGRADER*@ 
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet red-sunglo box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>Toygrader
+                                    </div>
+
+                                </div>
+
+                                <div class="portlet-body">
+                                    
+                                        <div class="row static-info">
+                                            <div class="col-md-2 name">
+                                                Id
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.ToyGraderItemId
+                                            </div>
+                                            <div class="col-md-2 name">
+                                                AFA Serial
+                                            </div>
+                                            <div class="col-md-4 value">
+
+                                                @Html.TextBoxFor(m => m.AFASerial, new { @class = "form-control mandatory", @height = "24px", @placeholder="Enter AFA Serial" })
+                                                @* @Model.AFASerial*@
+                                            </div>
+                                        </div>
+                                        
+                                       
+                                          
+                                       
+
+                                    
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*//eBay Data*@
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet blue-hoki box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>eBay Data
+                                    </div>
+
+                                </div>
+
+                                <div class="portlet-body">
+                                
+                                        <div class="row static-info">
+                                            <div class="col-md-2 name">
+                                                Item Id
+                                            </div>
+                                            <div class="col-md-2 value">
+                                                @Model.ItemId
+                                            </div>
+                                            
+                                            <div class="col-md-2 name">
+                                                Condition
+                                            </div>
+                                            <div class="col-md-2 value">
+                                                @Model.Condition
+                                            </div>
+                                            <div class="col-md-2 name">
+                                                Listing Type
+                                            </div>
+                                            <div class="col-md-2 value">
+                                                @Model.ListingInfoListingType
+                                            </div>
+                                        </div>
+                                            
+                                
+                                
+                                    <div class="row static-info">
+                                        <div class="col-md-2 name">
+                                            Title
+                                        </div>
+                                        <div class="col-md-8 value">
+                                            @Model.TitleDescription
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row static-info">
+                                        <div class="col-md-2 name">
+                                            Sub Title
+                                        </div>
+                                        <div class="col-md-8 value">
+                                            asd @*@Model.SubTitle*@
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row static-info">
+                                        <div class="col-md-2 name">
+                                            eBay URL
+                                        </div>
+                                        <div class="col-md-10 value">
+                                            <a href="@Model.ViewItemUrl" target="_blank">@Model.ViewItemUrl</a>
+                                        </div>
+
+                                    </div>
+
+
+                                    </div>
+                                    
+                                   
+                            </div>
+                        </div>
+                   
+                        
+
+                    
 
                     </div>
-                    <div class="caption">
-                        <i class="fa fa-bitbucket-square"></i>eBay Item Details
+                 
+                    @*Category*@
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet grey-cascade box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>Category
+                                    </div>
+
+                                </div>
+
+                                <div class="portlet-body">
+                                    
+                                        <div class="row static-info">
+                                            <div class="col-md-2 name">
+                                                Primary
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.PrimaryCategory
+                                            </div>
+                                            
+                                            <div class="col-md-2 name">
+                                                Secondary
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.SecondaryCategory
+                                            </div>
+                                        </div>
+
+                                 
+                                
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tools">
-                        <a href="~/Admin/EbayItemImportLV" style="color:white">
-                            Back
-                        </a>
+                        
+                        
+                    @*//Listing*@
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet green-meadow box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>Listing
+                                    </div>
 
+                                </div>
 
+                                <div class="portlet-body">
+                                   
+                                    <div class="row static-info">
+                                        <div class="col-md-2 name">
+                                            Buy it now Available
+                                        </div>
+                                        <div class="col-md-2 value">
+                                            @Html.CheckBoxFor(m => m.ListingInfoBuyItNowAvailable, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                        <div class="col-md-2 name">
+                                            Buy it now Price
+                                        </div>
+                                        <div class="col-md-2 value">
+                                            @Model.ListingInfoBuyItNowPrice
+                                        </div>
+                                            
+                                        <div class="col-md-2 name">
+                                            Gift
+                                        </div>
+                                        <div class="col-md-2 value">
+                                            @Html.CheckBoxFor(m => m.ListingInfoGift, new { @class = "form-control", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row static-info">
+                                        <div class="col-md-2 name">
+                                            Start
+                                        </div>
+                                        <div class="col-md-4 value">
+                                            @Model.ListingInfoStartTime
+                                        </div>
+                                        
+                                        <div class="col-md-2 name">
+                                            End
+                                        </div>
+                                        <div class="col-md-4 value">
+                                            @Model.ListingInfoEndTime
+                                        </div>
+
+                                    </div>
+                                     </div>
+                            </div>
+                                </div>
+
+                            </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet yellow-crusta box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>Selling
+                                    </div>
+
+                                </div>
+
+                                <div class="portlet-body">
+                                  
+                                        <div class="row static-info">
+                                            <div class="col-md-2 name">
+                                                Store Name
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.StoreInfoStoreName
+                                            </div>
+                                            
+                                            <div class="col-md-2 name">
+                                                Time Left
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.SellingStatusTimeLeft
+                                            </div>
+                                        </div>
+                                        <div class="row static-info">
+                                            <div class="col-md-2 name">
+                                                Top Rated Seller
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.SellerInfoTopRatedSeller
+                                            </div>
+                                            
+                                            <div class="col-md-2 name">
+                                                Bid Count
+                                            </div>
+                                            <div class="col-md-4 value">
+                                                @Model.SellingStatusBidCount
+                                            </div>
+                                        </div>
+                                    <div class="row static-info">
+                                        <div class="col-md-2 name">
+                                            State
+                                        </div>
+                                        <div class="col-md-4 value">
+                                            @Model.SellingStatusSellingState
+                                        </div>
+                                        <div class="col-md-2 name">
+                                            Current Price
+                                        </div>
+                                        <div class="col-md-4 value">
+                                            @Model.SellingStatusCurrentPrice
+                                        </div>
+                                    </div>
+                                    <div class="row static-info">
+                                        
+                                        <div class="col-md-2 name" >
+                                            Store URL
+                                        </div>
+                                        <div class="col-md-10 value">
+                                            <a href="@Model.StoreInfoStoreURL" target="_blank">@Model.StoreInfoStoreURL</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                               
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="portlet-body form">
-                    <div class="container-fluid">
-                        @Html.AntiForgeryToken()
+                    
 
-                        <fieldset>
-                            <legend>Details</legend>
-                            <div class="row margin-top-20">
-                                <label class="col-md-2 control-label textAlignRight textAlignRight">Id</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.EbayItemtId, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-2 control-label textAlignRight">Batch Id</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.EbayBatchImportIdValue, new { @class = "form-control mandatory", @readonly = "readonly" })
-                                </div>
-                            </div>
-
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Created On</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.CreatedOn, new { @class = "form-control mandatory", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-2 control-label textAlignRight">Created By</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.CreatedBy, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-
-                            <div class="row margin-top-20">
-                                <label class="col-md-2 control-label textAlignRight">Modified On</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.ModifiedOn, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-2 control-label textAlignRight">Modified By</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.ModifiedBy, new { @class = "form-control mandatory", @readonly = "readonly" })
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Toygrader</legend>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Id</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.ToyGraderItemId, new { @class = "form-control mandatory", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">AFA Serial</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.AFASerial, new { @class = "form-control mandatory" })
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>ebay Data</legend>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Item Id</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.ItemId, new { @class = "form-control mandatory", @readonly = "readonly" })
-                                </div>
-                                <label class="col-md-1 control-label textAlignRight">Condition</label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(m => m.Condition, new { @class = "form-control mandatory", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-1 control-label textAlignRight">Listing Type</label>
-                                <div class="col-md-2">
-                                    @Html.TextBoxFor(m => m.ListingInfoListingType, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Title</label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.TitleDescription, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">SubTitle</label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.SubTitle, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">eBay URL</label>
-                                <div class="col-md-9">
-                                    @Html.TextBoxFor(m => m.ViewItemUrl, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                                <div class="col-md-1">
-                                    @Html.Raw(Model.ViewItemUrlTag)
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Category</legend>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Primary</label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.PrimaryCategory, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Secondary</label>
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.SecondaryCategory, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Listing</legend>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Buy It Now Available</label>
-                                <div class="col-md-1">
-                                    @Html.CheckBoxFor(m => m.ListingInfoBuyItNowAvailable, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                                <label class="col-md-2 control-label textAlignRight">Buy It Now Price</label>
-                                <div class="col-md-3">
-                                    @Html.TextBoxFor(m => m.ListingInfoBuyItNowPrice, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-2 control-label textAlignRight">Gift</label>
-                                <div class="col-md-2">
-                                    @Html.CheckBoxFor(m => m.ListingInfoGift, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Start</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.ListingInfoStartTime, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-2 control-label textAlignRight">End</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.ListingInfoEndTime, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset>
-                            <legend>Selling</legend>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Store Name</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.StoreInfoStoreName, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-2 control-label textAlignRight">Top Rated Seller</label>
-                                <div class="col-md-4">
-                                    @Html.CheckBoxFor(m => m.SellerInfoTopRatedSeller, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">State</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.SellingStatusSellingState, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-2 control-label textAlignRight">Time Left</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.SellingStatusTimeLeft, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Bid Count</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.SellingStatusBidCount, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-
-                                <label class="col-md-2 control-label textAlignRight">Current Price</label>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(m => m.SellingStatusCurrentPrice, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row margin-top-10">
-                                <label class="col-md-2 control-label textAlignRight">Store URL</label>
-                                <div class="col-md-9">
-                                    @Html.TextBoxFor(m => m.StoreInfoStoreURL, new { @class = "form-control", @readonly = "readonly" })
-                                </div>
-                                <div class="col-md-1">
-                                    @Html.Raw(Model.StoreInfoStoreURLTag)
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
                     <div class="form-actions right">
                         <a href="~/Admin/EbayItemImportLV" class="btn default">Back</a>
                         @*<button type="button" class="btn default" value="Back"></button>*@
@@ -231,8 +373,47 @@
 
 
 
+                @*<fieldset>
+                    <legend>Details</legend>
+                    <div class="row margin-top-20">
+                        <label class="col-md-2 control-label textAlignRight textAlignRight">Id</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.EbayItemtId, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+
+                        <label class="col-md-2 control-label textAlignRight">Batch Id</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.EbayBatchImportIdValue, new { @class = "form-control mandatory", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="row margin-top-10">
+                        <label class="col-md-2 control-label textAlignRight">Created On</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.CreatedOn, new { @class = "form-control mandatory", @readonly = "readonly" })
+                        </div>
+
+                        <label class="col-md-2 control-label textAlignRight">Created By</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.CreatedBy, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="row margin-top-20">
+                        <label class="col-md-2 control-label textAlignRight">Modified On</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.ModifiedOn, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+
+                        <label class="col-md-2 control-label textAlignRight">Modified By</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.ModifiedBy, new { @class = "form-control mandatory", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </fieldset>*@
 
             </div>
+                
         </form>
     
 

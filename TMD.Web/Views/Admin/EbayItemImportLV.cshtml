@@ -111,13 +111,14 @@
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th class="textAlignRight">Batch</th>
-                                <th class="tableLeftAlignHeader">Title</th>
-                                <th class ="tableLeftAlignHeader">Created On</th>
-                                <th class="tableLeftAlignHeader">Toy Grader</th>
+                                <th class="textAlignRight tableHeaderWhite">Batch</th>
+                                <th class="textAlignRight tableHeaderWhite">Item Id</th>
+                                <th class="tableLeftAlignHeader tableHeaderWhite">Title</th>
+                                <th class="tableLeftAlignHeader tableHeaderWhite">Created On</th>
+                                <th class="tableLeftAlignHeader tableHeaderWhite">Toy Grader</th>
                               
-                                <th class="tableLeftAlignHeader">AFA Serial</th>
-                                <th class="tableLeftAlignHeader">Ebay</th>
+                                <th class="tableLeftAlignHeader tableHeaderWhite">AFA Serial</th>
+                                <th class="tableLeftAlignHeader tableHeaderWhite">Ebay</th>
                                 @*<th>Details</th>*@
                                 
                                 @*<th class="textAlignRight">Points</th>
@@ -183,6 +184,7 @@
             "aaSorting": [sortBy],
             "columns": [
                  { "data": "EbayBatchImportId", "class": "textAlignRight" },
+                 { "data": "EbayItemtId", "class": "textAlignRight" },
                 { "data": "Title" },
                 { "data": "CreatedOn" },
                 { "data": "ToyGraderItemId", },

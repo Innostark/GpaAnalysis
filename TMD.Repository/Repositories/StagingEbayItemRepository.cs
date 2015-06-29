@@ -88,10 +88,12 @@ namespace TMD.Repository.Repositories
                 {
                     
                     {StagingEbayItemRequestByColumn.EbayBatchImportId, c => c.EbayBatchImportId},
-                    {StagingEbayItemRequestByColumn.StoreInfoStoreName, c => c.StoreInfoStoreName},
-                    {StagingEbayItemRequestByColumn.SubTitle, c => c.SubTitle},
+                    {StagingEbayItemRequestByColumn.EbayItemtId, c => c.EbayItemtId},
                     {StagingEbayItemRequestByColumn.Title, c => c.Title},
-                    {StagingEbayItemRequestByColumn.ViewItemUrl, c => c.ViewItemUrl}
+                    {StagingEbayItemRequestByColumn.CreatedOn, c => c.CreatedOn},
+                    {StagingEbayItemRequestByColumn.ToyGraderItemId, c => c.ToyGraderItemId},
+                    {StagingEbayItemRequestByColumn.AFASerial, c => c.AFASerial},
+                    {StagingEbayItemRequestByColumn.ViewItemUrlLV, c => c.ViewItemUrl}
                    
                 };
         public Models.ResponseModels.EbayItemSearchResponse GetImports(Models.RequestModels.StagingEbayItemRequest searchRequest)

@@ -301,6 +301,7 @@ legend {
 }
 .textAlignRight {
     text-align: right;
+  
 }
 
 table.dataTable tbody th, table.dataTable tbody td {
@@ -309,7 +310,13 @@ table.dataTable tbody th, table.dataTable tbody td {
 
 .tableLeftAlignHeader {
   padding: 8px 6px !important;
-  
+  }
+
+.tableHeaderWhite {
+    color: white !important;
+}
+.dataTables_info {
+    color: white !important;
 }
 
 body {

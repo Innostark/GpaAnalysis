@@ -8,8 +8,10 @@ namespace TMD.Models.Common
 {
     public enum StagingEbayItemRequestByColumn
     {
-        Title = 0,
-        ViewItemUrl = 1,
-        SubTitle = 2, EbayBatchImportId = 3, StoreInfoStoreName = 4
+        EbayBatchImportId = 0,
+        EbayItemtId =1,
+        Title = 2,
+        CreatedOn = 3, ToyGraderItemId = 4, AFASerial = 5, ViewItemUrlLV=6
+
     }
 }

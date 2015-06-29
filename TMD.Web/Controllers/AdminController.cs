@@ -99,10 +99,16 @@ namespace TMD.Web.Controllers
          
             Session["PageMetaData"] = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(new EbayItemViewModel
+            var toReturnModel = new EbayItemViewModel
             {
                 SearchRequest = viewModel ?? new StagingEbayItemRequest()
-            });
+            };
+            if (viewModel == null)
+            {
+                toReturnModel.SearchRequest.IsAsc = false;
+            }
+            
+            return View(toReturnModel);
         }
 
          [HttpHeaderAttribute("Access-Control-Allow-Origin", "*")]
